@@ -1,46 +1,29 @@
 import { test, expect } from './fixtures';
+import { BasePage } from '../pages/BasePage';
+import { CreateAssetPage } from '../pages/CreateAssetPage';
 
 test.describe('Activos - Creación y Registro', () => {
 
   test('Full Path - Create Active', async ({ page }) => {
     // Shared Locators
-    const stepper = page.getByTestId('activesCreateStepper');
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
     const calendarBtn = page.getByRole('button', { name: 'Open calendar' });
     const dateBtn = page.locator('button[aria-current="date"]');
-
+    const createAsset = new CreateAssetPage(page);
     await test.step('Login - Register and Ubication', async () => {
-      await page.goto('/');
-      await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-      await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-      await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-      await page.getByTestId('loginSubmitButton').click();
-      await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-      await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-      await page.getByTestId('loginSubmitButton').click();
-      //start
-      await page.getByRole('button', { name: 'Crear activo' }).click();
-      await expect(page.getByRole('heading', { name: 'Crear activo' })).toBeVisible();
-      await expect(page.getByText('Selección placa')).toBeVisible();
-      //assertion 'Cargando más placas...'
-      await expect(page.getByText('Cargando más placas...')).toBeVisible();
-  
-      // Selects the first option matching the pattern, regardless of the dynamic ID
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-      
-      const plateText = await plateOption.innerText();
+      const basePage = new BasePage(page);
+      await basePage.login('qa', '123456');
+
+      await createAsset.openAndSelectPlate();
+      await createAsset.nextBtn.click();
+
+      const plateText = await createAsset.plateOption.innerText();
       console.log('Plate:', plateText);
 
-      await plateOption.click();
-
-      await nextBtn.click();
       await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
       await expect(page.locator('span').filter({ hasText: /^Ubicación y registro$/ })).toBeVisible();
 
-      await expect(stepper).toContainText('Sub paso 1 de 1');
+      await expect(createAsset.stepper).toContainText('Sub paso 1 de 1');
 
 
       await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
@@ -73,11 +56,11 @@ test.describe('Activos - Creación y Registro', () => {
       await page.getByRole('textbox', { name: 'Descripción' }).fill('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel metus non leo interdum laoreet. Sed ut erat hendrerit, commodo nunc eu, malesuada metus. Mauris ut tellus nec augue bibendum mollis a vel urna.');
 
       // Final verification
-      await expect(nextBtn).toBeEnabled();
+      await expect(createAsset.nextBtn).toBeEnabled();
 
       //All camps filled
-      await expect(stepper).toContainText('Campos13 de 13');
-      await nextBtn.click();
+      await expect(createAsset.stepper).toContainText('Campos13 de 13');
+      await createAsset.nextBtn.click();
       await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
 
@@ -85,8 +68,8 @@ test.describe('Activos - Creación y Registro', () => {
 
     await test.step('Proyecto e infraestructura Sub Step 1-2', async () => {
       //Proyecto e infraestructura Sub Step 1-2
-      await expect(stepper).toContainText('Proyecto e infraestructura');
-      await expect(stepper).toContainText('Sub paso 1 de 2');
+      await expect(createAsset.stepper).toContainText('Proyecto e infraestructura');
+      await expect(createAsset.stepper).toContainText('Sub paso 1 de 2');
 
       await page.getByTestId('activesCreateProyectoProyecto').getByText('Proyecto').click();
 
@@ -107,8 +90,8 @@ test.describe('Activos - Creación y Registro', () => {
       await page.getByRole('textbox', { name: 'Nodo anterior' }).fill('aaa22333aaaaa');
       await page.getByTestId('activesCreateProyectoNodoActual').getByText('Nodo actual').click();
       await page.getByRole('textbox', { name: 'Nodo actual' }).fill('aaa22333aaaaa');
-      await expect(stepper).toContainText('Campos7 de 7');
-      await nextBtn.click();
+      await expect(createAsset.stepper).toContainText('Campos7 de 7');
+      await createAsset.nextBtn.click();
       await page.getByTestId('activesCreateResponsableUsuarioBien').waitFor({ state: 'visible' });
 
     });
@@ -117,8 +100,8 @@ test.describe('Activos - Creación y Registro', () => {
       //Responsible and contracts Sub Step 2-2
 
 
-      await expect(stepper).toContainText('Responsable y contratos');
-      await expect(stepper).toContainText('Sub paso 2 de 2');
+      await expect(createAsset.stepper).toContainText('Responsable y contratos');
+      await expect(createAsset.stepper).toContainText('Sub paso 2 de 2');
 
 
 
@@ -179,8 +162,8 @@ test.describe('Activos - Creación y Registro', () => {
       await page.getByTestId('activesCreateResponsableObservacionEstado').getByText('Observación estado').click();
       await page.getByRole('textbox', { name: 'Observación estado' }).fill('lorem ipsum dolor sit amet');
 
-      await expect(stepper).toContainText('Campos18 de 18');
-      await nextBtn.click();
+      await expect(createAsset.stepper).toContainText('Campos18 de 18');
+      await createAsset.nextBtn.click();
       await page.getByTestId('activesCreateValoracionForm').waitFor({ state: 'visible' });
 
     });
@@ -188,8 +171,8 @@ test.describe('Activos - Creación y Registro', () => {
     await test.step('Financial valuation Step 1-2', async () => {
       // Financial valuation Step 1-2
 
-      await expect(stepper).toContainText('Valoración financiera');
-      await expect(stepper).toContainText('Sub paso 1 de 2');
+      await expect(createAsset.stepper).toContainText('Valoración financiera');
+      await expect(createAsset.stepper).toContainText('Sub paso 1 de 2');
 
 
       await page.getByTestId('activesCreateValoracionForm').click();
@@ -210,8 +193,8 @@ test.describe('Activos - Creación y Registro', () => {
       await page.locator('bds-form-field', { hasText: 'Vida remanente' }).locator('input').fill('22222');
 
 
-      await expect(stepper).toContainText('Campos10 de 10');
-      await nextBtn.click();
+      await expect(createAsset.stepper).toContainText('Campos10 de 10');
+      await createAsset.nextBtn.click();
       await page.getByTestId('activesCreateResponsableMarca').waitFor({ state: 'visible' });
 
 
@@ -247,8 +230,8 @@ test.describe('Activos - Creación y Registro', () => {
       await page.getByTestId('activesCreateResponsableSistemaPuestaTierra').getByText('Existe sistema de puesta a tierra').fill('aaaa3');
 
 
-      await expect(stepper).toContainText('Campos19 de 19');
-      await nextBtn.click();
+      await expect(createAsset.stepper).toContainText('Campos19 de 19');
+      await createAsset.nextBtn.click();
       await page.getByRole('textbox', { name: 'Altura apoyo (m)' }).waitFor({ state: 'visible' });
 
     });
@@ -275,8 +258,8 @@ test.describe('Activos - Creación y Registro', () => {
 
 
 
-      await expect(stepper).toContainText('Campos10 de 10');
-      await nextBtn.click();
+      await expect(createAsset.stepper).toContainText('Campos10 de 10');
+      await createAsset.nextBtn.click();
       await page.getByRole('textbox', { name: 'Nro. fases' }).waitFor({ state: 'visible' });
 
     });
@@ -305,8 +288,8 @@ test.describe('Activos - Creación y Registro', () => {
 
 
 
-      await expect(stepper).toContainText('Campos11 de 11');
-      await nextBtn.click();
+      await expect(createAsset.stepper).toContainText('Campos11 de 11');
+      await createAsset.nextBtn.click();
       await page.getByTestId('activesCreateResponsableAtributosApoyo').waitFor({ state: 'visible' });
 
 
@@ -333,7 +316,7 @@ test.describe('Activos - Creación y Registro', () => {
       await page.getByTestId('activesCreateCodigoFechaInicialPolizasAom').getByRole('button', { name: 'Open calendar' }).click();
       await dateBtn.waitFor({ state: 'visible' });
       await dateBtn.click();
-      await expect(stepper).toContainText('Campos12 de 12');
+      await expect(createAsset.stepper).toContainText('Campos12 de 12');
       await page.getByRole('button', { name: 'Finalizar' }).click();
       await expect(page.getByText('El activo se registró')).toBeVisible();
 

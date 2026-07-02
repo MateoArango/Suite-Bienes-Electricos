@@ -1,26 +1,16 @@
 import { test, expect } from './fixtures';
+import { BasePage } from '../pages/BasePage';
+import { CreateAssetPage } from '../pages/CreateAssetPage';
 
 test.describe('Crear Activo - P0 Strict Input Validation', () => {
 
   test('8. Fotos enforces max length exactly', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
 
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
-
-    await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     const fotosField = page.getByRole('textbox', { name: 'Fotos' });
@@ -42,24 +32,12 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('9. Enlace ARCGIS enforces max length exactly', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
 
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
-
-    await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     const arcgisField = page.getByRole('textbox', { name: 'Enlace ARCGIS' });
@@ -79,24 +57,12 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('10a. Valoración financiera - 5-char fields reject the 6th character', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
 
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
-
-    await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     // Required Location fields to advance
@@ -110,15 +76,15 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
     await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
     await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
     // Proyecto e infraestructura - skip, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableUsuarioBien').waitFor({ state: 'visible' });
 
     // Responsable y contratos - skip, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateValoracionForm').waitFor({ state: 'visible' });
 
     // Valoración financiera - target fields
@@ -135,24 +101,12 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await expect(vidaRemanente).toHaveValue('12345');
   });
   test('10b. Machine features - 5-char fields reject the 6th character', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
 
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
-
-    await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
@@ -165,16 +119,16 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
     await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
     await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableUsuarioBien').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateValoracionForm').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableMarca').waitFor({ state: 'visible' });
 
     // Machine features - target fields
@@ -200,24 +154,13 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('10c. Support and Structure - Altura apoyo rejects the 6th character', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
 
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
 
-    await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
@@ -230,19 +173,19 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
     await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
     await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableUsuarioBien').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateValoracionForm').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableMarca').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByRole('textbox', { name: 'Altura apoyo (m)' }).waitFor({ state: 'visible' });
 
     // Support and Structure - target field
@@ -252,24 +195,13 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('10d. Driver and network - 5-char fields reject the 6th character', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
-
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
 
     await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
@@ -282,22 +214,22 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
     await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
     await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableUsuarioBien').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateValoracionForm').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableMarca').waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByRole('textbox', { name: 'Altura apoyo (m)' }).waitFor({ state: 'visible' });
 
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByRole('textbox', { name: 'Nro. fases' }).waitFor({ state: 'visible' });
 
     // Driver and network - target fields
@@ -327,24 +259,13 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('11. Masked fields ignore invalid characters', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
 
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
 
-    await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     // Required fields to advance through Location step
@@ -358,11 +279,11 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
     await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
     await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
     // Proyecto e infraestructura - skip, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableUsuarioBien').waitFor({ state: 'visible' });
 
     // NIT/C.C. USUARIO: assumes numeric-only mask
@@ -384,55 +305,44 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
 
-    test('12. Fotos enforces max length via typing and paste', async ({ page, context }) => {
-      const nextBtn = page.getByRole('button', { name: 'Siguiente' });
-      
-      await page.goto('/');
-      await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-      await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-      await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-      await page.getByTestId('loginSubmitButton').click();
-      await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-      await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-      await page.getByTestId('loginSubmitButton').click();
-  
-      await page.getByRole('button', { name: 'Crear activo' }).click();
-      await expect(page.getByText('Selección placa')).toBeVisible();
-      await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-      await nextBtn.click();
-      await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
-  
-      const fotosField = page.getByRole('textbox', { name: 'Fotos' });
-      await page.getByTestId('activesCreateUbicacionEnlaceFotos').getByText('Fotos').click();
-  
-      const MAX_LENGTH = 200;
-  
-      // Path 1: fill() — truncated at MAX_LENGTH, extra chars are rejected
-      await fotosField.fill('a'.repeat(MAX_LENGTH + 10));
-      let result = await fotosField.inputValue();
-      expect(result.length).toBe(MAX_LENGTH);
-      expect(result).not.toContain('a'.repeat(MAX_LENGTH + 1)); // extra char absent
-  
-      // Path 2: real keyboard typing — browser enforces limit key-by-key
-      await fotosField.fill('');
-      await fotosField.pressSequentially('b'.repeat(MAX_LENGTH + 10), { delay: 1 });
-      result = await fotosField.inputValue();
-      expect(result.length).toBe(MAX_LENGTH);
-  
-      // Path 3: clipboard paste — limit holds even for pasted content
-      await fotosField.fill('');
-      await page.evaluate(async (text: string) => {
-        await navigator.clipboard.writeText(text);
-      }, 'c'.repeat(MAX_LENGTH + 10));
-      await fotosField.click();
-      await page.keyboard.press('Control+A');
-      await page.keyboard.press('Control+V');
-      result = await fotosField.inputValue();
-      expect(result.length).toBe(MAX_LENGTH);
-    });
-  
+  test('12. Fotos enforces max length via typing and paste', async ({ page, context }) => {
+
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
+
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
+    await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
+
+    const fotosField = page.getByRole('textbox', { name: 'Fotos' });
+    await page.getByTestId('activesCreateUbicacionEnlaceFotos').getByText('Fotos').click();
+
+    const MAX_LENGTH = 200;
+
+    // Path 1: fill() — truncated at MAX_LENGTH, extra chars are rejected
+    await fotosField.fill('a'.repeat(MAX_LENGTH + 10));
+    let result = await fotosField.inputValue();
+    expect(result.length).toBe(MAX_LENGTH);
+    expect(result).not.toContain('a'.repeat(MAX_LENGTH + 1)); // extra char absent
+
+    // Path 2: real keyboard typing — browser enforces limit key-by-key
+    await fotosField.fill('');
+    await fotosField.pressSequentially('b'.repeat(MAX_LENGTH + 10), { delay: 1 });
+    result = await fotosField.inputValue();
+    expect(result.length).toBe(MAX_LENGTH);
+
+    // Path 3: clipboard paste — limit holds even for pasted content
+    await fotosField.fill('');
+    await page.evaluate(async (text: string) => {
+      await navigator.clipboard.writeText(text);
+    }, 'c'.repeat(MAX_LENGTH + 10));
+    await fotosField.click();
+    await page.keyboard.press('Control+A');
+    await page.keyboard.press('Control+V');
+    result = await fotosField.inputValue();
+    expect(result.length).toBe(MAX_LENGTH);
+  });
+
 
 });

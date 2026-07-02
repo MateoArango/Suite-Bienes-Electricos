@@ -1,26 +1,15 @@
 import { test, expect } from './fixtures';
-
+import { BasePage } from '../pages/BasePage';
+import { CreateAssetPage } from '../pages/CreateAssetPage';
 test.describe('Crear Activo - P2 Robustness / UX', () => {
 
   test('23. Changing Departamento resets Municipio', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
 
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
-
-    await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     // Select Departamento + Municipio
@@ -42,7 +31,7 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
     await expect(page.getByRole('combobox', { name: 'Municipio' })).not.toContainText('GALAPA');
 
     // Siguiente should block again since Municipio now requires re-selection
-    await expect(nextBtn).toBeDisabled();
+    await expect(createAsset.nextBtn).toBeDisabled();
 
     // Re-selecting a valid Municipio for the new Departamento should unblock
     await page.getByRole('combobox', { name: 'Municipio' }).click();
@@ -52,25 +41,13 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
   });
 
   test('25. Optional long-text fields: empty does not block, overflow is capped', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
-    const endBtn = page.getByRole('button', { name: 'Finalizar' });
 
-    await page.goto('/');
-    await page.getByTestId('loginUserFieldContainer').getByText('Usuario').click();
-    await page.getByRole('textbox', { name: 'Usuario' }).fill('qa');
-    await page.getByRole('textbox', { name: 'Usuario' }).press('Enter');
-    await page.getByTestId('loginSubmitButton').click();
-    await page.getByTestId('loginPasswordFieldContainer').getByText('Contraseña').click();
-    await page.getByRole('textbox', { name: 'Contraseña' }).fill('123456');
-    await page.getByTestId('loginSubmitButton').click();
+    const basePage = new BasePage(page);
+    await basePage.login('qa', '123456');
 
-    await page.getByRole('button', { name: 'Crear activo' }).click();
-    await expect(page.getByText('Selección placa')).toBeVisible();
-    await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
-      await plateOption.click();
-    await nextBtn.click();
+    const createAsset = new CreateAssetPage(page);
+    await createAsset.openAndSelectPlate();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     // Fill only the 4 required Location fields
@@ -86,7 +63,7 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
     await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
 
     // --- Descripción: empty should not block advancing ---
-    await expect(nextBtn).toBeEnabled();
+    await expect(createAsset.nextBtn).toBeEnabled();
 
     // Overflow check on Descripción before moving on
     const descripcion = page.getByRole('textbox', { name: 'Descripción' });
@@ -98,32 +75,32 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
 
     // Clear it back to empty and confirm Siguiente is still enabled (optional field)
     await descripcion.fill('');
-    await expect(nextBtn).toBeEnabled();
-    await nextBtn.click();
+    await expect(createAsset.nextBtn).toBeEnabled();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
     // Proyecto e infraestructura - skip, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableUsuarioBien').waitFor({ state: 'visible' });
 
     // Responsable y contratos - skip, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateValoracionForm').waitFor({ state: 'visible' });
 
     // Valoración financiera - skip, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableMarca').waitFor({ state: 'visible' });
 
     // Machine features - skip, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByRole('textbox', { name: 'Altura apoyo (m)' }).waitFor({ state: 'visible' });
 
     // Support and Structure - skip, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByRole('textbox', { name: 'Nro. fases' }).waitFor({ state: 'visible' });
 
     // --- Atributos de la red: empty should not block, overflow should be capped ---
-    await expect(nextBtn).toBeEnabled();
+    await expect(createAsset.nextBtn).toBeEnabled();
 
     const atributosRed = page.getByTestId('activesCreateResponsableAtributosRed').getByText('Atributos de la red');
     const atributosRedInput = page.getByTestId('activesCreateResponsableAtributosRed').locator('input');
@@ -134,12 +111,12 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
     expect(atributosRedValue.length).toBeGreaterThan(0);
 
     await atributosRedInput.fill('');
-    await expect(nextBtn).toBeEnabled();
-    await nextBtn.click();
+    await expect(createAsset.nextBtn).toBeEnabled();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableAtributosApoyo').waitFor({ state: 'visible' });
 
     // --- Atributos apoyo: empty should not block, overflow should be capped ---
-    await expect(endBtn).toBeEnabled();
+    await expect(createAsset.endBtn).toBeEnabled();
 
     const atributosApoyo = page.getByTestId('activesCreateResponsableAtributosApoyo').locator('input');
     await atributosApoyo.fill('x'.repeat(2000));
@@ -148,7 +125,7 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
     expect(atributosApoyoValue.length).toBeGreaterThan(0);
 
     await atributosApoyo.fill('');
-    await expect(endBtn).toBeEnabled();
+    await expect(createAsset.endBtn).toBeEnabled();
   });
 
 });
