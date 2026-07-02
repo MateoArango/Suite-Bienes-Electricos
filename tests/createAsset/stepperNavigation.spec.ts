@@ -18,10 +18,9 @@ test.describe('Crear Activo - P1 Stepper Navigation', () => {
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
-
-    const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-    await plateOption.click();
+      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+      await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
@@ -45,10 +44,9 @@ test('16. Field counter tracks all filled fields independently from required val
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
-
-    const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-    await plateOption.click();
+      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+      await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
@@ -106,10 +104,9 @@ test('17. User can navigate back without losing Location values', async ({ page 
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
- 
-    const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-    await plateOption.click();
+       const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+      await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
  
@@ -154,10 +151,9 @@ test('18. Siguiente blocks and unblocks correctly on back navigation', async ({ 
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
- 
-    const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-    await plateOption.click();
+      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+      await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
  

@@ -17,10 +17,9 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
-
-    const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-    await plateOption.click();
+      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+      await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
@@ -68,10 +67,9 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
-
-    const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-    await plateOption.click();
+      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+      await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 

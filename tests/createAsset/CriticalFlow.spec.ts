@@ -34,9 +34,9 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await expect(page.getByRole('heading', { name: 'Crear activo' })).toBeVisible();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
 
     const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+    await plateOption.waitFor({ state: 'visible', timeout: 30000 });
     await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
@@ -99,7 +99,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     
   });
 
-  test('2. Cannot create asset without selecting Plate', async ({ page }) => {
+  test('2. Cannot create an Asset without selecting Plate', async ({ page }) => {
     const stepper = page.getByTestId('activesCreateStepper');
     const nextBtn = page.getByRole('button', { name: 'Siguiente' });
 
@@ -116,7 +116,10 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await expect(page.getByRole('heading', { name: 'Crear activo' })).toBeVisible();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
+    const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+    await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+
+
 
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
@@ -193,9 +196,9 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
 
     const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+    await plateOption.waitFor({ state: 'visible', timeout: 30000 });
     await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
@@ -228,9 +231,8 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
-
     const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+    await plateOption.waitFor({ state: 'visible', timeout: 30000 });
     await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
@@ -264,9 +266,8 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
-
     const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+    await plateOption.waitFor({ state: 'visible', timeout: 30000 });
     await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
@@ -300,9 +301,8 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
-
     const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+    await plateOption.waitFor({ state: 'visible', timeout: 30000 });
     await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
@@ -336,10 +336,9 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await page.getByRole('button', { name: 'Crear activo' }).click();
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
-    await page.waitForTimeout(20000);
-
-    const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-    await plateOption.click();
+      const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
+      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+      await plateOption.click();
     await nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 

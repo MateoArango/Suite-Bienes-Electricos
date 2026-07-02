@@ -24,10 +24,12 @@ test.describe('Activos - Creación y Registro', () => {
       await expect(page.getByText('Selección placa')).toBeVisible();
       //assertion 'Cargando más placas...'
       await expect(page.getByText('Cargando más placas...')).toBeVisible();
-      await page.waitForTimeout(20000);
+  
       // Selects the first option matching the pattern, regardless of the dynamic ID
       const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-
+      await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+      await plateOption.click();
+      
       const plateText = await plateOption.innerText();
       console.log('Plate:', plateText);
 
