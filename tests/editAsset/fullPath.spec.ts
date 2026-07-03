@@ -1,9 +1,12 @@
 import { test, expect } from '../createAsset/fixtures';
+import { BasePage } from '../pages/BasePage';
 
 test('Editar Activo - P0 Full Path', async ({ page }) => {
     //UBICATION AND REGISTER
-    await page.goto('https://bieneselectricos-qa.adacsc.co/detalle/00000196');
-    await page.pause();
+    const base = new BasePage(page);
+    await base.login('qa', '123456');
+    await expect(page).toHaveURL(/dashboard/);
+    await page.goto('/dashboard/bienelectrico/detalle/00000196');
     //ubication
     await page.getByTestId('activesDetailEdit').click();
     await expect(page.getByRole('button', { name: 'Ubicación Datos geográficos' })).toBeVisible();
