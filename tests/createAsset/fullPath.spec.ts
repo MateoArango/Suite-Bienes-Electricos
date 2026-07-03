@@ -26,12 +26,7 @@ test.describe('Activos - Creación y Registro', () => {
       await expect(createAsset.stepper).toContainText('Sub paso 1 de 1');
 
 
-      await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
-      await page.locator('mat-option', { hasText: '-ATLÁNTICO' }).waitFor({ state: 'visible' });
-      await page.getByRole('option', { name: '-ATLÁNTICO' }).click();
-      await page.getByTestId('activesCreateMunicipio').getByText('Municipio').click();
-      await page.locator('mat-option', { hasText: '-GALAPA' }).waitFor({ state: 'visible' });
-      await page.getByRole('option', { name: '-GALAPA' }).click();
+      await createAsset.fillRequiredLocationFields();
       await page.getByTestId('activesCreateUbicacionContainer').getByText('Localidad').click();
       await page.getByRole('textbox', { name: 'Localidad' }).fill('loremIpsumdolorSitAmet3123123');
       await page.getByTestId('activesCreateUbicacionVereda').getByText('Vereda').click();
@@ -43,10 +38,6 @@ test.describe('Activos - Creación y Registro', () => {
       await page.getByRole('textbox', { name: 'Latitud' }).fill('12222222222222222222223,33.A-A');
       await page.getByTestId('activesCreateUbicacionLongitud').getByText('Longitud').click();
       await page.getByRole('textbox', { name: 'Longitud' }).fill('12222222222222222222223,33.A-A');
-      await page.getByTestId('activesCreateUbicacionEnlaceFotos').getByText('Fotos').click();
-      await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com11111111111111111111111111112222222222222222222222222222222222222222233333333333333333333333333333333333333333asd11111111111111111111111111111111111222222222222222222222222222222222222222teot');
-      await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
-      await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com11111111111111111111111111112222222222222222222222222222222222222222233333333333333333333333333333333333333333asd11111111111111111111111111111111111222222222222222222222222222222222222222teo');
       await page.getByTestId('activesCreateUbicacionCarpetaAltitud').getByText('Carpeta altitud').click();
       await page.getByRole('textbox', { name: 'Carpeta altitud' }).fill('https://www.google.com11111111111111111111111111112222222222222222222222222222222222222222233333333333333333333333333333333333333333asd11111111111111111111111111111111111222222222222222222222222222222222222222teo');
       await page.getByTestId('activesCreateUbicacionNombrePlantilla').getByText('Nombre planilla').click();

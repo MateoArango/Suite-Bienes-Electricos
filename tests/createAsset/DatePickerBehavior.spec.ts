@@ -14,16 +14,7 @@ test.describe('Crear Activo - P1 Date Picker Behavior', () => {
     await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
-    await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
-    await page.locator('mat-option', { hasText: '-ATLÁNTICO' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-ATLÁNTICO' }).click();
-    await page.getByTestId('activesCreateMunicipio').getByText('Municipio').click();
-    await page.locator('mat-option', { hasText: '-GALAPA' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-GALAPA' }).click();
-    await page.getByTestId('activesCreateUbicacionEnlaceFotos').getByText('Fotos').click();
-    await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
-    await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
-    await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
+    await createAsset.fillRequiredLocationFields();
     await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
@@ -68,16 +59,7 @@ test.describe('Crear Activo - P1 Date Picker Behavior', () => {
     await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
-    await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
-    await page.locator('mat-option', { hasText: '-ATLÁNTICO' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-ATLÁNTICO' }).click();
-    await page.getByTestId('activesCreateMunicipio').getByText('Municipio').click();
-    await page.locator('mat-option', { hasText: '-GALAPA' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-GALAPA' }).click();
-    await page.getByTestId('activesCreateUbicacionEnlaceFotos').getByText('Fotos').click();
-    await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
-    await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
-    await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
+    await createAsset.fillRequiredLocationFields();
     await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 

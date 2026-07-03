@@ -39,19 +39,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await expect(createAsset.stepper).toContainText('Sub paso 1 de 1');
 
     // Only required Location fields
-    await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
-    await page.locator('mat-option', { hasText: '-ATLÁNTICO' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-ATLÁNTICO' }).click();
-
-    await page.getByTestId('activesCreateMunicipio').getByText('Municipio').click();
-    await page.locator('mat-option', { hasText: '-GALAPA' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-GALAPA' }).click();
-    await page.getByTestId('activesCreateUbicacionEnlaceFotos').getByText('Fotos').click();
-    await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
-
-    await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
-    await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
-
+    await createAsset.fillRequiredLocationFields();
     // Localidad, Vereda, Tipo de zona, Latitud, Longitud, Carpeta altitud,
     // Nombre planilla, Descripción left empty - not required
 
@@ -94,9 +82,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
   });
 
   test('2. Cannot create an Asset without selecting Plate', async ({ page }) => {
-    const stepper = page.getByTestId('activesCreateStepper');
-    const nextBtn = page.getByRole('button', { name: 'Siguiente' });
-
+    const createAsset = new CreateAssetPage(page);
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -107,73 +93,58 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
     await plateOption.waitFor({ state: 'visible', timeout: 30000 });
 
-
-
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
     await expect(page.locator('span').filter({ hasText: /^Ubicación y registro$/ })).toBeVisible();
-    await expect(stepper).toContainText('Sub paso 1 de 1');
+    await expect(createAsset.stepper).toContainText('Sub paso 1 de 1');
 
     // Only required Location fields
-    await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
-    await page.locator('mat-option', { hasText: '-ATLÁNTICO' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-ATLÁNTICO' }).click();
-
-    await page.getByTestId('activesCreateMunicipio').getByText('Municipio').click();
-    await page.locator('mat-option', { hasText: '-GALAPA' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-GALAPA' }).click();
-
-    await page.getByTestId('activesCreateUbicacionEnlaceFotos').getByText('Fotos').click();
-    await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
-
-    await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
-    await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
-
+    await createAsset.fillRequiredLocationFields();
     // Localidad, Vereda, Tipo de zona, Latitud, Longitud, Carpeta altitud,
     // Nombre planilla, Descripción left empty - not required
 
-    await expect(nextBtn).toBeEnabled();
-    await nextBtn.click();
+    await expect(createAsset.nextBtn).toBeEnabled();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateProyectoProyecto').waitFor({ state: 'visible' });
 
     // Proyecto e infraestructura - not necessary to create the active, just advance
-    await expect(stepper).toContainText('Proyecto e infraestructura');
-    await nextBtn.click();
+    await expect(createAsset.stepper).toContainText('Proyecto e infraestructura');
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableUsuarioBien').waitFor({ state: 'visible' });
 
     // Responsable y contratos - not necessary, just advance
-    await expect(stepper).toContainText('Responsable y contratos');
-    await nextBtn.click();
+    await expect(createAsset.stepper).toContainText('Responsable y contratos');
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateValoracionForm').waitFor({ state: 'visible' });
 
     // Valoración financiera - not necessary, just advance
-    await expect(stepper).toContainText('Valoración financiera');
-    await nextBtn.click();
+    await expect(createAsset.stepper).toContainText('Valoración financiera');
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableMarca').waitFor({ state: 'visible' });
 
     // Machine features - not necessary, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByRole('textbox', { name: 'Altura apoyo (m)' }).waitFor({ state: 'visible' });
 
     // Support and Structure - not necessary, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByRole('textbox', { name: 'Nro. fases' }).waitFor({ state: 'visible' });
 
     // Driver and network - not necessary, just advance
-    await nextBtn.click();
+    await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateResponsableAtributosApoyo').waitFor({ state: 'visible' });
 
     // CREG code and others - not necessary, just finalize
-    await page.getByRole('button', { name: 'Finalizar' }).click();
+    await createAsset.endBtn.click();
     await expect(page.getByText('Seleccione una placa para crear el activo.')).toBeVisible();
   });
 
   test('3. Cannot continue Location step without Departamento', async ({ page }) => {
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
-
     const createAsset = new CreateAssetPage(page);
+
     await createAsset.openAndSelectPlate();
     await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
@@ -272,16 +243,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
 
-    await page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
-    await page.locator('mat-option', { hasText: '-ATLÁNTICO' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-ATLÁNTICO' }).click();
-    await page.getByTestId('activesCreateMunicipio').getByText('Municipio').click();
-    await page.locator('mat-option', { hasText: '-GALAPA' }).waitFor({ state: 'visible' });
-    await page.getByRole('option', { name: '-GALAPA' }).click();
-    await page.getByTestId('activesCreateUbicacionEnlaceFotos').getByText('Fotos').click();
-    await page.getByRole('textbox', { name: 'Fotos' }).fill('https://www.google.com/fotos-test');
-    await page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
-    await page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
+    await createAsset.fillRequiredLocationFields();
 
     // Localidad, Vereda, Tipo de zona, Latitud, Longitud, Carpeta altitud,
     // Nombre planilla, Descripción intentionally left empty
