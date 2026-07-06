@@ -4,8 +4,12 @@ import { EditAssetPage } from '../pages/editAssetPage';
 
 test('Editar Activo - P0 Full Path', async ({ page }) => {
     const basePage = new BasePage(page);
-    await basePage.login('qa', '123456');
+    const saveBtn = page.getByTestId('activesDetailSave');
+    const deleteBtn = page.getByTestId('activesDetailDelete');
+    const descriptionBtn = page.getByTestId('activesDetailDescription');
     const editAsset = new EditAssetPage(page);
+
+    await basePage.login('qa', '123456');
 
     //UBICATION AND REGISTER
     await expect(page).toHaveURL(/dashboard/);
@@ -212,10 +216,11 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
         .click();
     await editAsset.selectAvailableCalendarDate();
 
-    /*  //btns
-     await page.getByTestId('activesDetailCancel').click();
-     await page.getByTestId('activesDetailSave').click();
-     await page.getByTestId('activesDetailDelete').click(); 
-    await page.getByTestId('activesDetailDescription').click();
-*/
+    //btns
+    // await page.getByTestId('activesDetailCancel').click();
+    await saveBtn.click();
+    await expect(page.getByText('Cambios guardados correctamente')).toBeVisible();
+
+
+
 });

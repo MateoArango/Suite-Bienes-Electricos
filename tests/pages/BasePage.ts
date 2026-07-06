@@ -13,7 +13,12 @@ export class BasePage {
     await this.page.getByRole('textbox', { name: 'Contraseña' }).fill(password);
     await this.page.getByTestId('loginSubmitButton').click();
   }
-  
+
+
+  /* This helper was created because the calendar lost the date´s day
+  attribute when a field comes with a value, it always selects the medium available date in the calendar and
+  also it allows adding an index to select another specific date.
+  */
   async selectAvailableCalendarDate(index?: number) {
     const calendar = this.page.locator('.mat-calendar-body');
     await calendar.waitFor({ state: 'visible' });
