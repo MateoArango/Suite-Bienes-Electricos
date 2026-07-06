@@ -9,7 +9,7 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
 
     //UBICATION AND REGISTER
     await expect(page).toHaveURL(/dashboard/);
-    await page.goto('/dashboard/bienelectrico/detalle/00000077'); //196 - 198 - 077
+    await page.goto('/dashboard/bienelectrico/detalle/00000198'); //196 - 198 - 077
     //ubication
     await page.getByTestId('activesDetailEdit').click();
     await expect(page.getByRole('button', { name: 'Ubicación Datos geográficos' })).toBeVisible();
@@ -54,7 +54,6 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
 
     await page.getByRole('button', { name: 'Responsable y contratos' }).click();
     await page.getByTestId('activesDetailResponsableUsuarioBien').fill('INSTITUTO DE LANIFICACION');
-    await page.getByTestId('activesDetailResponsableNitCcUsuario').click();
     await page.getByTestId('activesDetailResponsableNitCcUsuario').fill('89999904');
     await page.getByTestId('activesDetailResponsableMemorando').fill('Memorando');
     await page.getByTestId('activesDetailResponsableContratoIpse').fill('71541997');
@@ -73,8 +72,6 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
         .click();
 
     await editAsset.selectAvailableCalendarDate();
-
-
 
 
     await page.getByTestId('activesDetailResponsableNumeroContactoOperadorAom').fill('123456789');
@@ -179,6 +176,7 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     await page.getByTestId('activesDetailConductorFtoConductor').fill('123456789');
     await page.getByText('Estado conductor').click();
     await page.getByRole('option', { name: 'Regular' }).click();
+    await page.getByTestId('activesDetailConductorCableGuardaKm').fill('12ada6789');
     await page.getByTestId('activesDetailConductorPuestaTierra').fill('123456789');
     await page.getByTestId('activesDetailConductorTempletes').fill('123456789');
     await page.getByTestId('activesDetailConductorCantConductorKm').fill('123456789');
@@ -217,7 +215,7 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     /*  //btns
      await page.getByTestId('activesDetailCancel').click();
      await page.getByTestId('activesDetailSave').click();
-     await page.getByTestId('activesDetailDelete').click(); */
-    await page.getByTestId('activesDetailDescription').fill('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel metus non leo interdum laoreet. Sed ut erat hendrerit, commodo nunc eu, malesuada metus. Mauris ut tellus nec augue bibendum mollis a vel urna.');
-
+     await page.getByTestId('activesDetailDelete').click(); 
+    await page.getByTestId('activesDetailDescription').click();
+*/
 });
