@@ -8,7 +8,7 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
 
     //UBICATION AND REGISTER
     await expect(page).toHaveURL(/dashboard/);
-    await page.goto('/dashboard/bienelectrico/detalle/00000078');
+    await page.goto('/dashboard/bienelectrico/detalle/00000078'); //196
     //ubication
     await page.getByTestId('activesDetailEdit').click();
     await expect(page.getByRole('button', { name: 'Ubicación Datos geográficos' })).toBeVisible();
