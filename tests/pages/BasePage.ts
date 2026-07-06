@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 
 export class BasePage {
-  constructor(protected page: Page) {}
+  constructor(protected page: Page) { }
 
   async login(username: string, password: string) {
     await this.page.goto('/');
@@ -13,4 +13,22 @@ export class BasePage {
     await this.page.getByRole('textbox', { name: 'Contraseña' }).fill(password);
     await this.page.getByTestId('loginSubmitButton').click();
   }
+  
+  async selectAvailableCalendarDate(index?: number) {
+    const calendar = this.page.locator('.mat-calendar-body');
+    await calendar.waitFor({ state: 'visible' });
+
+    const enabledCells = this.page.locator(
+      '.mat-calendar-body-cell:not(.mat-calendar-body-disabled)'
+    );
+
+    const count = await enabledCells.count();
+    if (count === 0) {
+      throw new Error('No enabled dates found in calendar view');
+    }
+
+    const targetIndex = index ?? Math.floor(count / 2);
+    await enabledCells.nth(targetIndex).click();
+  }
+
 }

@@ -1,14 +1,15 @@
 import { test, expect } from '../createAsset/fixtures';
 import { BasePage } from '../pages/BasePage';
+import { EditAssetPage } from '../pages/editAssetPage';
 
 test('Editar Activo - P0 Full Path', async ({ page }) => {
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
-    const dateBtn = page.locator('button[aria-current="date"]');
+    const editAsset = new EditAssetPage(page);
 
     //UBICATION AND REGISTER
     await expect(page).toHaveURL(/dashboard/);
-    await page.goto('/dashboard/bienelectrico/detalle/00000076'); //196 - 198 - 076
+    await page.goto('/dashboard/bienelectrico/detalle/00000077'); //196 - 198 - 077
     //ubication
     await page.getByTestId('activesDetailEdit').click();
     await expect(page.getByRole('button', { name: 'Ubicación Datos geográficos' })).toBeVisible();
@@ -62,43 +63,19 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     await page.getByTestId('activesDetailResponsableNumeroContratoOperadorAom').fill('2222222');
     await page.getByTestId('activesDetailResponsableVigenciaContratoAom').fill('2022-01-01');
 
-    /* await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
+
+
+
+
+    await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
         .locator('xpath=ancestor::bds-datepicker')
         .getByRole('button', { name: 'Open calendar' })
         .click();
 
+    await editAsset.selectAvailableCalendarDate();
 
 
 
-    const datepicker = page
-        .getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
-        .locator('xpath=ancestor::bds-datepicker');
-
-    await datepicker.getByRole('button', { name: 'Open calendar' }).click();
-
-    const calendar = page.getByRole('dialog');
-
-    if (await calendar.locator('button[aria-current="date"]').count()) {
-        await calendar.locator('button[aria-current="date"]').click();
-    } else if (await calendar.locator('button[aria-pressed="true"]').count()) {
-        await calendar.locator('button[aria-pressed="true"]').click();
-    } else {
-        await calendar.locator('.mat-calendar-body-cell button:not([disabled])').first().click();
-    }
-
-
-
-
-
-
-
-
-
-
-
- */
-    /* await dateBtn.waitFor({ state: 'visible' });
-    await dateBtn.click(); */
 
     await page.getByTestId('activesDetailResponsableNumeroContactoOperadorAom').fill('123456789');
     await page.getByTestId('activesDetailResponsableEmailOperadorAom').fill('correo@correo.com');
@@ -107,23 +84,21 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     await page.getByTestId('activesDetailResponsableNumeroPolizasObra').fill('123456789');
 
 
- /*    await page.getByTestId('activesDetailResponsableFechaInicialPolizasObra')
+    await page.getByTestId('activesDetailResponsableFechaInicialPolizasObra')
         .locator('xpath=ancestor::bds-datepicker')
         .getByRole('button', { name: 'Open calendar' })
         .click();
 
-    await dateBtn.waitFor({ state: 'visible' });
-    await dateBtn.click();
 
+    await editAsset.selectAvailableCalendarDate();
 
     await page.getByTestId('activesDetailResponsableFechaFinalPolizasObra')
         .locator('xpath=ancestor::bds-datepicker')
         .getByRole('button', { name: 'Open calendar' })
         .click();
 
-    await dateBtn.waitFor({ state: 'visible' });
-    await dateBtn.click();
- */
+    await editAsset.selectAvailableCalendarDate();
+
     await page.getByTestId('activesDetailResponsableTipoPolizaObra').fill('123456789');
     await page.getByTestId('activesDetailResponsableObservacionEstado').fill('123456789');
 
@@ -164,14 +139,13 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     await page.getByTestId('activesDetailCaracteristicasLocalidadLev').fill('123456789');
     await page.getByTestId('activesDetailCaracteristicasCodigoCregGeneral').fill('123456789');
 
-/* 
+
     await page.getByTestId('activesDetailCaracteristicasFechaLevantamiento')
         .locator('xpath=ancestor::bds-datepicker')
         .getByRole('button', { name: 'Open calendar' })
         .click();
 
-    await dateBtn.waitFor({ state: 'visible' });
-    await dateBtn.click(); */
+    await editAsset.selectAvailableCalendarDate();
     await page.getByTestId('activesDetailCaracteristicasPcbs').click();
     await page.getByRole('option', { name: 'No libre de PCB' }).click();
     await page.getByTestId('activesDetailCaracteristicasTipoAislamiento').fill('123456789');
@@ -224,22 +198,26 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     await page.getByTestId('activesDetailCodigoValorCregConductor').fill('123456789');
 
 
-/*     await page.getByTestId('activesDetailCodigoFechaFinalPolizasAom')
+    await page.getByTestId('activesDetailCodigoFechaFinalPolizasAom')
         .locator('xpath=ancestor::bds-datepicker')
         .getByRole('button', { name: 'Open calendar' })
         .click();
 
-    await dateBtn.waitFor({ state: 'visible' });
-    await dateBtn.click();
- */
+    await editAsset.selectAvailableCalendarDate();
+
     await page.getByTestId('activesDetailCodigoNumeroPolizasAom').fill('123456789');
 
-/*     await page.getByTestId('activesDetailCodigoFechaInicialPolizasAom')//date
-    await page.getByTestId('activesDetailCodigoContainer').getByText('Fecha inicial de pólizas de').fill('2022-01-01');
- */
-    //btns
-    await page.getByTestId('activesDetailCancel').click();
-    await page.getByTestId('activesDetailSave').click();
-    await page.getByTestId('activesDetailDelete').click();
+
+    await page.getByTestId('activesDetailCodigoFechaInicialPolizasAom')
+        .locator('xpath=ancestor::bds-datepicker')
+        .getByRole('button', { name: 'Open calendar' })
+        .click();
+    await editAsset.selectAvailableCalendarDate();
+
+    /*  //btns
+     await page.getByTestId('activesDetailCancel').click();
+     await page.getByTestId('activesDetailSave').click();
+     await page.getByTestId('activesDetailDelete').click(); */
     await page.getByTestId('activesDetailDescription').fill('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel metus non leo interdum laoreet. Sed ut erat hendrerit, commodo nunc eu, malesuada metus. Mauris ut tellus nec augue bibendum mollis a vel urna.');
+
 });
