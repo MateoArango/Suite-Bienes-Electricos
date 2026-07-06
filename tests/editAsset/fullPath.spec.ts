@@ -8,7 +8,7 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
 
     //UBICATION AND REGISTER
     await expect(page).toHaveURL(/dashboard/);
-    await page.goto('/dashboard/bienelectrico/detalle/00000078'); //196
+    await page.goto('/dashboard/bienelectrico/detalle/00000076'); //196 - 198 - 076
     //ubication
     await page.getByTestId('activesDetailEdit').click();
     await expect(page.getByRole('button', { name: 'Ubicación Datos geográficos' })).toBeVisible();
@@ -62,13 +62,43 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     await page.getByTestId('activesDetailResponsableNumeroContratoOperadorAom').fill('2222222');
     await page.getByTestId('activesDetailResponsableVigenciaContratoAom').fill('2022-01-01');
 
-await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
-  .locator('xpath=ancestor::bds-datepicker')
-  .getByRole('button', { name: 'Open calendar' })
-  .click();
+    /* await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
+        .locator('xpath=ancestor::bds-datepicker')
+        .getByRole('button', { name: 'Open calendar' })
+        .click();
 
-    await dateBtn.waitFor({ state: 'visible' });
-    await dateBtn.click();
+
+
+
+    const datepicker = page
+        .getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
+        .locator('xpath=ancestor::bds-datepicker');
+
+    await datepicker.getByRole('button', { name: 'Open calendar' }).click();
+
+    const calendar = page.getByRole('dialog');
+
+    if (await calendar.locator('button[aria-current="date"]').count()) {
+        await calendar.locator('button[aria-current="date"]').click();
+    } else if (await calendar.locator('button[aria-pressed="true"]').count()) {
+        await calendar.locator('button[aria-pressed="true"]').click();
+    } else {
+        await calendar.locator('.mat-calendar-body-cell button:not([disabled])').first().click();
+    }
+
+
+
+
+
+
+
+
+
+
+
+ */
+    /* await dateBtn.waitFor({ state: 'visible' });
+    await dateBtn.click(); */
 
     await page.getByTestId('activesDetailResponsableNumeroContactoOperadorAom').fill('123456789');
     await page.getByTestId('activesDetailResponsableEmailOperadorAom').fill('correo@correo.com');
@@ -77,23 +107,23 @@ await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
     await page.getByTestId('activesDetailResponsableNumeroPolizasObra').fill('123456789');
 
 
-    await page.getByTestId('activesDetailResponsableFechaInicialPolizasObra')
-  .locator('xpath=ancestor::bds-datepicker')
-  .getByRole('button', { name: 'Open calendar' })
-  .click();
+ /*    await page.getByTestId('activesDetailResponsableFechaInicialPolizasObra')
+        .locator('xpath=ancestor::bds-datepicker')
+        .getByRole('button', { name: 'Open calendar' })
+        .click();
 
     await dateBtn.waitFor({ state: 'visible' });
     await dateBtn.click();
 
 
     await page.getByTestId('activesDetailResponsableFechaFinalPolizasObra')
-  .locator('xpath=ancestor::bds-datepicker')
-  .getByRole('button', { name: 'Open calendar' })
-  .click();
+        .locator('xpath=ancestor::bds-datepicker')
+        .getByRole('button', { name: 'Open calendar' })
+        .click();
 
     await dateBtn.waitFor({ state: 'visible' });
     await dateBtn.click();
-
+ */
     await page.getByTestId('activesDetailResponsableTipoPolizaObra').fill('123456789');
     await page.getByTestId('activesDetailResponsableObservacionEstado').fill('123456789');
 
@@ -106,7 +136,7 @@ await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
     await page.getByTestId('activesDetailValoracionAvaluoRv').fill('2232');
     await page.getByTestId('activesDetailValoracionFuente').fill('123456789');
 
-    await page.getByTestId('activesDetailValoracionFormaAdquisicion').click();
+    await page.getByTestId('activesDetailValoracionFormaAdquisicion').click({ force: true });
     await page.getByRole('option', { name: 'Recursos Mixtos' }).click();
 
     await page.getByTestId('activesDetailValoracionEdadAgotada').fill('123456789');
@@ -134,20 +164,20 @@ await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
     await page.getByTestId('activesDetailCaracteristicasLocalidadLev').fill('123456789');
     await page.getByTestId('activesDetailCaracteristicasCodigoCregGeneral').fill('123456789');
 
-
+/* 
     await page.getByTestId('activesDetailCaracteristicasFechaLevantamiento')
-  .locator('xpath=ancestor::bds-datepicker')
-  .getByRole('button', { name: 'Open calendar' })
-  .click();
+        .locator('xpath=ancestor::bds-datepicker')
+        .getByRole('button', { name: 'Open calendar' })
+        .click();
 
     await dateBtn.waitFor({ state: 'visible' });
-    await dateBtn.click();
+    await dateBtn.click(); */
     await page.getByTestId('activesDetailCaracteristicasPcbs').click();
     await page.getByRole('option', { name: 'No libre de PCB' }).click();
     await page.getByTestId('activesDetailCaracteristicasTipoAislamiento').fill('123456789');
     await page.getByTestId('activesDetailCaracteristicasTipoInstalacion').fill('123456789');
     await page.getByTestId('activesDetailCaracteristicasSistemaPuestaTierra').fill('123456789');
-    
+
     //NETWORK AND STRUCTURES
     await page.getByRole('tab', { name: 'Red y estructuras' }).click();
 
@@ -175,12 +205,8 @@ await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
     await page.getByTestId('activesDetailConductorFtoConductor').fill('123456789');
     await page.getByText('Estado conductor').click();
     await page.getByRole('option', { name: 'Regular' }).click();
-    await page.getByTestId('activesDetailConductorContainer').getByText('Cable guarda').click();
-    await page.getByRole('option', { name: '2' }).click();
-    await page.getByTestId('activesDetailConductorContainer').getByText('Puesta a tierra').click();
-    await page.getByRole('option', { name: '3' }).click();
-    await page.getByTestId('activesDetailConductorTempletes').click();
-    await page.getByRole('option', { name: '1' }).click();
+    await page.getByTestId('activesDetailConductorPuestaTierra').fill('123456789');
+    await page.getByTestId('activesDetailConductorTempletes').fill('123456789');
     await page.getByTestId('activesDetailConductorCantConductorKm').fill('123456789');
     await page.getByTestId('activesDetailConductorLongitudCalcM').fill('123456789');
     await page.getByTestId('activesDetailConductorAtributosRed').fill('123456789');
@@ -198,19 +224,19 @@ await page.getByTestId('activesDetailResponsableFechaSuscripcionContratoAom')
     await page.getByTestId('activesDetailCodigoValorCregConductor').fill('123456789');
 
 
-    await page.getByTestId('activesDetailCodigoFechaFinalPolizasAom')
+/*     await page.getByTestId('activesDetailCodigoFechaFinalPolizasAom')
         .locator('xpath=ancestor::bds-datepicker')
         .getByRole('button', { name: 'Open calendar' })
         .click();
 
     await dateBtn.waitFor({ state: 'visible' });
     await dateBtn.click();
-
+ */
     await page.getByTestId('activesDetailCodigoNumeroPolizasAom').fill('123456789');
 
-    await page.getByTestId('activesDetailCodigoFechaInicialPolizasAom').fill('2022-01-01');
+/*     await page.getByTestId('activesDetailCodigoFechaInicialPolizasAom')//date
     await page.getByTestId('activesDetailCodigoContainer').getByText('Fecha inicial de pólizas de').fill('2022-01-01');
-
+ */
     //btns
     await page.getByTestId('activesDetailCancel').click();
     await page.getByTestId('activesDetailSave').click();

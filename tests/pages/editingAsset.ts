@@ -11,12 +11,6 @@ export class EditingAssetPage {
 
     }
 
-    async openAndSelectPlate() {
-        await this.page.getByRole('button', { name: 'Crear activo' }).click();
-        await this.page.getByText('Cargando más placas...').waitFor({ state: 'visible' });
-        await this.plateOption.waitFor({ state: 'visible', timeout: 30000 });
-        await this.plateOption.click();
-    }
 
     async fillRequiredLocationFields() {
         await this.page.getByTestId('activesCreateDepartamento').getByText('Departamento').click();
@@ -30,6 +24,7 @@ export class EditingAssetPage {
         await this.page.getByTestId('activesCreateUbicacionEnlaceArcgis').getByText('Enlace ARCGIS').click();
         await this.page.getByRole('textbox', { name: 'Enlace ARCGIS' }).fill('https://www.google.com/arcgis-test');
     }
+
 
 
 }
