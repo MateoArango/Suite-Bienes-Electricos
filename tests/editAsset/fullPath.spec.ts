@@ -8,6 +8,7 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     const deleteBtn = page.getByTestId('activesDetailDelete');
     const descriptionBtn = page.getByTestId('activesDetailDescription');
     const editAsset = new EditAssetPage(page);
+    const cancelBtn = page.getByTestId('activesDetailCancel');
 
     await basePage.login('qa', '123456');
 
@@ -217,7 +218,7 @@ test('Editar Activo - P0 Full Path', async ({ page }) => {
     await editAsset.selectAvailableCalendarDate();
 
     //btns
-    // await page.getByTestId('activesDetailCancel').click();
+    
     await saveBtn.click();
     await expect(page.getByText('Cambios guardados correctamente')).toBeVisible();
 
