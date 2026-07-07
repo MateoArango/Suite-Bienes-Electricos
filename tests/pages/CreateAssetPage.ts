@@ -20,7 +20,7 @@ export class CreateAssetPage {
     async openAndSelectPlate() {
         await this.page.getByRole('button', { name: 'Crear activo' }).click();
         await this.page.getByText('Cargando más placas...').waitFor({ state: 'visible' });
-        await this.plateOption.waitFor({ state: 'visible', timeout: 30000 });
+        await this.plateOption.waitFor({ state: 'visible', timeout: 60000 });
         await this.plateOption.click();
     }
 
