@@ -1,10 +1,7 @@
-import { test as base, expect, Page } from '@playwright/test';
+import { test as base, expect, Page, APIRequestContext, request } from '@playwright/test';
 
-/**
- * Injects a <style> tag that kills ALL CSS transitions and animations.
- * This is the reliable way to fix "element is not stable" errors caused
- * by Angular Material animation classes (mat-ripple, mat-calendar, overlays, etc.)
- */
+const BASE_URL = 'https://bieneselectricosapi-qa.adacsc.co';
+
 async function disableAnimations(page: Page) {
   await page.addStyleTag({
     content: `
@@ -18,11 +15,44 @@ async function disableAnimations(page: Page) {
   });
 }
 
-export const test = base.extend<{ page: Page }>({
+async function getAuthToken(apiContext: APIRequestContext): Promise<string> {
+  const response = await apiContext.post(`${BASE_URL}/electrical-assets/auth/login`, {
+    data: { login: 'qa', password: '123456' },
+  });
+
+  if (!response.ok()) {
+    throw new Error(`Login failed: ${response.status()} ${await response.text()}`);
+  }
+
+  const body = await response.json();
+  if (!body.success || !body.data?.token) {
+    throw new Error(`Unexpected login response shape: ${JSON.stringify(body)}`);
+  }
+
+  return body.data.token;
+}
+
+type Fixtures = {
+  page: Page;
+  apiContext: APIRequestContext;
+  authToken: string;
+};
+
+export const test = base.extend<Fixtures>({
   page: async ({ page }, use) => {
-    // Re-inject on every full page load (covers SPA navigations too)
     page.on('load', () => disableAnimations(page));
     await use(page);
+  },
+
+  apiContext: async ({}, use) => {
+    const context = await request.newContext({ baseURL: BASE_URL });
+    await use(context);
+    await context.dispose();
+  },
+
+  authToken: async ({ apiContext }, use) => {
+    const token = await getAuthToken(apiContext);
+    await use(token);
   },
 });
 
