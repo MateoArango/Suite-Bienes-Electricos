@@ -1,4 +1,4 @@
-import { test, expect } from '../createAsset/fixtures';
+import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 
 

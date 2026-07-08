@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures';
+import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { CreateAssetPage } from '../pages/CreateAssetPage';
 test.describe('Crear Activo - P1 Stepper Navigation', () => {

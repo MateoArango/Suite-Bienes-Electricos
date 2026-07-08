@@ -1,5 +1,5 @@
 import { Locator } from '@playwright/test';
-import { test, expect } from './fixtures';
+import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
 
@@ -17,7 +17,7 @@ Edit plates used in this test are known to be editable and have a variety of fie
 - 0000247649
 */
 
-const PLATE = '0000247649'; 
+const PLATE = '00000077';
 const uiValue = (value: unknown) => value == null ? '' : String(value);
 const isDateValue = (value: unknown) => typeof value === 'string' && /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(value);
 const normalizedDate = (value: string) => value.split('/').map((part, index) => index < 2 ? String(Number(part)) : part).join('/');
@@ -61,6 +61,13 @@ async function expectVisibleText(locator: Locator, value: unknown) {
   await expect(locator).toContainText(String(value));
 }
 
+async function logInputComparison(label: string, locator: Locator, apiValue: unknown) {
+  console.log(`${label}:`, {
+    apiValue,
+    uiValue: await locator.inputValue(),
+  });
+}
+
 test('QA-EDIT-001: prepopulated fields match API source', async ({ page, apiContext, authToken }) => {
   const basePage = new BasePage(page);
   const editAsset = new EditAssetPage(page);
@@ -72,7 +79,7 @@ test('QA-EDIT-001: prepopulated fields match API source', async ({ page, apiCont
   );
   expect(response.ok(), `API call failed for plate ${PLATE}`).toBeTruthy();
   const asset = await response.json();
-  console.log('Article resume API response:', JSON.stringify(asset, null, 2));
+  //console.log('Article resume API response:', JSON.stringify(asset, null, 2));
   const ubicacion = asset.ubicacionYRegistro;
   const proyecto = asset.proyectoYGestion;
   const equipo = asset.equipoYAvaluo;
@@ -152,8 +159,11 @@ test('QA-EDIT-001: prepopulated fields match API source', async ({ page, apiCont
   await expectInputValue(editAsset.municipioLevField, equipo.municipioLev);
   await expectInputValue(editAsset.localidadLevField, equipo.localidadLev);
   await expectInputValue(editAsset.codigoCregGeneralField, equipo.codigoCregGeneral);
+  await logInputComparison('fechaLevantamiento', editAsset.fechaLevantamientoField, equipo.fechaLevantamiento);
   await expectInputValue(editAsset.fechaLevantamientoField, equipo.fechaLevantamiento);
+  await logInputComparison('tipoAislamiento', editAsset.tipoAislamientoField, equipo.tipoAislamiento);
   await expectInputValue(editAsset.tipoAislamientoField, equipo.tipoAislamiento);
+  await logInputComparison('tipoInstalacion', editAsset.tipoInstalacionField, equipo.tipoInstalacion);
   await expectInputValue(editAsset.tipoInstalacionField, equipo.tipoInstalacion);
   await expectInputValue(editAsset.sistemaPuestaTierraField, equipo.sistemaPuestaTierra);
 
