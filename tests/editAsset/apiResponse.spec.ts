@@ -159,11 +159,11 @@ test('QA-EDIT-001: prepopulated fields match API source', async ({ page, apiCont
   await expectInputValue(editAsset.municipioLevField, equipo.municipioLev);
   await expectInputValue(editAsset.localidadLevField, equipo.localidadLev);
   await expectInputValue(editAsset.codigoCregGeneralField, equipo.codigoCregGeneral);
-  await logInputComparison('fechaLevantamiento', editAsset.fechaLevantamientoField, equipo.fechaLevantamiento);
+  //await logInputComparison('fechaLevantamiento', editAsset.fechaLevantamientoField, equipo.fechaLevantamiento);
   await expectInputValue(editAsset.fechaLevantamientoField, equipo.fechaLevantamiento);
-  await logInputComparison('tipoAislamiento', editAsset.tipoAislamientoField, equipo.tipoAislamiento);
+  //await logInputComparison('tipoAislamiento', editAsset.tipoAislamientoField, equipo.tipoAislamiento);
   await expectInputValue(editAsset.tipoAislamientoField, equipo.tipoAislamiento);
-  await logInputComparison('tipoInstalacion', editAsset.tipoInstalacionField, equipo.tipoInstalacion);
+  //await logInputComparison('tipoInstalacion', editAsset.tipoInstalacionField, equipo.tipoInstalacion);
   await expectInputValue(editAsset.tipoInstalacionField, equipo.tipoInstalacion);
   await expectInputValue(editAsset.sistemaPuestaTierraField, equipo.sistemaPuestaTierra);
 
