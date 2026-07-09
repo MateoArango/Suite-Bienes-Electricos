@@ -3,16 +3,21 @@ import { test as base, expect, Page, APIRequestContext, request } from '@playwri
 const BASE_URL = 'https://bieneselectricosapi-qa.adacsc.co';
 
 async function disableAnimations(page: Page) {
-  await page.addStyleTag({
-    content: `
-      *, *::before, *::after {
-        transition-duration: 0ms !important;
-        transition-delay:    0ms !important;
-        animation-duration:  0ms !important;
-        animation-delay:     0ms !important;
-      }
-    `,
-  });
+  try {
+    await page.addStyleTag({
+      content: `
+        *, *::before, *::after {
+          transition-duration: 0ms !important;
+          transition-delay: 0ms !important;
+          animation-duration: 0ms !important;
+          animation-delay: 0ms !important;
+        }
+      `,
+    });
+  } catch {
+    // Navigation can destroy the page context while injecting styles.
+    // Safe to ignore because the next page load will try again.
+  }
 }
 
 async function getAuthToken(apiContext: APIRequestContext): Promise<string> {
