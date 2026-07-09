@@ -6,6 +6,7 @@ import { EditAssetPage } from '../pages/editAssetPage';
 const PLATE = '0000247634';
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
 const SUCCESS_TOAST = 'Cambios guardados correctamente';
+const ERROR_TOAST = 'Error guardando cambios';
 
 async function saveAndExpectSuccess(page: Page, editAsset: EditAssetPage) {
   const updateResponsePromise = page.waitForResponse(response =>
@@ -20,13 +21,30 @@ async function saveAndExpectSuccess(page: Page, editAsset: EditAssetPage) {
   await expect(page.getByText(SUCCESS_TOAST)).toBeVisible();
 }
 
-test.describe('Edit asset persistence', () => {
-  test('QA-EDIT-032: browser back and forward do not show stale cached form data after save', async ({ page }) => {
+test.describe('Edit asset robustness', () => {
+  test('QA-EDIT-035: failed save can be retried without losing the edited value', async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
 
+    let patchAttempts = 0;
     let savedEditedValue = false;
     let originalLocalidad = '';
+
+    await page.route(`**${UPDATE_PATH}`, async route => {
+      if (route.request().method() !== 'PATCH') {
+        await route.continue();
+        return;
+      }
+
+      patchAttempts++;
+
+      if (patchAttempts === 1) {
+        await route.abort('failed');
+        return;
+      }
+
+      await route.continue();
+    });
 
     await basePage.login('qa', '123456');
     await expect(page).toHaveURL(/dashboard/);
@@ -34,25 +52,32 @@ test.describe('Edit asset persistence', () => {
 
     try {
       originalLocalidad = await editAsset.localidadField.inputValue();
-      const editedLocalidad = originalLocalidad === 'QA browser nav'
-        ? 'QA browser nav 2'
-        : 'QA browser nav';
+      const editedLocalidad = originalLocalidad === 'QA no internet save'
+        ? 'QA no internet save 2'
+        : 'QA no internet save';
 
       await editAsset.localidadField.fill(editedLocalidad);
       await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
 
+      const failedSaveRequest = page.waitForEvent('requestfailed', request =>
+        request.method() === 'PATCH' &&
+        request.url().includes(UPDATE_PATH)
+      );
+
+      await editAsset.saveBtn.click();
+      await failedSaveRequest;
+
+      expect(patchAttempts).toBe(1);
+      await expect(page.getByText(ERROR_TOAST)).toBeVisible();
+      await expect(page.getByText(SUCCESS_TOAST)).toBeHidden();
+      await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
+      await expect(editAsset.saveBtn).toBeEnabled();
+
       await saveAndExpectSuccess(page, editAsset);
       savedEditedValue = true;
+      expect(patchAttempts).toBe(2);
 
-      await page.goBack();
-      await expect(page).toHaveURL(/dashboard/);
-      expect(page.url()).not.toContain(`/detalle/${PLATE}`);
-
-      await page.goForward();
-      await expect(page).toHaveURL(new RegExp(`/dashboard/bienelectrico/detalle/${PLATE}`));
-      await expect(editAsset.editBtn).toBeVisible();
-
-      await editAsset.editBtn.click();
+      await editAsset.goto(PLATE);
       await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
     } finally {
       if (savedEditedValue) {
