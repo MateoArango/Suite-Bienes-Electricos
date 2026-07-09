@@ -230,4 +230,24 @@ test.describe('Edit asset critical flow', () => {
       }
     }
   });
+
+  test('QA-EDIT-009: direct URL opens a valid asset edit form', async ({ page }) => {
+    const basePage = new BasePage(page);
+    const editAsset = new EditAssetPage(page);
+
+    await basePage.login('qa', '123456');
+    await expect(page).toHaveURL(/dashboard/);
+
+    await page.goto(`/dashboard/bienelectrico/detalle/${PLATE}`);
+    await expect(editAsset.editBtn).toBeVisible();
+    await expect(editAsset.editBtn).toBeEnabled();
+
+    await editAsset.editBtn.click();
+
+    await expect(editAsset.saveBtn).toBeVisible();
+    await expect(editAsset.cancelBtn).toBeVisible();
+    await expect(editAsset.latitudField).toBeVisible();
+    await expect(editAsset.longitudField).toBeVisible();
+    await expect(editAsset.veredaField).toBeVisible();
+  });
 });
