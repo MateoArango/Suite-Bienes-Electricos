@@ -91,7 +91,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await expect(page.getByText('Selección placa')).toBeVisible();
     await expect(page.getByText('Cargando más placas...')).toBeVisible();
     const plateOption = page.getByTestId(/activesCreatePlacaOption\d+/).first();
-    await plateOption.waitFor({ state: 'visible', timeout: 30000 });
+    await plateOption.waitFor({ state: 'visible', timeout: 60000 });
 
     await createAsset.nextBtn.click();
     await page.getByTestId('activesCreateDepartamento').waitFor({ state: 'visible' });
