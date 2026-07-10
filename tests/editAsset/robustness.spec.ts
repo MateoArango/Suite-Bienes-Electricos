@@ -3,7 +3,7 @@ import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
 
-const PLATE = '0000247634';
+const PLATE = '00000610';
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
 const SUCCESS_TOAST = 'Cambios guardados correctamente';
 const ERROR_TOAST = 'Error guardando cambios';

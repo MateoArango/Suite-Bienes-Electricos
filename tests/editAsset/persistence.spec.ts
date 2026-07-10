@@ -3,7 +3,7 @@ import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
 
-const PLATE = '0000247634';
+const PLATE = '00000564';
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
 const SUCCESS_TOAST = 'Cambios guardados correctamente';
 
@@ -20,26 +20,33 @@ async function saveAndExpectSuccess(page: Page, editAsset: EditAssetPage) {
   await expect(page.getByText(SUCCESS_TOAST)).toBeVisible();
 }
 
+async function openResponsablePanel(page: Page) {
+  await page.getByRole('tab', { name: /Proyecto y gesti.n/ }).click();
+  await page.getByRole('button', { name: /Responsable y contratos/ }).click();
+}
+
 test.describe('Edit asset persistence', () => {
   test('QA-EDIT-032: browser back and forward do not show stale cached form data after save', async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
 
     let savedEditedValue = false;
-    let originalLocalidad = '';
+    let originalMemorando = '';
 
     await basePage.login('qa', '123456');
     await expect(page).toHaveURL(/dashboard/);
     await editAsset.goto(PLATE);
 
     try {
-      originalLocalidad = await editAsset.localidadField.inputValue();
-      const editedLocalidad = originalLocalidad === 'QA browser nav'
+      await openResponsablePanel(page);
+
+      originalMemorando = await editAsset.memorandoField.inputValue();
+      const editedMemorando = originalMemorando === 'QA browser nav'
         ? 'QA browser nav 2'
         : 'QA browser nav';
 
-      await editAsset.localidadField.fill(editedLocalidad);
-      await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
+      await editAsset.memorandoField.fill(editedMemorando);
+      await expect(editAsset.memorandoField).toHaveValue(editedMemorando);
 
       await saveAndExpectSuccess(page, editAsset);
       savedEditedValue = true;
@@ -53,11 +60,13 @@ test.describe('Edit asset persistence', () => {
       await expect(editAsset.editBtn).toBeVisible();
 
       await editAsset.editBtn.click();
-      await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
+      await openResponsablePanel(page);
+      await expect(editAsset.memorandoField).toHaveValue(editedMemorando);
     } finally {
       if (savedEditedValue) {
         await editAsset.goto(PLATE);
-        await editAsset.localidadField.fill(originalLocalidad);
+        await openResponsablePanel(page);
+        await editAsset.memorandoField.fill(originalMemorando);
         await saveAndExpectSuccess(page, editAsset);
       }
     }

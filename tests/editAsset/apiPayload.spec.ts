@@ -14,7 +14,7 @@ import { EditAssetPage } from '../pages/editAssetPage';
  * The changed values are restored in finally so the QA plate is not left dirty.
  */
 
-const PLATE = '0000247634';
+const PLATE = '00000551';
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
 
 async function waitForUpdateRequest(page: Page): Promise<Request> {
@@ -103,11 +103,11 @@ test('QA-EDIT-006: save sends full update payload and preserves important fields
     expect(payload.ubicacionYRegistro.localidad).toBe(editedLocalidad);
     expect(payload.ubicacionYRegistro.longitud).toBe(original.ubicacionYRegistro.longitud);
 
-    console.log('Changed field comparison:', {
+   /*  console.log('Changed field comparison:', {
       vereda: { original: originalVereda, sent: payload.ubicacionYRegistro.vereda },
       latitud: { original: originalLatitud, sent: payload.ubicacionYRegistro.latitud },
       localidad: { original: originalLocalidad, sent: payload.ubicacionYRegistro.localidad },
-    });
+    }); */
   } finally {
     if (savedEditedValue) {
       await editAsset.goto(PLATE);

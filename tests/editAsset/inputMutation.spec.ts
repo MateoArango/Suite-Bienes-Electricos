@@ -3,7 +3,7 @@ import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
 
-const PLATE = '0000247634';
+const PLATE = '00000542';
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
 const SUCCESS_TOAST = 'Cambios guardados correctamente';
 const SELECT_ALL_SHORTCUT = process.platform === 'darwin' ? 'Meta+A' : 'Control+A';
@@ -32,6 +32,11 @@ async function saveAndExpectSuccess(page: Page, editAsset: EditAssetPage) {
     const updateResponse = await updateResponsePromise;
     expect(updateResponse.ok(), `Update failed: ${updateResponse.status()} ${await updateResponse.text()}`).toBe(true);
     await expect(page.getByText(SUCCESS_TOAST)).toBeVisible();
+}
+
+async function openResponsablePanel(page: Page) {
+    await page.getByRole('tab', { name: /Proyecto y gesti.n/ }).click();
+    await page.getByRole('button', { name: /Responsable y contratos/ }).click();
 }
 
 test.describe('Input mutation', () => {
@@ -266,29 +271,33 @@ test.describe('Input mutation', () => {
         const editAsset = new EditAssetPage(page);
 
         let savedUnicodeValue = false;
-        let originalLocalidad = '';
+        let originalEmailOperadorAom = '';
 
         await basePage.login('qa', '123456');
         await expect(page).toHaveURL(/dashboard/);
         await editAsset.goto(PLATE);
 
         try {
-            originalLocalidad = await editAsset.localidadField.inputValue();
-            const unicodeValue = 'QA \u00f1\u00e1\u00e9\u00ed\u00f3\u00fa \u00d1and\u00fa Caf\u00e9 S\u00e3o \u00e7\u03a9';
+            await openResponsablePanel(page);
 
-            await editAsset.localidadField.fill(unicodeValue);
-            await expect(editAsset.localidadField).toHaveValue(unicodeValue);
+            originalEmailOperadorAom = await editAsset.emailOperadorAomField.inputValue();
+            const unicodeValue = 'qa.\u00f1and\u00fa.caf\u00e9@example.com';
+
+            await editAsset.emailOperadorAomField.fill(unicodeValue);
+            await expect(editAsset.emailOperadorAomField).toHaveValue(unicodeValue);
 
             await saveAndExpectSuccess(page, editAsset);
             savedUnicodeValue = true;
 
             await page.reload();
             await editAsset.goto(PLATE);
-            await expect(editAsset.localidadField).toHaveValue(unicodeValue);
+            await openResponsablePanel(page);
+            await expect(editAsset.emailOperadorAomField).toHaveValue(unicodeValue);
         } finally {
             if (savedUnicodeValue) {
                 await editAsset.goto(PLATE);
-                await editAsset.localidadField.fill(originalLocalidad);
+                await openResponsablePanel(page);
+                await editAsset.emailOperadorAomField.fill(originalEmailOperadorAom);
                 await saveAndExpectSuccess(page, editAsset);
             }
         }

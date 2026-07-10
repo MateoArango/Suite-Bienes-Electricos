@@ -17,7 +17,7 @@ Edit plates used in this test are known to be editable and have a variety of fie
 - 0000247649
 */
 
-const PLATE = '00000077';
+const PLATE = '00000558';
 const uiValue = (value: unknown) => value == null ? '' : String(value);
 const isDateValue = (value: unknown) => typeof value === 'string' && /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(value);
 const normalizedDate = (value: string) => value.split('/').map((part, index) => index < 2 ? String(Number(part)) : part).join('/');

@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
 
-const PLATE = '0000247634';
+const PLATE = '00000560';
 
 test.describe('Edit asset field dependencies', () => {
   test('QA-EDIT-026: changing Departamento resets Municipio and Codigo DANE', async ({ page }) => {
