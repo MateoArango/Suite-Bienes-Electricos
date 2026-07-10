@@ -246,18 +246,19 @@ test.describe('Input mutation', () => {
         await page.getByRole('button', { name: /Responsable y contratos/ }).click();
 
         const mixedInput = 'ABC123XYZ456';
-        const digitsOnly = '123456';
+        const digitsOnlyCc = '123456';
+        const digitsOnlyAvaluo = '123.456';
 
         await editAsset.nitCcUsuarioField.click();
         await editAsset.nitCcUsuarioField.press(SELECT_ALL_SHORTCUT);
         await editAsset.nitCcUsuarioField.pressSequentially(mixedInput);
-        await expect(editAsset.nitCcUsuarioField).toHaveValue(digitsOnly);
+        await expect(editAsset.nitCcUsuarioField).toHaveValue(digitsOnlyCc);
 
         await page.getByRole('tab', { name: /Equipo y aval.o/ }).click();
         await editAsset.avaluoRvField.click();
         await editAsset.avaluoRvField.press(SELECT_ALL_SHORTCUT);
         await editAsset.avaluoRvField.pressSequentially(mixedInput);
-        await expect(editAsset.avaluoRvField).toHaveValue(digitsOnly);
+        await expect(editAsset.avaluoRvField).toHaveValue(digitsOnlyAvaluo);
     });
 
     test('QA-EDIT-023: unicode input persists after save and reload', async ({ page }) => {

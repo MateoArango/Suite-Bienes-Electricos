@@ -33,12 +33,6 @@ async function saveAndCapturePayload(page: Page, editAsset: EditAssetPage) {
   const updateResponse = await updateRequest.response();
   const payload = updateRequest.postDataJSON();
 
-  console.log('PATCH request sent:', {
-    method: updateRequest.method(),
-    url: updateRequest.url(),
-    payload,
-  });
-
   expect(updateResponse?.ok(), 'Update request should succeed').toBeTruthy();
 
   return {

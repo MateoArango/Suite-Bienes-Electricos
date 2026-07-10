@@ -5,6 +5,7 @@ export class EditAssetPage extends BasePage {
     readonly editBtn: Locator;
     readonly saveBtn: Locator;
     readonly cancelBtn: Locator;
+    readonly cancelDialogBtn: Locator;
     readonly deleteBtn: Locator;
     readonly descriptionBtn: Locator;
 
@@ -122,6 +123,7 @@ export class EditAssetPage extends BasePage {
         this.cancelBtn = page.getByTestId('activesDetailCancel');
         this.deleteBtn = page.getByTestId('activesDetailDelete');
         this.descriptionBtn = page.getByTestId('activesDetailDescription');
+        this.cancelDialogBtn = page.getByTestId('activesDetailDiscardDialogDiscard');
 
         // mat-select fields render as visible text, so assert with toContainText().
         this.departamentoField = page.getByTestId('departamento');

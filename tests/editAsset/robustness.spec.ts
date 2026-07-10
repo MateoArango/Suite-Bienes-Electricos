@@ -21,6 +21,10 @@ async function saveAndExpectSuccess(page: Page, editAsset: EditAssetPage) {
   await expect(page.getByText(SUCCESS_TOAST)).toBeVisible();
 }
 
+async function openRegistroPanel(page: Page) {
+  await page.getByRole('button', { name: /Registro Enlaces y/ }).click();
+}
+
 test.describe('Edit asset robustness', () => {
   test('QA-EDIT-035: failed save can be retried without losing the edited value', async ({ page }) => {
     const basePage = new BasePage(page);
@@ -28,7 +32,7 @@ test.describe('Edit asset robustness', () => {
 
     let patchAttempts = 0;
     let savedEditedValue = false;
-    let originalLocalidad = '';
+    let originalEnlaceArcgis = '';
 
     await page.route(`**${UPDATE_PATH}`, async route => {
       if (route.request().method() !== 'PATCH') {
@@ -51,13 +55,15 @@ test.describe('Edit asset robustness', () => {
     await editAsset.goto(PLATE);
 
     try {
-      originalLocalidad = await editAsset.localidadField.inputValue();
-      const editedLocalidad = originalLocalidad === 'QA no internet save'
-        ? 'QA no internet save 2'
-        : 'QA no internet save';
+      await openRegistroPanel(page);
 
-      await editAsset.localidadField.fill(editedLocalidad);
-      await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
+      originalEnlaceArcgis = await editAsset.enlaceArcgisField.inputValue();
+      const editedEnlaceArcgis = originalEnlaceArcgis === 'https://www.google.com/?qa=no-internet-save'
+        ? 'https://www.google.com/?qa=no-internet-save-2'
+        : 'https://www.google.com/?qa=no-internet-save';
+
+      await editAsset.enlaceArcgisField.fill(editedEnlaceArcgis);
+      await expect(editAsset.enlaceArcgisField).toHaveValue(editedEnlaceArcgis);
 
       const failedSaveRequest = page.waitForEvent('requestfailed', request =>
         request.method() === 'PATCH' &&
@@ -70,7 +76,7 @@ test.describe('Edit asset robustness', () => {
       expect(patchAttempts).toBe(1);
       await expect(page.getByText(ERROR_TOAST)).toBeVisible();
       await expect(page.getByText(SUCCESS_TOAST)).toBeHidden();
-      await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
+      await expect(editAsset.enlaceArcgisField).toHaveValue(editedEnlaceArcgis);
       await expect(editAsset.saveBtn).toBeEnabled();
 
       await saveAndExpectSuccess(page, editAsset);
@@ -78,11 +84,13 @@ test.describe('Edit asset robustness', () => {
       expect(patchAttempts).toBe(2);
 
       await editAsset.goto(PLATE);
-      await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
+      await openRegistroPanel(page);
+      await expect(editAsset.enlaceArcgisField).toHaveValue(editedEnlaceArcgis);
     } finally {
       if (savedEditedValue) {
         await editAsset.goto(PLATE);
-        await editAsset.localidadField.fill(originalLocalidad);
+        await openRegistroPanel(page);
+        await editAsset.enlaceArcgisField.fill(originalEnlaceArcgis);
         await saveAndExpectSuccess(page, editAsset);
       }
     }

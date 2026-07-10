@@ -35,6 +35,8 @@ async function waitForUnexpectedUpdate(page: Page) {
     .catch(() => false);
 }
 
+
+test.describe.configure({ mode: 'serial' });// Run tests in this file serially to avoid conflicts on the same asset.
 test.describe('Edit asset critical flow', () => {
   test('QA-EDIT-002: edit one required field and persist it after save', async ({ page }) => {
     const basePage = new BasePage(page);
@@ -180,20 +182,23 @@ test.describe('Edit asset critical flow', () => {
     await expect(page).toHaveURL(/dashboard/);
     await editAsset.goto(PLATE);
 
-    const originalLocalidad = await editAsset.localidadField.inputValue();
-    const editedLocalidad = originalLocalidad === 'QA cancel check'
-      ? 'QA cancel check 2'
-      : 'QA cancel check';
+    await openRegistroPanel(page);
+
+    const originalNombrePlantilla = await editAsset.nombrePlantillaField.inputValue();
+    const editedNombrePlantilla = originalNombrePlantilla === 'QA cancel'
+      ? 'QA cancel2'
+      : 'QA cancel';
     const updateRequestPromise = waitForUnexpectedUpdate(page);
 
-    await editAsset.localidadField.fill(editedLocalidad);
-    await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
+    await editAsset.nombrePlantillaField.fill(editedNombrePlantilla);
+    await expect(editAsset.nombrePlantillaField).toHaveValue(editedNombrePlantilla);
     await editAsset.cancelBtn.click();
-
+    await editAsset.cancelDialogBtn.click();
     expect(await updateRequestPromise).toBe(false);
 
     await editAsset.goto(PLATE);
-    await expect(editAsset.localidadField).toHaveValue(originalLocalidad);
+    await openRegistroPanel(page);
+    await expect(editAsset.nombrePlantillaField).toHaveValue(originalNombrePlantilla);
   });
 
   test('QA-EDIT-008: saved value survives hard reload and reopen', async ({ page }) => {
