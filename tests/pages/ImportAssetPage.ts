@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import { BasePage } from './BasePage';
 
 export class ImportAssetPage {
     readonly importButton: Locator;
@@ -16,7 +17,7 @@ export class ImportAssetPage {
     readonly retryButton: Locator;
     readonly successMessage: Locator;
     readonly selectFileButton: Locator;
-    
+
     constructor(readonly page: Page) {
         this.tabsContainer = page.getByTestId('importActiveTabsContainer');
         this.importTab = page.getByTestId('importActiveImportTab');
@@ -33,5 +34,12 @@ export class ImportAssetPage {
         this.importButton = page.getByRole('button').filter({ hasText: 'upload' })
         this.successMessage = page.getByText('Archivo importado');
         this.selectFileButton = page.getByRole('button', { name: 'Seleccionar archivo' });
+    }
+
+    async openImport(username = 'qa', password = '123456') {
+        const basePage = new BasePage(this.page);
+
+        await basePage.login(username, password);
+        await this.importButton.click();
     }
 }
