@@ -10,7 +10,7 @@ import { ImportAssetPage } from '../pages/ImportAssetPage';
  * uploads the Excel fixture, opens the imported plate detail, captures the
  * article-resume API response, and compares the 102 Excel fields against API data.
  */
-const PLATE = '0000067489';
+const PLATE = '00000381';
 const EXCEL_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'fullPath.xlsx');
 const SHEET_NAME = 'Plantilla';
 
