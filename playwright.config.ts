@@ -32,6 +32,7 @@ export default defineConfig({
   
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    //video: 'on', // or 'retain-on-failure', 'on-first-retry', 'off'
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: 'https://bieneselectricos-qa.adacsc.co/',
     

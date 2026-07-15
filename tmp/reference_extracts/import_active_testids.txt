@@ -1,0 +1,35 @@
+
+===== PAGE 1 =====
+Import Activo Component — data-testid Reference
+Extracted from app-import-active component markup
+#
+data-testid
+Element / Purpose
+1
+importActiveTabsContainer
+Container for Importar / Historial tabs
+2
+importActiveImportTab
+"Importar" tab button
+3
+importActiveHistoryTab
+"Historial" tab button
+4
+importActiveInstructionsContainer
+Wrapper for step-by-step instructions (steps 01-03)
+5
+importActiveDownloadTemplateButton
+"Descargar plantilla" button
+6
+importActiveUploaderContainer
+File uploader container (bds-uploader, drag & drop / select file)
+7
+importActiveActionsContainer
+Wrapper for Cancelar / Importar activo action buttons
+8
+importActiveCancelButton
+"Cancelar" button
+9
+importActiveSubmitButton
+"Importar activo" submit button (disabled until valid file selected)
+Total elements found: 9. All identifiers use the data-testid attribute (no data-test-id variants present).

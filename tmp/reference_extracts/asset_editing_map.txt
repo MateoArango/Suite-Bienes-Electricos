@@ -1,0 +1,426 @@
+
+===== PAGE 1 =====
+Asset Editing Component - Comprehensive Test Scenario Map 
+Based on the Create Asset robustness strategy, optimized for Playwright. 
+ 
+ID 
+Suite / Feature 
+Priority 
+Scenario Name 
+& Objective 
+Key Assertions 
+& Actions 
+QA-EDIT-001 
+P0-Critical Edit 
+Flow 
+P0 
+Open existing 
+asset 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-002 
+P0-Critical Edit 
+Flow 
+P0 
+Edit one 
+required field 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-003 
+P0-Critical Edit 
+Flow 
+P0 
+Edit multiple 
+required fields 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-004 
+P0-Critical Edit 
+Flow 
+P0 
+Clear required 
+field 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-005 
+P0-Critical Edit 
+Flow 
+P0 
+Clear optional 
+field 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-006 
+P0-Critical Edit 
+Flow 
+P0 
+Save only 
+changed values 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+
+===== PAGE 2 =====
+and expected 
+navigation. 
+QA-EDIT-007 
+P0-Critical Edit 
+Flow 
+P0 
+Cancel changes 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-008 
+P0-Critical Edit 
+Flow 
+P0 
+Reload after 
+save 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-009 
+P0-Critical Edit 
+Flow 
+P0 
+Direct URL edit 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-010 
+P0-Critical Edit 
+Flow 
+P0 
+Prevent double 
+save 
+Verify pre-
+populated form, 
+validation, 
+persistence, 
+save behavior, 
+and expected 
+navigation. 
+QA-EDIT-011 
+P1-Input 
+Mutation 
+P1 
+Overwrite text 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-012 
+P1-Input 
+Mutation 
+P1 
+Append text 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-013 
+P1-Input 
+Mutation 
+P1 
+Insert middle 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-014 
+P1-Input 
+Mutation 
+P1 
+Delete first char 
+Verify edited 
+value, limits, 
+masking, and 
+
+===== PAGE 3 =====
+persisted 
+result. 
+QA-EDIT-015 
+P1-Input 
+Mutation 
+P1 
+Delete last char 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-016 
+P1-Input 
+Mutation 
+P1 
+Ctrl+A replace 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-017 
+P1-Input 
+Mutation 
+P1 
+Copy/Paste 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-018 
+P1-Input 
+Mutation 
+P1 
+Cut/Paste 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-019 
+P1-Input 
+Mutation 
+P1 
+Max length 
+typing 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-020 
+P1-Input 
+Mutation 
+P1 
+Max length 
+paste 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-021 
+P1-Input 
+Mutation 
+P1 
+Numeric mask 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-022 
+P1-Input 
+Mutation 
+P1 
+Whitespace 
+trim 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-023 
+P1-Input 
+Mutation 
+P1 
+Unicode 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-024 
+P1-Input 
+Mutation 
+P1 
+Undo/Redo 
+Verify edited 
+value, limits, 
+
+===== PAGE 4 =====
+masking, and 
+persisted 
+result. 
+QA-EDIT-025 
+P1-Input 
+Mutation 
+P1 
+Masked field 
+Verify edited 
+value, limits, 
+masking, and 
+persisted 
+result. 
+QA-EDIT-026 
+P1-
+Dependencies 
+P1 
+Departamento 
+resets 
+Municipio 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-027 
+P1-
+Dependencies 
+P1 
+Asset Type 
+reloads subtype 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-028 
+P1-Stepper 
+P1 
+Next/Back 
+preserves edits 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-029 
+P1-Stepper 
+P1 
+Refresh 
+behavior 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-030 
+P1-Stepper 
+P1 
+Unsaved exit 
+warning 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-031 
+P1-Persistence 
+P1 
+Save and 
+reopen 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-032 
+P1-Persistence 
+P1 
+Browser 
+back/forward 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-033 
+P1-Persistence 
+P1 
+API success 
+message 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-034 
+P2-Robustness 
+P2 
+Concurrent edit 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-035 
+P2-Robustness 
+P2 
+Network retry 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-036 
+P2-Robustness 
+P2 
+Locked asset 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-037 
+P2-Robustness 
+P2 
+Archived asset 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-038 
+P2-UX 
+P2 
+Keyboard only 
+Verify expected 
+business 
+behavior. 
+
+===== PAGE 5 =====
+QA-EDIT-039 
+P2-UX 
+P2 
+Tab order 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-040 
+P2-UX 
+P2 
+Focus after 
+validation 
+Verify expected 
+business 
+behavior. 
+QA-EDIT-041 
+P2-UX 
+P2 
+Loading state 
+Verify expected 
+business 
+behavior. 
+ 

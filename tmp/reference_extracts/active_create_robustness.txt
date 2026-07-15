@@ -1,0 +1,228 @@
+
+===== PAGE 1 =====
+I inspected the repo. The only meaningful coverage is the long happy-path recording in 
+[tests/test-3.spec.ts (line 5)](C:/Users/marango/Desktop/BienesElectricos-
+tests/tests/test-3.spec.ts:5). The other specs are placeholders. Qwen’s idea is 
+pointing in the right direction, but I’d split this into focused, reliable Playwright 
+scenarios instead of one huge flow. 
+Assumption: by “line 338 cerrar modal” you mean the final success modal after 
+Finalizar, currently asserted with El activo se registró. 
+Recommended Test Suite 
+P0 - Critical Flow 
+1. Create active successfully with only required fields 
+o Login. 
+o Click Crear activo. 
+o Select first available Placa. 
+o Continue to Ubicación y registro. 
+o Fill only: 
+▪ 
+Departamento 
+▪ 
+Municipio 
+▪ 
+Fotos 
+▪ 
+Enlace ARCGIS 
+o Leave optional fields empty. 
+o Assert Siguiente is enabled. 
+o Complete later required steps as minimally as possible. 
+o Click Finalizar. 
+o Assert success modal/text: El activo se registró. 
+2. Cannot continue without selecting Plate 
+o Open create active flow. 
+o Do not select any activesCreatePlacaOption. 
+o Assert Siguiente is disabled or blocks navigation. 
+
+===== PAGE 2 =====
+o Assert user remains in Selección placa. 
+3. Cannot continue Location and Registration without Departamento 
+o Select plate. 
+o Fill Municipio, Fotos, Enlace ARCGIS. 
+o Leave Departamento empty. 
+o Assert Siguiente disabled or validation shown. 
+o Assert stepper still shows Ubicación y registro. 
+4. Cannot continue Location and Registration without Municipio 
+o Fill Departamento, Fotos, Enlace ARCGIS. 
+o Leave Municipio empty. 
+o Assert no navigation. 
+5. Cannot continue Location and Registration without Fotos 
+o Fill Departamento, Municipio, Enlace ARCGIS. 
+o Leave Fotos empty. 
+o Assert no navigation. 
+6. Cannot continue Location and Registration without Enlace ARCGIS 
+o Fill Departamento, Municipio, Fotos. 
+o Leave Enlace ARCGIS empty. 
+o Assert no navigation. 
+7. Optional fields are not required 
+o Select plate. 
+o Fill only the required Location fields. 
+o Leave Localidad, Vereda, Tipo de zona, Latitud, Longitud, Carpeta 
+altitud, Nombre planilla, Descripción empty. 
+o Assert the user can continue to Proyecto e infraestructura. 
+P0 - Strict Input Validation 
+
+===== PAGE 3 =====
+8. Fotos enforces max length exactly 
+o Fill Fotos with max allowed characters. 
+o Assert stored value length equals max. 
+o Fill/paste max + 1 characters. 
+o Assert value length is still max. 
+o Assert the extra character is not present. 
+9. Enlace ARCGIS enforces max length exactly 
+o Same pattern as Fotos. 
+10. All 5-character fields reject the 6th character 
+Examples from the current test data: 
+o Edad agotada 
+o Edad tipo de vida útil 
+o Vida remanente 
+o Cantidad 
+o Capacidad kVA/kW 
+o Capacidad kVA 
+o Capacidad kW 
+o Edad aparente 
+o Altura apoyo (m) 
+o Nro. fases 
+o Calibre conductor 
+o Cant. circuitos 
+o Templetes 
+o Cant. conductor (km) 
+o Longitud calc (m) 
+Assertion pattern: 
+
+===== PAGE 4 =====
+await field.fill('123456'); 
+await expect(field).toHaveValue('12345'); 
+11. Masked/sanitized fields ignore invalid characters 
+o For numeric-like fields, type values such as: 
+▪ 
+12-34A 
+▪ 
+12.3,4 
+▪ 
+abc123456 
+o Assert the resulting value matches the component behavior. 
+o Example expected behavior, if numeric-only and max 5: 
+▪ 
+input: abc123456 
+▪ 
+expected: 12345 
+12. Typing and paste both enforce max length 
+o Use fill('123456'). 
+o Use keyboard typing: pressSequentially('123456'). 
+o Use clipboard paste if needed. 
+o Assert all paths result in max length only. 
+P1 - Date Picker Behavior 
+13. Date fields do not allow manual typing 
+o Locate date input inside date-picker form field. 
+o Try fill('2026-06-30'). 
+o Assert value remains empty or unchanged. 
+o Open calendar using Open calendar. 
+o Select current day. 
+o Assert date value is populated. 
+14. Date can only be selected from calendar 
+Current fields to cover: 
+
+===== PAGE 5 =====
+o Fecha suscripción contrato A.O.M 
+o Fecha inicial pólizas obra 
+o Fecha final pólizas obra 
+o Fecha adquisición/instalación or the generic calendarBtn usage 
+o Fecha inicial pólizas AOM 
+o Fecha final pólizas AOM 
+P1 - Stepper Navigation 
+15. Stepper displays correct step after plate selection 
+o After selecting plate and clicking Siguiente. 
+o Assert: 
+▪ 
+Ubicación y registro 
+▪ 
+Sub paso 1 de 1 
+16. Location step field counter reflects required/filled behavior 
+o Start with empty required fields. 
+o Fill one required field at a time. 
+o Assert counter increases only when valid required fields are completed. 
+o Be careful: current test expects Campos13 de 13, but business rules 
+say only selected fields are required. This should be clarified against 
+actual product behavior. 
+17. User can navigate back without losing Location values 
+o Fill required Location fields. 
+o Go next. 
+o Go back if a back button exists. 
+o Assert Departamento, Municipio, Fotos, Enlace ARCGIS values persist. 
+18. Validation remains after returning to an incomplete step 
+o Leave Fotos empty. 
+o Try to continue. 
+
+===== PAGE 6 =====
+o Navigate away/back if possible. 
+o Assert required validation still blocks completion. 
+P1 - Modal / Finalization 
+19. Success modal appears after finalizing 
+o Complete valid flow. 
+o Click Finalizar. 
+o Assert modal/text: El activo se registró. 
+20. Cerrar modal closes success modal 
+o After success modal appears. 
+o Click button named Cerrar, close icon, or modal action. 
+o Assert modal is hidden. 
+o Assert user lands on expected page/list/detail view. 
+21. Finalizar cannot be double-submitted 
+o Complete valid flow. 
+o Click Finalizar. 
+o Assert button becomes disabled/loading or only one success response 
+occurs. 
+o Prevent duplicate asset creation. 
+P2 - Robustness / UX 
+22. Departamento filters Municipio options 
+o Select -ATLÁNTICO. 
+o Open Municipio. 
+o Assert -GALAPA appears. 
+o Optionally assert unrelated municipalities are not listed if business 
+rules require filtering. 
+23. Changing Departamento resets Municipio 
+o Select Departamento and Municipio. 
+this one is like advance and return to fill out camps it's all!
+
+===== PAGE 7 =====
+o Change Departamento. 
+o Assert Municipio clears or requires re-selection. 
+24. Required field errors disappear after valid input 
+o Trigger required error on Fotos. 
+o Fill valid URL/text. 
+o Assert error disappears and Siguiente becomes available. 
+25. Long optional text fields enforce max length but do not block if empty 
+o Validate fields like Descripción, Atributos de la red, Atributos apoyo. 
+o Empty should pass if optional. 
+o Max + 1 should truncate/reject. 
+How I’d Improve the Current Test Design 
+Create helpers instead of one giant recorded test: 
+async function login(page) {} 
+async function startCreateActive(page) {} 
+async function selectFirstPlate(page) {} 
+async function fillRequiredLocation(page) {} 
+async function expectMaxLength(locator, attemptedValue, expectedValue) {} 
+async function selectTodayFromDatePicker(page, containerTestId) {} 
+Then split tests by behavior: 
+test.describe('Create active - required flow', () => {}); 
+test.describe('Create active - Location validation', () => {}); 
+test.describe('Create active - max length validation', () => {}); 
+test.describe('Create active - date picker behavior', () => {}); 
+test.describe('Create active - final modal', () => {}); 
+Most important correction: don’t rely only on Campos13 de 13 as proof that the 
+business rule is correct. If the true requirement is only Departamento, Municipio, 
+Is this useful when before we created a critical flow with 
+limits to the fields? because this inputs are blocked and 
+earlier we hace mode type (keyboard) and mode copy-
+paste and fill mode???
+
+===== PAGE 8 =====
+Fotos, Enlace ARCGIS, and earlier Placa, then the automation should prove optional 
+fields can stay empty. 
+ 
+createAsset.spec.ts
+  - creates asset with required fields
+  - creates asset with all optional fields
+  - validates required fields
+  - prevents duplicated asset code/name
+  - handles cancel/back behavior
+  - verifies created asset details page
