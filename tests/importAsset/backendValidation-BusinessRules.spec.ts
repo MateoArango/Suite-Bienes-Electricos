@@ -2,8 +2,28 @@ import { test, expect } from '../fixtures';
 import path from 'path';
 import { ImportAssetPage } from '../pages/ImportAssetPage';
 
+
+const PLATE = '00000401';
+const REORDERED_TEMPLATE = path.join(
+    process.cwd(),
+    'fixtures',
+    'importFixtures',
+    'reordered-template.xlsx'
+);
+
+const EXPECTED_LOCATION = {
+    localidad: 'https://mateo.google.com/qyf-aynk-omd',
+    codigoDane: '5002',
+    // The article-resume API exposes the department catalog code: 05 = ANTIOQUIA.
+    departamento: '05',
+};
 const SPARSE_GOOD_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'rows_3of5_Populated-Good.xlsx');
 const SPARSE_ERROR_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'rows_3of5_Populated-Error.xlsx');
+const ASSET_ARTICLE_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'asset-article.xlsx');
+const INVALID_PLATE_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'invalidPlate.xlsx');
+const SAME_PLATE_TWICE_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'samePlateTwice.xlsx');
+const DANE_WRONG_MUNICIPALITY_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'dane-wrong-municipality.xlsx');
+const MUNICIPALITY_WRONG_DEPARTMENT_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'municipality-wrong-department.xlsx');
 const FILE_ERRORS_MESSAGE = 'Se encontraron errores en el archivo';
 const REQUIRED_FIELD_CASES = [
     { fileName: 'requiredField1-Error - 1.xlsx', column: 'ARTICULO' },
@@ -39,6 +59,102 @@ test('Import reports physical row number for sparse row errors', async ({ page }
     await expect(calibreErrorRow.locator('.col-row')).toHaveText('6');
 });
 
+test('Import rejects a plate that does not correspond to the article', async ({ page }) => {
+    const importAssetPage = new ImportAssetPage(page);
+
+    await importAssetPage.openImport();
+    await page.setInputFiles('input[type="file"]', ASSET_ARTICLE_FILE);
+    await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+    await expect(importAssetPage.submitButton).toBeDisabled();
+    await importAssetPage.errorsButton.click();
+
+    const articleErrorRow = page.locator('tr', {
+        has: page.locator('.col-column', { hasText: 'ARTICULO' }),
+    }).first();
+
+    await expect(articleErrorRow.locator('.col-row')).toHaveText('2');
+    await expect(articleErrorRow.locator('.col-column')).toHaveText('ARTICULO');
+    await expect(articleErrorRow.locator('.col-desc')).toContainText('no corresponde al artículo');
+});
+
+test('Import rejects a plate in Baja or Devolucion status', async ({ page }) => {
+    const importAssetPage = new ImportAssetPage(page);
+
+    await importAssetPage.openImport();
+    await page.setInputFiles('input[type="file"]', INVALID_PLATE_FILE);
+    await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+    await expect(importAssetPage.submitButton).toBeDisabled();
+    await importAssetPage.errorsButton.click();
+
+    const plateErrorRow = page.locator('tr', {
+        has: page.locator('.col-column', { hasText: 'PLACA' }),
+    }).first();
+
+    await expect(plateErrorRow.locator('.col-row')).toHaveText('2');
+    await expect(plateErrorRow.locator('.col-column')).toHaveText('PLACA');
+    await expect(plateErrorRow.locator('.col-desc')).toContainText('se encuentra en estado Baja o Devolucion');
+});
+
+test('Import rejects a plate repeated in the same workbook', async ({ page }) => {
+    const importAssetPage = new ImportAssetPage(page);
+
+    await importAssetPage.openImport();
+    await page.setInputFiles('input[type="file"]', SAME_PLATE_TWICE_FILE);
+    await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+    await expect(importAssetPage.submitButton).toBeDisabled();
+    await importAssetPage.errorsButton.click();
+
+    const duplicatePlateErrorRow = page.locator('tr', {
+        has: page.locator('.col-column', { hasText: 'PLACA' }),
+    }).first();
+
+    await expect(duplicatePlateErrorRow.locator('.col-row')).toHaveText('2');
+    await expect(duplicatePlateErrorRow.locator('.col-column')).toHaveText('PLACA');
+    await expect(duplicatePlateErrorRow.locator('.col-desc')).toContainText("La placa '00000535' está repetida");
+    await expect(duplicatePlateErrorRow.locator('.col-desc')).toContainText('filas: 2, 7');
+});
+
+test('Import rejects a DANE code that does not match the municipality', async ({ page }) => {
+    const importAssetPage = new ImportAssetPage(page);
+
+    await importAssetPage.openImport();
+    await page.setInputFiles('input[type="file"]', DANE_WRONG_MUNICIPALITY_FILE);
+    await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+    await expect(importAssetPage.submitButton).toBeDisabled();
+    await importAssetPage.errorsButton.click();
+
+    const daneErrorRow = page.locator('tr', {
+        has: page.locator('.col-column', { hasText: 'CODIGO_DANE' }),
+    }).first();
+
+    await expect(daneErrorRow.locator('.col-row')).toHaveText('2');
+    await expect(daneErrorRow.locator('.col-column')).toHaveText('CODIGO_DANE');
+    await expect(daneErrorRow.locator('.col-desc')).toContainText(
+        'El campo CODIGO_DANE no coincide con DEPARTAMENTO/MUNICIPIO'
+    );
+    await expect(daneErrorRow.locator('.col-desc')).toContainText('Esperado: 5001, recibido: 5002');
+});
+
+test('Import rejects a municipality that does not belong to the department', async ({ page }) => {
+    const importAssetPage = new ImportAssetPage(page);
+
+    await importAssetPage.openImport();
+    await page.setInputFiles('input[type="file"]', MUNICIPALITY_WRONG_DEPARTMENT_FILE);
+    await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+    await expect(importAssetPage.submitButton).toBeDisabled();
+    await importAssetPage.errorsButton.click();
+
+    const locationErrorRow = page.locator('tr', {
+        has: page.locator('.col-column', { hasText: 'DEPARTAMENTO/MUNICIPIO' }),
+    }).first();
+
+    await expect(locationErrorRow.locator('.col-row')).toHaveText('2');
+    await expect(locationErrorRow.locator('.col-column')).toHaveText('DEPARTAMENTO/MUNICIPIO');
+    await expect(locationErrorRow.locator('.col-desc')).toContainText(
+        'Los campos DEPARTAMENTO y MUNICIPIO deben contener una combinación DIVIPOLA válida del catálogo DANE'
+    );
+});
+
 for (const requiredFieldCase of REQUIRED_FIELD_CASES) {
     test(`Import rejects missing required field ${requiredFieldCase.column}`, async ({ page }) => {
         const importAssetPage = new ImportAssetPage(page);
@@ -59,3 +175,55 @@ for (const requiredFieldCase of REQUIRED_FIELD_CASES) {
         await expect(requiredFieldErrorRow.locator('.col-desc')).toContainText('obligatorio');
     });
 }
+
+test('Import maps reordered location columns by header', async ({
+    page,
+    apiContext,
+    authToken,
+}) => {
+    const importAssetPage = new ImportAssetPage(page);
+    let actualLocation: Partial<typeof EXPECTED_LOCATION> = {};
+
+    await importAssetPage.openImport();
+    await page.setInputFiles('input[type="file"]', REORDERED_TEMPLATE);
+    await importAssetPage.submitButton.click();
+    await expect(importAssetPage.successMessage).toBeVisible();
+
+    await expect.poll(async () => {
+        const response = await apiContext.get(
+            `/electrical-assets/article-resume/${PLATE}`,
+            { headers: { Authorization: `Bearer ${authToken}` } }
+        );
+
+        if (!response.ok()) {
+            return { status: response.status() };
+        }
+
+        const asset = await response.json();
+        const location = asset.ubicacionYRegistro;
+
+        actualLocation = {
+            localidad: location?.localidad,
+            codigoDane: String(location?.codigoDane ?? ''),
+            departamento: location?.departamento,
+        };
+
+        return actualLocation;
+    }, {
+        message: `Imported location fields for plate ${PLATE} did not match the reordered headers`,
+        timeout: 15_000,
+    }).toEqual(EXPECTED_LOCATION);
+/*
+    console.log('LOCALIDAD comparison:', {
+        expected: EXPECTED_LOCATION.localidad,
+        actual: actualLocation.localidad,
+    });
+    console.log('COD_LOCALIZACION_DANE comparison:', {
+        expected: EXPECTED_LOCATION.codigoDane,
+        actual: actualLocation.codigoDane,
+    });
+    console.log('DEPARTAMENTO comparison:', {
+        expected: EXPECTED_LOCATION.departamento,
+        actual: actualLocation.departamento,
+    }); */
+});
