@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures';
 import path from 'path';
+import fs from 'fs/promises';
 import { ImportAssetPage } from '../pages/ImportAssetPage';
 
 
@@ -24,7 +25,35 @@ const INVALID_PLATE_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures'
 const SAME_PLATE_TWICE_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'samePlateTwice.xlsx');
 const DANE_WRONG_MUNICIPALITY_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'dane-wrong-municipality.xlsx');
 const MUNICIPALITY_WRONG_DEPARTMENT_FILE = path.join(process.cwd(), 'fixtures', 'importFixtures', 'municipality-wrong-department.xlsx');
+const BOUNDARIES_DIR = path.join(process.cwd(), 'fixtures', 'importFixtures', 'boundaries');
 const FILE_ERRORS_MESSAGE = 'Se encontraron errores en el archivo';
+const BOUNDARY_CASES = [
+    {
+        fileName: 'text-max-plus-one.xlsx',
+        column: 'TIPO DE INSTALACI\u00d3N',
+        expectedError: 'longitud entre 0 y 8 caracteres (actual: 10)',
+    },
+    {
+        fileName: 'number-out-of-range.xlsx',
+        column: 'EDAD_AGOTADA',
+        expectedError: 'longitud entre 0 y 5 caracteres (actual: 6)',
+    },
+    {
+        fileName: 'number-decimal-not-allowed.xlsx',
+        column: 'VALOR ASOCIADO A SU MANTENIMIENTO',
+        expectedError: 'longitud entre 0 y 16 caracteres (actual: 17)',
+    },
+    {
+        fileName: 'decimal-invalid-format.xlsx',
+        column: 'VALOR ASOCIADO A SU MANTENIMIENTO',
+        expectedError: 'debe ser numérico. Ejemplos válidos: 1, 1.5 o 1,5.',
+    },
+    {
+        fileName: 'date-wrong-format.xlsx',
+        column: 'FECHA_INICIAL_POLIZAS_CONTRATO_DE_OBRA',
+        expectedError: 'debe tener formato dd/MM/yyyy. Ejemplo válido: 25/05/2026.',
+    },
+];
 const REQUIRED_FIELD_CASES = [
     { fileName: 'requiredField1-Error - 1.xlsx', column: 'ARTICULO' },
     { fileName: 'requiredField1-Error - 2.xlsx', column: 'N° PLACA' },
@@ -153,6 +182,65 @@ test('Import rejects a municipality that does not belong to the department', asy
     await expect(locationErrorRow.locator('.col-desc')).toContainText(
         'Los campos DEPARTAMENTO y MUNICIPIO deben contener una combinación DIVIPOLA válida del catálogo DANE'
     );
+});
+
+for (const boundaryCase of BOUNDARY_CASES) {
+    test(`Import rejects ${boundaryCase.fileName} violation in ${boundaryCase.column}`, async ({ page }) => {
+        const importAssetPage = new ImportAssetPage(page);
+        const filePath = path.join(BOUNDARIES_DIR, boundaryCase.fileName);
+
+        await importAssetPage.openImport();
+        await page.setInputFiles('input[type="file"]', filePath);
+        await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+        await expect(importAssetPage.submitButton).toBeDisabled();
+        await importAssetPage.errorsButton.click();
+
+        const boundaryErrorRow = page.locator('tr', {
+            has: page.locator('.col-column', { hasText: boundaryCase.column }),
+        }).first();
+
+        await expect(boundaryErrorRow.locator('.col-row')).toHaveText('2');
+        await expect(boundaryErrorRow.locator('.col-column')).toHaveText(boundaryCase.column);
+        await expect(boundaryErrorRow.locator('.col-desc')).toContainText(boundaryCase.expectedError);
+    });
+}
+
+test('Import exports multiple boundary errors from one workbook', async ({ page }) => {
+    const importAssetPage = new ImportAssetPage(page);
+    const filePath = path.join(BOUNDARIES_DIR, 'multiple-boundary-errors.xlsx');
+
+    await importAssetPage.openImport();
+    await page.setInputFiles('input[type="file"]', filePath);
+    await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+    await expect(importAssetPage.submitButton).toBeDisabled();
+    await importAssetPage.errorsButton.click();
+
+    const downloadPromise = page.waitForEvent('download');
+    await importAssetPage.exportErrors.click();
+    const download = await downloadPromise;
+    const downloadedFilePath = path.join(
+        process.cwd(),
+        'tmp',
+        'downloads',
+        download.suggestedFilename()
+    );
+
+    expect(download.suggestedFilename()).toContain('multiple-boundary-errors');
+    expect(download.suggestedFilename()).toMatch(/\.csv$/i);
+
+    await fs.mkdir(path.dirname(downloadedFilePath), { recursive: true });
+    await download.saveAs(downloadedFilePath);
+
+    const csvContent = await fs.readFile(downloadedFilePath, 'utf8');
+
+    expect(csvContent).toContain('PLANILLA (ARCGIS)');
+    expect(csvContent).toContain('longitud entre 0 y 100 caracteres (actual: 106)');
+    expect(csvContent).toContain('EDAD_TIPO_VIDA_UTIL');
+    expect(csvContent).toContain('longitud entre 0 y 5 caracteres (actual: 6)');
+    expect(csvContent).toContain('UC_VALOR_T');
+    expect(csvContent).toContain('debe ser numérico. Ejemplos válidos: 1, 1.5 o 1,5.');
+    expect(csvContent).toContain('FECHA_SUSCRIPCION_CONTRATO_AOM');
+    expect(csvContent).toContain('debe tener formato dd/MM/yyyy. Ejemplo válido: 25/05/2026.');
 });
 
 for (const requiredFieldCase of REQUIRED_FIELD_CASES) {

@@ -29,7 +29,9 @@ export class ImportAssetPage {
         this.cancelButton = page.getByTestId('importActiveCancelButton');
         this.submitButton = page.getByTestId('importActiveSubmitButton');
         this.errorsButton = page.getByRole('button', { name: 'Ver errores' });
-        this.exportErrors = page.getByRole('button', { name: 'Exportar errores' });
+        this.exportErrors = page
+            .getByRole('dialog')
+            .getByRole('button', { name: 'Exportar errores' });
         this.retryButton = page.getByRole('button', { name: 'Reintentar' });
         this.importButton = page.getByRole('button').filter({ hasText: 'upload' })
         this.successMessage = page.getByText('Archivo importado');
