@@ -1,0 +1,5 @@
+﻿Fila;Columna;Descripción del error
+2;PLANILLA (ARCGIS);El campo PLANILLA (ARCGIS) debe tener una longitud entre 0 y 100 caracteres (actual: 106).
+2;EDAD_TIPO_VIDA_UTIL;El campo EDAD_TIPO_VIDA_UTIL debe tener una longitud entre 0 y 5 caracteres (actual: 6).
+2;UC_VALOR_T;El campo UC_VALOR_T debe ser numérico. Ejemplos válidos: 1, 1.5 o 1,5.
+2;FECHA_SUSCRIPCION_CONTRATO_AOM;El campo FECHA_SUSCRIPCION_CONTRATO_AOM debe tener formato dd/MM/yyyy. Ejemplo válido: 25/05/2026.

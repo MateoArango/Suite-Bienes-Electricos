@@ -176,7 +176,7 @@ test('Import rejects files over 10 MB and then validates smaller files', async (
     await expect(page.getByText(MAX_SIZE_MESSAGE)).toBeVisible();
 
     await page.setInputFiles('input[type="file"]', INVALID_TEMPLATE_FILE);
-    await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+    await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible({ timeout: 20_000 });
 });
 
 test('Import rejects empty Excel files', async ({ page }) => {

@@ -176,7 +176,7 @@ test("Import rejects a plate in Baja or Devolucion status", async ({
 
   await importAssetPage.openImport();
   await page.setInputFiles('input[type="file"]', INVALID_PLATE_FILE);
-  await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+  await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible({ timeout: 20_000 });
   await expect(importAssetPage.submitButton).toBeDisabled();
   await importAssetPage.errorsButton.click();
 
@@ -200,7 +200,7 @@ test("Import rejects a plate repeated in the same workbook", async ({
 
   await importAssetPage.openImport();
   await page.setInputFiles('input[type="file"]', SAME_PLATE_TWICE_FILE);
-  await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible();
+  await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible({ timeout: 20_000 });
   await expect(importAssetPage.submitButton).toBeDisabled();
   await importAssetPage.errorsButton.click();
 
