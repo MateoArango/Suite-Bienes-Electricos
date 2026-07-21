@@ -1,0 +1,420 @@
+- generic [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e8]:
+      - generic [ref=e12]:
+        - text: Inventario de bienes eléctricos
+        - generic [ref=e13]: Consulte y gestione la georreferenciación de activos eléctricos de su organización de manera eficiente.
+      - generic [ref=e14]:
+        - button [ref=e16] [cursor=pointer]:
+          - img [ref=e17]: download
+        - button [ref=e21] [cursor=pointer]:
+          - img [ref=e22]: upload
+        - button "Crear activo" [ref=e26]:
+          - generic [ref=e28]:
+            - img [ref=e29]: add
+            - generic [ref=e30]: Crear activo
+        - separator [ref=e33]
+        - img "Profile" [ref=e36] [cursor=pointer]
+    - generic [ref=e38]:
+      - generic [ref=e44]:
+        - generic [ref=e46]:
+          - generic [ref=e49] [cursor=pointer]:
+            - img [ref=e50]: search
+            - textbox "Filtrar registros"
+          - generic [ref=e57]:
+            - img [ref=e58]: location_on
+            - generic [ref=e59]: Departamento
+            - img [ref=e60]: arrow_drop_down
+          - generic [ref=e67]:
+            - img [ref=e68]: apartment
+            - generic [ref=e69]: Municipio
+            - img [ref=e70]: arrow_drop_down
+        - table [ref=e72]:
+          - rowgroup [ref=e73]:
+            - row "Placa Código externo Descripción Departamento Municipio" [ref=e74]:
+              - columnheader "Placa" [ref=e75] [cursor=pointer]:
+                - button "Placa" [ref=e76]:
+                  - generic [ref=e77]: Placa
+                  - img [ref=e79]
+              - columnheader "Código externo" [ref=e81] [cursor=pointer]:
+                - button "Código externo" [ref=e82]:
+                  - generic [ref=e83]: Código externo
+                  - img [ref=e85]
+              - columnheader "Descripción" [ref=e87] [cursor=pointer]:
+                - button "Descripción" [ref=e88]:
+                  - generic [ref=e89]: Descripción
+                  - img [ref=e91]
+              - columnheader "Departamento" [ref=e93] [cursor=pointer]:
+                - button "Departamento" [ref=e94]:
+                  - generic [ref=e95]: Departamento
+                  - img [ref=e97]
+              - columnheader "Municipio" [ref=e99] [cursor=pointer]:
+                - button "Municipio" [ref=e100]:
+                  - generic [ref=e101]: Municipio
+                  - img [ref=e103]
+          - rowgroup [ref=e105]:
+            - row "00000016 4020010001 Plantas Eléctricas ATLÁNTICO BARANOA" [ref=e106]:
+              - cell "00000016" [ref=e107]
+              - cell "4020010001" [ref=e108]
+              - cell "Plantas Eléctricas" [ref=e109]
+              - cell "ATLÁNTICO" [ref=e110]
+              - cell "BARANOA" [ref=e111]
+            - row "00000041 4020010001 Plantas Eléctricas ARAUCA ARAUQUITA" [ref=e112]:
+              - cell "00000041" [ref=e113]
+              - cell "4020010001" [ref=e114]
+              - cell "Plantas Eléctricas" [ref=e115]
+              - cell "ARAUCA" [ref=e116]
+              - cell "ARAUQUITA" [ref=e117]
+            - row "00000076 4020010001 Plantas Eléctricas AMAZONAS EL ENCANTO" [ref=e118]:
+              - cell "00000076" [ref=e119]
+              - cell "4020010001" [ref=e120]
+              - cell "Plantas Eléctricas" [ref=e121]
+              - cell "AMAZONAS" [ref=e122]
+              - cell "EL ENCANTO" [ref=e123]
+            - row "00000096 4020010001 Plantas Eléctricas CASANARE HATO COROZAL" [ref=e124]:
+              - cell "00000096" [ref=e125]
+              - cell "4020010001" [ref=e126]
+              - cell "Plantas Eléctricas" [ref=e127]
+              - cell "CASANARE" [ref=e128]
+              - cell "HATO COROZAL" [ref=e129]
+            - row "00000116 4020010001 Plantas Eléctricas ARAUCA PUERTO RONDÁN" [ref=e130]:
+              - cell "00000116" [ref=e131]
+              - cell "4020010001" [ref=e132]
+              - cell "Plantas Eléctricas" [ref=e133]
+              - cell "ARAUCA" [ref=e134]
+              - cell "PUERTO RONDÁN" [ref=e135]
+            - row "00000126 4020010001 Plantas Eléctricas AMAZONAS EL ENCANTO" [ref=e136]:
+              - cell "00000126" [ref=e137]
+              - cell "4020010001" [ref=e138]
+              - cell "Plantas Eléctricas" [ref=e139]
+              - cell "AMAZONAS" [ref=e140]
+              - cell "EL ENCANTO" [ref=e141]
+            - row "00000034 4020010001 Plantas Eléctricas ATLÁNTICO POLONUEVO" [ref=e142]:
+              - cell "00000034" [ref=e143]
+              - cell "4020010001" [ref=e144]
+              - cell "Plantas Eléctricas" [ref=e145]
+              - cell "ATLÁNTICO" [ref=e146]
+              - cell "POLONUEVO" [ref=e147]
+            - row "00000085 4020010001 Plantas Eléctricas AMAZONAS EL ENCANTO" [ref=e148]:
+              - cell "00000085" [ref=e149]
+              - cell "4020010001" [ref=e150]
+              - cell "Plantas Eléctricas" [ref=e151]
+              - cell "AMAZONAS" [ref=e152]
+              - cell "EL ENCANTO" [ref=e153]
+            - row "00000117 4020010001 Plantas Eléctricas ARAUCA PUERTO RONDÁN" [ref=e154]:
+              - cell "00000117" [ref=e155]
+              - cell "4020010001" [ref=e156]
+              - cell "Plantas Eléctricas" [ref=e157]
+              - cell "ARAUCA" [ref=e158]
+              - cell "PUERTO RONDÁN" [ref=e159]
+            - row "00000196 4020010001 Plantas Eléctricas VICHADA CUMARIBO" [ref=e160]:
+              - cell "00000196" [ref=e161]
+              - cell "4020010001" [ref=e162]
+              - cell "Plantas Eléctricas" [ref=e163]
+              - cell "VICHADA" [ref=e164]
+              - cell "CUMARIBO" [ref=e165]
+            - row "00000019 4020010001 Plantas Eléctricas ATLÁNTICO GALAPA" [ref=e166]:
+              - cell "00000019" [ref=e167]
+              - cell "4020010001" [ref=e168]
+              - cell "Plantas Eléctricas" [ref=e169]
+              - cell "ATLÁNTICO" [ref=e170]
+              - cell "GALAPA" [ref=e171]
+            - row "00000109 4020010001 Plantas Eléctricas ANTIOQUIA ABEJORRAL" [ref=e172]:
+              - cell "00000109" [ref=e173]
+              - cell "4020010001" [ref=e174]
+              - cell "Plantas Eléctricas" [ref=e175]
+              - cell "ANTIOQUIA" [ref=e176]
+              - cell "ABEJORRAL" [ref=e177]
+            - row "00000313 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e178]:
+              - cell "00000313" [ref=e179]
+              - cell "4020010001" [ref=e180]
+              - cell "Plantas Eléctricas" [ref=e181]
+              - cell "VAUPÉS" [ref=e182]
+              - cell "CARURU" [ref=e183]
+            - row "00000121 4020010001 Plantas Eléctricas ARAUCA PUERTO RONDÁN" [ref=e184]:
+              - cell "00000121" [ref=e185]
+              - cell "4020010001" [ref=e186]
+              - cell "Plantas Eléctricas" [ref=e187]
+              - cell "ARAUCA" [ref=e188]
+              - cell "PUERTO RONDÁN" [ref=e189]
+            - row "00000189 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e190]:
+              - cell "00000189" [ref=e191]
+              - cell "4020010001" [ref=e192]
+              - cell "Plantas Eléctricas" [ref=e193]
+              - cell "VAUPÉS" [ref=e194]
+              - cell "CARURU" [ref=e195]
+            - row "00000271 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e196]:
+              - cell "00000271" [ref=e197]
+              - cell "4020010001" [ref=e198]
+              - cell "Plantas Eléctricas" [ref=e199]
+              - cell "VAUPÉS" [ref=e200]
+              - cell "CARURU" [ref=e201]
+            - row "00000110 4020010001 Plantas Eléctricas ANTIOQUIA ALEJANDRÍA" [ref=e202]:
+              - cell "00000110" [ref=e203]
+              - cell "4020010001" [ref=e204]
+              - cell "Plantas Eléctricas" [ref=e205]
+              - cell "ANTIOQUIA" [ref=e206]
+              - cell "ALEJANDRÍA" [ref=e207]
+            - row "00000277 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e208]:
+              - cell "00000277" [ref=e209]
+              - cell "4020010001" [ref=e210]
+              - cell "Plantas Eléctricas" [ref=e211]
+              - cell "VAUPÉS" [ref=e212]
+              - cell "CARURU" [ref=e213]
+            - row "00000037 4020010001 Plantas Eléctricas CHOCÓ ACANDÍ" [ref=e214]:
+              - cell "00000037" [ref=e215]
+              - cell "4020010001" [ref=e216]
+              - cell "Plantas Eléctricas" [ref=e217]
+              - cell "CHOCÓ" [ref=e218]
+              - cell "ACANDÍ" [ref=e219]
+            - row "00000120 4020010001 Plantas Eléctricas ARAUCA PUERTO RONDÁN" [ref=e220]:
+              - cell "00000120" [ref=e221]
+              - cell "4020010001" [ref=e222]
+              - cell "Plantas Eléctricas" [ref=e223]
+              - cell "ARAUCA" [ref=e224]
+              - cell "PUERTO RONDÁN" [ref=e225]
+            - row "00000185 4020010001 Plantas Eléctricas VICHADA CUMARIBO" [ref=e226]:
+              - cell "00000185" [ref=e227]
+              - cell "4020010001" [ref=e228]
+              - cell "Plantas Eléctricas" [ref=e229]
+              - cell "VICHADA" [ref=e230]
+              - cell "CUMARIBO" [ref=e231]
+            - row "00000243 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e232]:
+              - cell "00000243" [ref=e233]
+              - cell "4020010001" [ref=e234]
+              - cell "Plantas Eléctricas" [ref=e235]
+              - cell "VAUPÉS" [ref=e236]
+              - cell "CARURU" [ref=e237]
+            - row "00000244 4020010001 Plantas Eléctricas VICHADA CUMARIBO" [ref=e238]:
+              - cell "00000244" [ref=e239]
+              - cell "4020010001" [ref=e240]
+              - cell "Plantas Eléctricas" [ref=e241]
+              - cell "VICHADA" [ref=e242]
+              - cell "CUMARIBO" [ref=e243]
+            - row "00000246 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e244]:
+              - cell "00000246" [ref=e245]
+              - cell "4020010001" [ref=e246]
+              - cell "Plantas Eléctricas" [ref=e247]
+              - cell "VAUPÉS" [ref=e248]
+              - cell "CARURU" [ref=e249]
+            - row "00000249 4020010001 Plantas Eléctricas VICHADA CUMARIBO" [ref=e250]:
+              - cell "00000249" [ref=e251]
+              - cell "4020010001" [ref=e252]
+              - cell "Plantas Eléctricas" [ref=e253]
+              - cell "VICHADA" [ref=e254]
+              - cell "CUMARIBO" [ref=e255]
+        - generic [ref=e259]:
+          - button [disabled]:
+            - img: chevron_left
+          - generic [ref=e260]:
+            - button "1" [ref=e261] [cursor=pointer]: "1"
+            - button "2" [ref=e264] [cursor=pointer]: "2"
+            - button "3" [ref=e267] [cursor=pointer]: "3"
+            - button "4" [ref=e270] [cursor=pointer]: "4"
+            - button "5" [ref=e273] [cursor=pointer]: "5"
+            - button "6" [ref=e276] [cursor=pointer]: "6"
+            - button "..." [disabled]: ...
+            - button "408" [ref=e279] [cursor=pointer]: "408"
+          - button [ref=e282] [cursor=pointer]:
+            - img [ref=e283]: chevron_right
+      - complementary [ref=e286]:
+        - generic [ref=e287]:
+          - generic [ref=e288]:
+            - heading "Generar reporte" [level=2] [ref=e289]
+            - generic [ref=e290] [cursor=pointer]: close
+          - generic [ref=e296]:
+            - generic [ref=e297]: Periodo de consulta
+            - generic [ref=e299]:
+              - generic [ref=e303]:
+                - generic [ref=e304]: Fecha Inicial
+                - textbox "Fecha Inicial" [ref=e306]
+                - button "Open calendar" [ref=e309] [cursor=pointer]:
+                  - img [ref=e310]
+              - generic [ref=e318]:
+                - generic [ref=e319]: Fecha final
+                - textbox "Fecha final" [ref=e321]
+                - button "Open calendar" [ref=e324] [cursor=pointer]:
+                  - img [ref=e325]
+            - generic [ref=e330]: Ubicación
+            - generic [ref=e334] [cursor=pointer]:
+              - generic [ref=e335]: Departamento
+              - combobox "Departamento" [ref=e337]:
+                - img [ref=e343]
+            - generic [ref=e347]:
+              - generic:
+                - generic:
+                  - generic [ref=e348]: Municipio
+                  - generic:
+                    - combobox "Municipio" [disabled]:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - img
+            - generic [ref=e350]:
+              - generic [ref=e354]:
+                - generic [ref=e355]: Número de placa
+                - textbox "Número de placa" [ref=e357]
+              - generic [ref=e362] [cursor=pointer]:
+                - generic [ref=e363]: Estado del activo
+                - combobox "Estado del activo" [ref=e365]:
+                  - img [ref=e371]
+            - generic [ref=e377] [cursor=pointer]:
+              - generic [ref=e378]: Grupo del activo
+              - combobox "Grupo del activo" [expanded] [active] [ref=e380]:
+                - img [ref=e386]
+            - generic [ref=e389]:
+              - button "Cancelar" [ref=e391]:
+                - generic [ref=e394]: Cancelar
+              - button "Limpiar filtros" [ref=e398]:
+                - generic [ref=e401]: Limpiar filtros
+              - button "Generar reporte (XLS)" [ref=e405]:
+                - generic [ref=e408]: Generar reporte (XLS)
+  - listbox "Grupo del activo" [ref=e540]:
+    - option "Ninguno" [ref=e541] [cursor=pointer]:
+      - generic [ref=e542]: Ninguno
+    - option "Bienes de control por politica contable" [ref=e543] [cursor=pointer]:
+      - generic [ref=e544]: Bienes de control por politica contable
+    - option "Bodegas" [ref=e545] [cursor=pointer]:
+      - generic [ref=e546]: Bodegas
+    - option "CONSUMO" [ref=e547] [cursor=pointer]:
+      - generic [ref=e548]: CONSUMO
+    - option "Consumo" [ref=e549] [cursor=pointer]:
+      - generic [ref=e550]: Consumo
+    - option "ELEMENTOS DE ASEO Y CAFETERÍA (CC)" [ref=e551] [cursor=pointer]:
+      - generic [ref=e552]: ELEMENTOS DE ASEO Y CAFETERÍA (CC)
+    - option "ELEMENTOS DE CAFETERIA Y ASEO" [ref=e553] [cursor=pointer]:
+      - generic [ref=e554]: ELEMENTOS DE CAFETERIA Y ASEO
+    - option "ELEMENTOS DE DOTACION, SALUD O SST" [ref=e555] [cursor=pointer]:
+      - generic [ref=e556]: ELEMENTOS DE DOTACION, SALUD O SST
+    - option "ELEMENTOS DECORATIVOS" [ref=e557] [cursor=pointer]:
+      - generic [ref=e558]: ELEMENTOS DECORATIVOS
+    - option "ELEMENTOS Y ACCESORIOS PARA DEPORTE" [ref=e559] [cursor=pointer]:
+      - generic [ref=e560]: ELEMENTOS Y ACCESORIOS PARA DEPORTE
+    - option "ELEMENTOS Y ACCESORIOS PARA EQUIPOS" [ref=e561] [cursor=pointer]:
+      - generic [ref=e562]: ELEMENTOS Y ACCESORIOS PARA EQUIPOS
+    - option "Edificios y Casas" [ref=e563] [cursor=pointer]:
+      - generic [ref=e564]: Edificios y Casas
+    - option "Edificios y Casas AOM" [ref=e565] [cursor=pointer]:
+      - generic [ref=e566]: Edificios y Casas AOM
+    - option "Edificios y casas" [ref=e567] [cursor=pointer]:
+      - generic [ref=e568]: Edificios y casas
+    - option "Equipo de Computación" [ref=e569] [cursor=pointer]:
+      - generic [ref=e570]: Equipo de Computación
+    - option "Equipo de Computación" [ref=e571] [cursor=pointer]:
+      - generic [ref=e572]: Equipo de Computación
+    - option "Equipo de Transporte" [ref=e573] [cursor=pointer]:
+      - generic [ref=e574]: Equipo de Transporte
+    - option "Equipo de Transporte Terrestre" [ref=e575] [cursor=pointer]:
+      - generic [ref=e576]: Equipo de Transporte Terrestre
+    - option "Equipos Electronicos y Comunicacion" [ref=e577] [cursor=pointer]:
+      - generic [ref=e578]: Equipos Electronicos y Comunicacion
+    - option "Equipos Electronicos y Comunicacion" [ref=e579] [cursor=pointer]:
+      - generic [ref=e580]: Equipos Electronicos y Comunicacion
+    - option "Equipos de Comunicacion y computo (CC)" [ref=e581] [cursor=pointer]:
+      - generic [ref=e582]: Equipos de Comunicacion y computo (CC)
+    - option "Equipos de Urgencia" [ref=e583] [cursor=pointer]:
+      - generic [ref=e584]: Equipos de Urgencia
+    - option "Equipos de Urgencia" [ref=e585] [cursor=pointer]:
+      - generic [ref=e586]: Equipos de Urgencia
+    - option "Equipos de telemetría y monitoreo" [ref=e587] [cursor=pointer]:
+      - generic [ref=e588]: Equipos de telemetría y monitoreo
+    - option "Equipos y Accesorios de Medicion Tecnica" [ref=e589] [cursor=pointer]:
+      - generic [ref=e590]: Equipos y Accesorios de Medicion Tecnica
+    - option "Equipos y Accesorios de Medicion Tecnica" [ref=e591] [cursor=pointer]:
+      - generic [ref=e592]: Equipos y Accesorios de Medicion Tecnica
+    - option "Equipos y Maquinas para Comedor y Cocina" [ref=e593] [cursor=pointer]:
+      - generic [ref=e594]: Equipos y Maquinas para Comedor y Cocina
+    - option "Equipos y Maquinas para Comedor y Cocina" [ref=e595] [cursor=pointer]:
+      - generic [ref=e596]: Equipos y Maquinas para Comedor y Cocina
+    - option "Equipos y Maquinas para Contruccion e Industria" [ref=e597] [cursor=pointer]:
+      - generic [ref=e598]: Equipos y Maquinas para Contruccion e Industria
+    - option "Equipos y Maquinas para Contruccion e Industria" [ref=e599] [cursor=pointer]:
+      - generic [ref=e600]: Equipos y Maquinas para Contruccion e Industria
+    - option "Equipos y Máquinas de Oficina" [ref=e601] [cursor=pointer]:
+      - generic [ref=e602]: Equipos y Máquinas de Oficina
+    - option "Equipos y Máquinas de Oficina" [ref=e603] [cursor=pointer]:
+      - generic [ref=e604]: Equipos y Máquinas de Oficina
+    - option "GASOLINA, GRASAS, LUBRICANTES Y/O COMB" [ref=e605] [cursor=pointer]:
+      - generic [ref=e606]: GASOLINA, GRASAS, LUBRICANTES Y/O COMB
+    - option "HERRAMIENTAS Y ACCESORIOS (CC)" [ref=e607] [cursor=pointer]:
+      - generic [ref=e608]: HERRAMIENTAS Y ACCESORIOS (CC)
+    - option "HERRAMIENTAS Y EQUIPOS MENORES" [ref=e609] [cursor=pointer]:
+      - generic [ref=e610]: HERRAMIENTAS Y EQUIPOS MENORES
+    - option "Herramientas y Accesorios" [ref=e611] [cursor=pointer]:
+      - generic [ref=e612]: Herramientas y Accesorios
+    - option "Herramientas y Accesorios" [ref=e613] [cursor=pointer]:
+      - generic [ref=e614]: Herramientas y Accesorios
+    - option "LICENCIA" [ref=e615] [cursor=pointer]:
+      - generic [ref=e616]: LICENCIA
+    - option "LICENCIA A 1 AÑOS" [ref=e617] [cursor=pointer]:
+      - generic [ref=e618]: LICENCIA A 1 AÑOS
+    - option "LICENCIA A 2 AÑOS" [ref=e619] [cursor=pointer]:
+      - generic [ref=e620]: LICENCIA A 2 AÑOS
+    - option "LICENCIA A 3 AÑOS" [ref=e621] [cursor=pointer]:
+      - generic [ref=e622]: LICENCIA A 3 AÑOS
+    - option "LICENCIA A 4 AÑOS" [ref=e623] [cursor=pointer]:
+      - generic [ref=e624]: LICENCIA A 4 AÑOS
+    - option "LICENCIA A 5 AÑOS (SOFTWARE)" [ref=e625] [cursor=pointer]:
+      - generic [ref=e626]: LICENCIA A 5 AÑOS (SOFTWARE)
+    - option "Licencias, Software y Suscripciones" [ref=e627] [cursor=pointer]:
+      - generic [ref=e628]: Licencias, Software y Suscripciones
+    - option "Líneas de Transmisión" [ref=e629] [cursor=pointer]:
+      - generic [ref=e630]: Líneas de Transmisión
+    - option "MATERIALES DE CONSTRUCCION O INSUMOS" [ref=e631] [cursor=pointer]:
+      - generic [ref=e632]: MATERIALES DE CONSTRUCCION O INSUMOS
+    - option "MUEBLES, ENSERES Y EQUIPOS DE OFICINA (CC)" [ref=e633] [cursor=pointer]:
+      - generic [ref=e634]: MUEBLES, ENSERES Y EQUIPOS DE OFICINA (CC)
+    - option "Muebles de Oficina" [ref=e635] [cursor=pointer]:
+      - generic [ref=e636]: Muebles de Oficina
+    - option "Muebles y Enseres" [ref=e637] [cursor=pointer]:
+      - generic [ref=e638]: Muebles y Enseres
+    - option "Muebles y Enseres" [ref=e639] [cursor=pointer]:
+      - generic [ref=e640]: Muebles y Enseres
+    - option "OTROS ELEMENTOS DE CONSUMO" [ref=e641] [cursor=pointer]:
+      - generic [ref=e642]: OTROS ELEMENTOS DE CONSUMO
+    - option "Oficinas" [ref=e643] [cursor=pointer]:
+      - generic [ref=e644]: Oficinas
+    - option "Oficinas" [ref=e645] [cursor=pointer]:
+      - generic [ref=e646]: Oficinas
+    - option "Otros Devolutivos" [ref=e647] [cursor=pointer]:
+      - generic [ref=e648]: Otros Devolutivos
+    - option "PAPELERIA Y UTILES DE OFICINA" [ref=e649] [cursor=pointer]:
+      - generic [ref=e650]: PAPELERIA Y UTILES DE OFICINA
+    - option "PCH Pequeñas Centrales Hidroeléctricas" [ref=e651] [cursor=pointer]:
+      - generic [ref=e652]: PCH Pequeñas Centrales Hidroeléctricas
+    - option "Papelería" [ref=e653] [cursor=pointer]:
+      - generic [ref=e654]: Papelería
+    - option "Plantas" [ref=e655] [cursor=pointer]:
+      - generic [ref=e656]: Plantas
+    - option "Plantas de Generación" [ref=e657] [cursor=pointer]:
+      - generic [ref=e658]: Plantas de Generación
+    - option "REPUESTOS PARA MAQUINARIA Y EQUIPO" [ref=e659] [cursor=pointer]:
+      - generic [ref=e660]: REPUESTOS PARA MAQUINARIA Y EQUIPO
+    - option "Redes de Distribución BT(baja tensión)" [ref=e661] [cursor=pointer]:
+      - generic [ref=e662]: Redes de Distribución BT(baja tensión)
+    - option "Redes de Distribución MT(media tensión)" [ref=e663] [cursor=pointer]:
+      - generic [ref=e664]: Redes de Distribución MT(media tensión)
+    - option "Redes y Lineas" [ref=e665] [cursor=pointer]:
+      - generic [ref=e666]: Redes y Lineas
+    - option "Respuestos de Vehículo" [ref=e667] [cursor=pointer]:
+      - generic [ref=e668]: Respuestos de Vehículo
+    - option "Sistemas Eólicos" [ref=e669] [cursor=pointer]:
+      - generic [ref=e670]: Sistemas Eólicos
+    - option "Sistemas Eólicos" [ref=e671] [cursor=pointer]:
+      - generic [ref=e672]: Sistemas Eólicos
+    - option "Sistemas Fotovoltaicos Concentrados" [ref=e673] [cursor=pointer]:
+      - generic [ref=e674]: Sistemas Fotovoltaicos Concentrados
+    - option "Sistemas Fotovoltaicos Individuales" [ref=e675] [cursor=pointer]:
+      - generic [ref=e676]: Sistemas Fotovoltaicos Individuales
+    - option "Sistemas Fotovoltaicos Individuales" [ref=e677] [cursor=pointer]:
+      - generic [ref=e678]: Sistemas Fotovoltaicos Individuales
+    - option "Sistemas de Purificacion de Agua" [ref=e679] [cursor=pointer]:
+      - generic [ref=e680]: Sistemas de Purificacion de Agua
+    - option "Subestaciones" [ref=e681] [cursor=pointer]:
+      - generic [ref=e682]: Subestaciones
+    - option "Subestación" [ref=e683] [cursor=pointer]:
+      - generic [ref=e684]: Subestación
+    - option "Terrenos" [ref=e685] [cursor=pointer]:
+      - generic [ref=e686]: Terrenos
+    - option "Urbanos" [ref=e687] [cursor=pointer]:
+      - generic [ref=e688]: Urbanos
