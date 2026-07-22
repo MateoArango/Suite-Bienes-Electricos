@@ -1,0 +1,536 @@
+- generic [ref=e1]:
+  - generic [ref=e5]:
+    - generic [ref=e8]:
+      - generic [ref=e12]:
+        - text: Inventario de bienes eléctricos
+        - generic [ref=e13]: Consulte y gestione la georreferenciación de activos eléctricos de su organización de manera eficiente.
+      - generic [ref=e14]:
+        - button [ref=e16] [cursor=pointer]:
+          - img [ref=e17]: download
+        - button [ref=e21] [cursor=pointer]:
+          - img [ref=e22]: upload
+        - button "Crear activo" [ref=e26]:
+          - generic [ref=e28]:
+            - img [ref=e29]: add
+            - generic [ref=e30]: Crear activo
+        - separator [ref=e33]
+        - img "Profile" [ref=e36] [cursor=pointer]
+    - generic [ref=e38]:
+      - generic [ref=e44]:
+        - generic [ref=e46]:
+          - generic [ref=e49] [cursor=pointer]:
+            - img [ref=e50]: search
+            - textbox "Filtrar registros"
+          - generic [ref=e57]:
+            - img [ref=e58]: location_on
+            - generic [ref=e59]: Departamento
+            - img [ref=e60]: arrow_drop_down
+          - generic [ref=e67]:
+            - img [ref=e68]: apartment
+            - generic [ref=e69]: Municipio
+            - img [ref=e70]: arrow_drop_down
+        - table [ref=e72]:
+          - rowgroup [ref=e73]:
+            - row "Placa Código externo Descripción Departamento Municipio" [ref=e74]:
+              - columnheader "Placa" [ref=e75] [cursor=pointer]:
+                - button "Placa" [ref=e76]:
+                  - generic [ref=e77]: Placa
+                  - img [ref=e79]
+              - columnheader "Código externo" [ref=e81] [cursor=pointer]:
+                - button "Código externo" [ref=e82]:
+                  - generic [ref=e83]: Código externo
+                  - img [ref=e85]
+              - columnheader "Descripción" [ref=e87] [cursor=pointer]:
+                - button "Descripción" [ref=e88]:
+                  - generic [ref=e89]: Descripción
+                  - img [ref=e91]
+              - columnheader "Departamento" [ref=e93] [cursor=pointer]:
+                - button "Departamento" [ref=e94]:
+                  - generic [ref=e95]: Departamento
+                  - img [ref=e97]
+              - columnheader "Municipio" [ref=e99] [cursor=pointer]:
+                - button "Municipio" [ref=e100]:
+                  - generic [ref=e101]: Municipio
+                  - img [ref=e103]
+          - rowgroup [ref=e105]:
+            - row "00000016 4020010001 Plantas Eléctricas ATLÁNTICO BARANOA" [ref=e106]:
+              - cell "00000016" [ref=e107]
+              - cell "4020010001" [ref=e108]
+              - cell "Plantas Eléctricas" [ref=e109]
+              - cell "ATLÁNTICO" [ref=e110]
+              - cell "BARANOA" [ref=e111]
+            - row "00000041 4020010001 Plantas Eléctricas ARAUCA ARAUQUITA" [ref=e112]:
+              - cell "00000041" [ref=e113]
+              - cell "4020010001" [ref=e114]
+              - cell "Plantas Eléctricas" [ref=e115]
+              - cell "ARAUCA" [ref=e116]
+              - cell "ARAUQUITA" [ref=e117]
+            - row "00000076 4020010001 Plantas Eléctricas AMAZONAS EL ENCANTO" [ref=e118]:
+              - cell "00000076" [ref=e119]
+              - cell "4020010001" [ref=e120]
+              - cell "Plantas Eléctricas" [ref=e121]
+              - cell "AMAZONAS" [ref=e122]
+              - cell "EL ENCANTO" [ref=e123]
+            - row "00000096 4020010001 Plantas Eléctricas CASANARE HATO COROZAL" [ref=e124]:
+              - cell "00000096" [ref=e125]
+              - cell "4020010001" [ref=e126]
+              - cell "Plantas Eléctricas" [ref=e127]
+              - cell "CASANARE" [ref=e128]
+              - cell "HATO COROZAL" [ref=e129]
+            - row "00000116 4020010001 Plantas Eléctricas ARAUCA PUERTO RONDÁN" [ref=e130]:
+              - cell "00000116" [ref=e131]
+              - cell "4020010001" [ref=e132]
+              - cell "Plantas Eléctricas" [ref=e133]
+              - cell "ARAUCA" [ref=e134]
+              - cell "PUERTO RONDÁN" [ref=e135]
+            - row "00000126 4020010001 Plantas Eléctricas AMAZONAS EL ENCANTO" [ref=e136]:
+              - cell "00000126" [ref=e137]
+              - cell "4020010001" [ref=e138]
+              - cell "Plantas Eléctricas" [ref=e139]
+              - cell "AMAZONAS" [ref=e140]
+              - cell "EL ENCANTO" [ref=e141]
+            - row "00000034 4020010001 Plantas Eléctricas ATLÁNTICO POLONUEVO" [ref=e142]:
+              - cell "00000034" [ref=e143]
+              - cell "4020010001" [ref=e144]
+              - cell "Plantas Eléctricas" [ref=e145]
+              - cell "ATLÁNTICO" [ref=e146]
+              - cell "POLONUEVO" [ref=e147]
+            - row "00000085 4020010001 Plantas Eléctricas AMAZONAS EL ENCANTO" [ref=e148]:
+              - cell "00000085" [ref=e149]
+              - cell "4020010001" [ref=e150]
+              - cell "Plantas Eléctricas" [ref=e151]
+              - cell "AMAZONAS" [ref=e152]
+              - cell "EL ENCANTO" [ref=e153]
+            - row "00000117 4020010001 Plantas Eléctricas ARAUCA PUERTO RONDÁN" [ref=e154]:
+              - cell "00000117" [ref=e155]
+              - cell "4020010001" [ref=e156]
+              - cell "Plantas Eléctricas" [ref=e157]
+              - cell "ARAUCA" [ref=e158]
+              - cell "PUERTO RONDÁN" [ref=e159]
+            - row "00000196 4020010001 Plantas Eléctricas VICHADA CUMARIBO" [ref=e160]:
+              - cell "00000196" [ref=e161]
+              - cell "4020010001" [ref=e162]
+              - cell "Plantas Eléctricas" [ref=e163]
+              - cell "VICHADA" [ref=e164]
+              - cell "CUMARIBO" [ref=e165]
+            - row "00000019 4020010001 Plantas Eléctricas ATLÁNTICO GALAPA" [ref=e166]:
+              - cell "00000019" [ref=e167]
+              - cell "4020010001" [ref=e168]
+              - cell "Plantas Eléctricas" [ref=e169]
+              - cell "ATLÁNTICO" [ref=e170]
+              - cell "GALAPA" [ref=e171]
+            - row "00000109 4020010001 Plantas Eléctricas ANTIOQUIA ABEJORRAL" [ref=e172]:
+              - cell "00000109" [ref=e173]
+              - cell "4020010001" [ref=e174]
+              - cell "Plantas Eléctricas" [ref=e175]
+              - cell "ANTIOQUIA" [ref=e176]
+              - cell "ABEJORRAL" [ref=e177]
+            - row "00000313 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e178]:
+              - cell "00000313" [ref=e179]
+              - cell "4020010001" [ref=e180]
+              - cell "Plantas Eléctricas" [ref=e181]
+              - cell "VAUPÉS" [ref=e182]
+              - cell "CARURU" [ref=e183]
+            - row "00000121 4020010001 Plantas Eléctricas ARAUCA PUERTO RONDÁN" [ref=e184]:
+              - cell "00000121" [ref=e185]
+              - cell "4020010001" [ref=e186]
+              - cell "Plantas Eléctricas" [ref=e187]
+              - cell "ARAUCA" [ref=e188]
+              - cell "PUERTO RONDÁN" [ref=e189]
+            - row "00000189 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e190]:
+              - cell "00000189" [ref=e191]
+              - cell "4020010001" [ref=e192]
+              - cell "Plantas Eléctricas" [ref=e193]
+              - cell "VAUPÉS" [ref=e194]
+              - cell "CARURU" [ref=e195]
+            - row "00000271 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e196]:
+              - cell "00000271" [ref=e197]
+              - cell "4020010001" [ref=e198]
+              - cell "Plantas Eléctricas" [ref=e199]
+              - cell "VAUPÉS" [ref=e200]
+              - cell "CARURU" [ref=e201]
+            - row "00000110 4020010001 Plantas Eléctricas ANTIOQUIA ALEJANDRÍA" [ref=e202]:
+              - cell "00000110" [ref=e203]
+              - cell "4020010001" [ref=e204]
+              - cell "Plantas Eléctricas" [ref=e205]
+              - cell "ANTIOQUIA" [ref=e206]
+              - cell "ALEJANDRÍA" [ref=e207]
+            - row "00000277 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e208]:
+              - cell "00000277" [ref=e209]
+              - cell "4020010001" [ref=e210]
+              - cell "Plantas Eléctricas" [ref=e211]
+              - cell "VAUPÉS" [ref=e212]
+              - cell "CARURU" [ref=e213]
+            - row "00000037 4020010001 Plantas Eléctricas CHOCÓ ACANDÍ" [ref=e214]:
+              - cell "00000037" [ref=e215]
+              - cell "4020010001" [ref=e216]
+              - cell "Plantas Eléctricas" [ref=e217]
+              - cell "CHOCÓ" [ref=e218]
+              - cell "ACANDÍ" [ref=e219]
+            - row "00000120 4020010001 Plantas Eléctricas ARAUCA PUERTO RONDÁN" [ref=e220]:
+              - cell "00000120" [ref=e221]
+              - cell "4020010001" [ref=e222]
+              - cell "Plantas Eléctricas" [ref=e223]
+              - cell "ARAUCA" [ref=e224]
+              - cell "PUERTO RONDÁN" [ref=e225]
+            - row "00000185 4020010001 Plantas Eléctricas VICHADA CUMARIBO" [ref=e226]:
+              - cell "00000185" [ref=e227]
+              - cell "4020010001" [ref=e228]
+              - cell "Plantas Eléctricas" [ref=e229]
+              - cell "VICHADA" [ref=e230]
+              - cell "CUMARIBO" [ref=e231]
+            - row "00000243 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e232]:
+              - cell "00000243" [ref=e233]
+              - cell "4020010001" [ref=e234]
+              - cell "Plantas Eléctricas" [ref=e235]
+              - cell "VAUPÉS" [ref=e236]
+              - cell "CARURU" [ref=e237]
+            - row "00000244 4020010001 Plantas Eléctricas VICHADA CUMARIBO" [ref=e238]:
+              - cell "00000244" [ref=e239]
+              - cell "4020010001" [ref=e240]
+              - cell "Plantas Eléctricas" [ref=e241]
+              - cell "VICHADA" [ref=e242]
+              - cell "CUMARIBO" [ref=e243]
+            - row "00000246 4020010001 Plantas Eléctricas VAUPÉS CARURU" [ref=e244]:
+              - cell "00000246" [ref=e245]
+              - cell "4020010001" [ref=e246]
+              - cell "Plantas Eléctricas" [ref=e247]
+              - cell "VAUPÉS" [ref=e248]
+              - cell "CARURU" [ref=e249]
+            - row "00000249 4020010001 Plantas Eléctricas VICHADA CUMARIBO" [ref=e250]:
+              - cell "00000249" [ref=e251]
+              - cell "4020010001" [ref=e252]
+              - cell "Plantas Eléctricas" [ref=e253]
+              - cell "VICHADA" [ref=e254]
+              - cell "CUMARIBO" [ref=e255]
+        - generic [ref=e259]:
+          - button [disabled]:
+            - img: chevron_left
+          - generic [ref=e260]:
+            - button "1" [ref=e261] [cursor=pointer]: "1"
+            - button "2" [ref=e264] [cursor=pointer]: "2"
+            - button "3" [ref=e267] [cursor=pointer]: "3"
+            - button "4" [ref=e270] [cursor=pointer]: "4"
+            - button "5" [ref=e273] [cursor=pointer]: "5"
+            - button "6" [ref=e276] [cursor=pointer]: "6"
+            - button "..." [disabled]: ...
+            - button "408" [ref=e279] [cursor=pointer]: "408"
+          - button [ref=e282] [cursor=pointer]:
+            - img [ref=e283]: chevron_right
+      - complementary [ref=e286]:
+        - generic [ref=e287]:
+          - generic [ref=e288]:
+            - heading "Generar reporte" [level=2] [ref=e289]
+            - generic [ref=e290] [cursor=pointer]: close
+          - generic [ref=e438]:
+            - generic [ref=e439]: Periodo de consulta
+            - generic [ref=e441]:
+              - generic [ref=e445]:
+                - generic [ref=e446]: Fecha Inicial
+                - textbox "Fecha Inicial" [ref=e448]
+                - button "Open calendar" [ref=e451] [cursor=pointer]:
+                  - img [ref=e452]
+              - generic [ref=e460]:
+                - generic [ref=e461]: Fecha final
+                - textbox "Fecha final" [ref=e463]
+                - button "Open calendar" [ref=e466] [cursor=pointer]:
+                  - img [ref=e467]
+            - generic [ref=e472]: Ubicación
+            - generic [ref=e476] [cursor=pointer]:
+              - generic [ref=e477]: Departamento
+              - combobox "Departamento" [ref=e479]:
+                - generic [ref=e480]:
+                  - generic [ref=e658]: ANTIOQUIA, ARAUCA
+                  - img [ref=e485]
+            - generic [ref=e660] [cursor=pointer]:
+              - generic [ref=e490]: Municipio
+              - combobox "Municipio" [expanded] [active] [ref=e662]:
+                - generic [ref=e663]:
+                  - generic [ref=e1072]: ABEJORRAL, ARAUQUITA
+                  - img [ref=e668]
+            - generic [ref=e492]:
+              - generic [ref=e496]:
+                - generic [ref=e497]: Número de placa
+                - textbox "Número de placa" [ref=e499]
+              - generic [ref=e504] [cursor=pointer]:
+                - generic [ref=e505]: Estado del activo
+                - combobox "Estado del activo" [ref=e507]:
+                  - img [ref=e513]
+            - generic [ref=e519] [cursor=pointer]:
+              - generic [ref=e520]: Grupo del activo
+              - combobox "Grupo del activo" [ref=e522]:
+                - img [ref=e528]
+            - generic [ref=e531]:
+              - button "Cancelar" [ref=e533]:
+                - generic [ref=e536]: Cancelar
+              - button "Limpiar filtros" [ref=e540]:
+                - generic [ref=e543]: Limpiar filtros
+              - button "Generar reporte (XLS)" [ref=e547]:
+                - generic [ref=e550]: Generar reporte (XLS)
+  - listbox "Municipio" [ref=e672]:
+    - option "Todos" [ref=e673] [cursor=pointer]:
+      - generic [ref=e675]: Todos
+    - option "ABEJORRAL" [selected] [ref=e676] [cursor=pointer]:
+      - generic [ref=e678]: ABEJORRAL
+    - option "ABRIAQUÍ" [ref=e679] [cursor=pointer]:
+      - generic [ref=e681]: ABRIAQUÍ
+    - option "ALEJANDRÍA" [ref=e682] [cursor=pointer]:
+      - generic [ref=e684]: ALEJANDRÍA
+    - option "AMAGÁ" [ref=e685] [cursor=pointer]:
+      - generic [ref=e687]: AMAGÁ
+    - option "AMALFI" [ref=e688] [cursor=pointer]:
+      - generic [ref=e690]: AMALFI
+    - option "ANDES" [ref=e691] [cursor=pointer]:
+      - generic [ref=e693]: ANDES
+    - option "ANGELÓPOLIS" [ref=e694] [cursor=pointer]:
+      - generic [ref=e696]: ANGELÓPOLIS
+    - option "ANGOSTURA" [ref=e697] [cursor=pointer]:
+      - generic [ref=e699]: ANGOSTURA
+    - option "ANORÍ" [ref=e700] [cursor=pointer]:
+      - generic [ref=e702]: ANORÍ
+    - option "ANZA" [ref=e703] [cursor=pointer]:
+      - generic [ref=e705]: ANZA
+    - option "APARTADÓ" [ref=e706] [cursor=pointer]:
+      - generic [ref=e708]: APARTADÓ
+    - option "MEDELLÍN" [ref=e709] [cursor=pointer]:
+      - generic [ref=e711]: MEDELLÍN
+    - option "ARAUQUITA" [selected] [ref=e712] [cursor=pointer]:
+      - generic [ref=e714]: ARAUQUITA
+    - option "ARBOLETES" [ref=e715] [cursor=pointer]:
+      - generic [ref=e717]: ARBOLETES
+    - option "ARGELIA" [ref=e718] [cursor=pointer]:
+      - generic [ref=e720]: ARGELIA
+    - option "ARMENIA" [ref=e721] [cursor=pointer]:
+      - generic [ref=e723]: ARMENIA
+    - option "BARBOSA" [ref=e724] [cursor=pointer]:
+      - generic [ref=e726]: BARBOSA
+    - option "BELLO" [ref=e727] [cursor=pointer]:
+      - generic [ref=e729]: BELLO
+    - option "BELMIRA" [ref=e730] [cursor=pointer]:
+      - generic [ref=e732]: BELMIRA
+    - option "BETANIA" [ref=e733] [cursor=pointer]:
+      - generic [ref=e735]: BETANIA
+    - option "BETULIA" [ref=e736] [cursor=pointer]:
+      - generic [ref=e738]: BETULIA
+    - option "BRICEÑO" [ref=e739] [cursor=pointer]:
+      - generic [ref=e741]: BRICEÑO
+    - option "BURITICÁ" [ref=e742] [cursor=pointer]:
+      - generic [ref=e744]: BURITICÁ
+    - option "CAICEDO" [ref=e745] [cursor=pointer]:
+      - generic [ref=e747]: CAICEDO
+    - option "CALDAS" [ref=e748] [cursor=pointer]:
+      - generic [ref=e750]: CALDAS
+    - option "CAMPAMENTO" [ref=e751] [cursor=pointer]:
+      - generic [ref=e753]: CAMPAMENTO
+    - option "CARACOLÍ" [ref=e754] [cursor=pointer]:
+      - generic [ref=e756]: CARACOLÍ
+    - option "CARAMANTA" [ref=e757] [cursor=pointer]:
+      - generic [ref=e759]: CARAMANTA
+    - option "CAREPA" [ref=e760] [cursor=pointer]:
+      - generic [ref=e762]: CAREPA
+    - option "CAROLINA" [ref=e763] [cursor=pointer]:
+      - generic [ref=e765]: CAROLINA
+    - option "CAUCASIA" [ref=e766] [cursor=pointer]:
+      - generic [ref=e768]: CAUCASIA
+    - option "CAÑASGORDAS" [ref=e769] [cursor=pointer]:
+      - generic [ref=e771]: CAÑASGORDAS
+    - option "CHIGORODÓ" [ref=e772] [cursor=pointer]:
+      - generic [ref=e774]: CHIGORODÓ
+    - option "CISNEROS" [ref=e775] [cursor=pointer]:
+      - generic [ref=e777]: CISNEROS
+    - option "CIUDAD BOLÍVAR" [ref=e778] [cursor=pointer]:
+      - generic [ref=e780]: CIUDAD BOLÍVAR
+    - option "COCORNÁ" [ref=e781] [cursor=pointer]:
+      - generic [ref=e783]: COCORNÁ
+    - option "CONCEPCIÓN" [ref=e784] [cursor=pointer]:
+      - generic [ref=e786]: CONCEPCIÓN
+    - option "CONCORDIA" [ref=e787] [cursor=pointer]:
+      - generic [ref=e789]: CONCORDIA
+    - option "COPACABANA" [ref=e790] [cursor=pointer]:
+      - generic [ref=e792]: COPACABANA
+    - option "CRAVO NORTE" [ref=e793] [cursor=pointer]:
+      - generic [ref=e795]: CRAVO NORTE
+    - option "CÁCERES" [ref=e796] [cursor=pointer]:
+      - generic [ref=e798]: CÁCERES
+    - option "DABEIBA" [ref=e799] [cursor=pointer]:
+      - generic [ref=e801]: DABEIBA
+    - option "DONMATÍAS" [ref=e802] [cursor=pointer]:
+      - generic [ref=e804]: DONMATÍAS
+    - option "EBÉJICO" [ref=e805] [cursor=pointer]:
+      - generic [ref=e807]: EBÉJICO
+    - option "EL BAGRE" [ref=e808] [cursor=pointer]:
+      - generic [ref=e810]: EL BAGRE
+    - option "EL CARMEN DE VIBORAL" [ref=e811] [cursor=pointer]:
+      - generic [ref=e813]: EL CARMEN DE VIBORAL
+    - option "EL SANTUARIO" [ref=e814] [cursor=pointer]:
+      - generic [ref=e816]: EL SANTUARIO
+    - option "ENTRERRIOS" [ref=e817] [cursor=pointer]:
+      - generic [ref=e819]: ENTRERRIOS
+    - option "ENVIGADO" [ref=e820] [cursor=pointer]:
+      - generic [ref=e822]: ENVIGADO
+    - option "FORTUL" [ref=e823] [cursor=pointer]:
+      - generic [ref=e825]: FORTUL
+    - option "FREDONIA" [ref=e826] [cursor=pointer]:
+      - generic [ref=e828]: FREDONIA
+    - option "FRONTINO" [ref=e829] [cursor=pointer]:
+      - generic [ref=e831]: FRONTINO
+    - option "GIRALDO" [ref=e832] [cursor=pointer]:
+      - generic [ref=e834]: GIRALDO
+    - option "GIRARDOTA" [ref=e835] [cursor=pointer]:
+      - generic [ref=e837]: GIRARDOTA
+    - option "GRANADA" [ref=e838] [cursor=pointer]:
+      - generic [ref=e840]: GRANADA
+    - option "GUADALUPE" [ref=e841] [cursor=pointer]:
+      - generic [ref=e843]: GUADALUPE
+    - option "GUARNE" [ref=e844] [cursor=pointer]:
+      - generic [ref=e846]: GUARNE
+    - option "GUATAPE" [ref=e847] [cursor=pointer]:
+      - generic [ref=e849]: GUATAPE
+    - option "GÓMEZ PLATA" [ref=e850] [cursor=pointer]:
+      - generic [ref=e852]: GÓMEZ PLATA
+    - option "HELICONIA" [ref=e853] [cursor=pointer]:
+      - generic [ref=e855]: HELICONIA
+    - option "HISPANIA" [ref=e856] [cursor=pointer]:
+      - generic [ref=e858]: HISPANIA
+    - option "ITAGUI" [ref=e859] [cursor=pointer]:
+      - generic [ref=e861]: ITAGUI
+    - option "ITUANGO" [ref=e862] [cursor=pointer]:
+      - generic [ref=e864]: ITUANGO
+    - option "JARDÍN" [ref=e865] [cursor=pointer]:
+      - generic [ref=e867]: JARDÍN
+    - option "JERICÓ" [ref=e868] [cursor=pointer]:
+      - generic [ref=e870]: JERICÓ
+    - option "LA CEJA" [ref=e871] [cursor=pointer]:
+      - generic [ref=e873]: LA CEJA
+    - option "LA ESTRELLA" [ref=e874] [cursor=pointer]:
+      - generic [ref=e876]: LA ESTRELLA
+    - option "LA PINTADA" [ref=e877] [cursor=pointer]:
+      - generic [ref=e879]: LA PINTADA
+    - option "LA UNIÓN" [ref=e880] [cursor=pointer]:
+      - generic [ref=e882]: LA UNIÓN
+    - option "LIBORINA" [ref=e883] [cursor=pointer]:
+      - generic [ref=e885]: LIBORINA
+    - option "MACEO" [ref=e886] [cursor=pointer]:
+      - generic [ref=e888]: MACEO
+    - option "MARINILLA" [ref=e889] [cursor=pointer]:
+      - generic [ref=e891]: MARINILLA
+    - option "MEDELLÍN" [ref=e892] [cursor=pointer]:
+      - generic [ref=e894]: MEDELLÍN
+    - option "MONTEBELLO" [ref=e895] [cursor=pointer]:
+      - generic [ref=e897]: MONTEBELLO
+    - option "MURINDÓ" [ref=e898] [cursor=pointer]:
+      - generic [ref=e900]: MURINDÓ
+    - option "MUTATÁ" [ref=e901] [cursor=pointer]:
+      - generic [ref=e903]: MUTATÁ
+    - option "NARIÑO" [ref=e904] [cursor=pointer]:
+      - generic [ref=e906]: NARIÑO
+    - option "NECHÍ" [ref=e907] [cursor=pointer]:
+      - generic [ref=e909]: NECHÍ
+    - option "NECOCLÍ" [ref=e910] [cursor=pointer]:
+      - generic [ref=e912]: NECOCLÍ
+    - option "OLAYA" [ref=e913] [cursor=pointer]:
+      - generic [ref=e915]: OLAYA
+    - option "PEQUE" [ref=e916] [cursor=pointer]:
+      - generic [ref=e918]: PEQUE
+    - option "PEÑOL" [ref=e919] [cursor=pointer]:
+      - generic [ref=e921]: PEÑOL
+    - option "PUEBLORRICO" [ref=e922] [cursor=pointer]:
+      - generic [ref=e924]: PUEBLORRICO
+    - option "PUERTO BERRÍO" [ref=e925] [cursor=pointer]:
+      - generic [ref=e927]: PUERTO BERRÍO
+    - option "PUERTO NARE" [ref=e928] [cursor=pointer]:
+      - generic [ref=e930]: PUERTO NARE
+    - option "PUERTO TRIUNFO" [ref=e931] [cursor=pointer]:
+      - generic [ref=e933]: PUERTO TRIUNFO
+    - option "PUERTO TRIUNFO" [ref=e934] [cursor=pointer]:
+      - generic [ref=e936]: PUERTO TRIUNFO
+    - option "REMEDIOS" [ref=e937] [cursor=pointer]:
+      - generic [ref=e939]: REMEDIOS
+    - option "RETIRO" [ref=e940] [cursor=pointer]:
+      - generic [ref=e942]: RETIRO
+    - option "RIONEGRO" [ref=e943] [cursor=pointer]:
+      - generic [ref=e945]: RIONEGRO
+    - option "SABANALARGA" [ref=e946] [cursor=pointer]:
+      - generic [ref=e948]: SABANALARGA
+    - option "SABANETA" [ref=e949] [cursor=pointer]:
+      - generic [ref=e951]: SABANETA
+    - option "SALGAR" [ref=e952] [cursor=pointer]:
+      - generic [ref=e954]: SALGAR
+    - option "SAN ANDRÉS DE CUERQUÍA" [ref=e955] [cursor=pointer]:
+      - generic [ref=e957]: SAN ANDRÉS DE CUERQUÍA
+    - option "SAN CARLOS" [ref=e958] [cursor=pointer]:
+      - generic [ref=e960]: SAN CARLOS
+    - option "SAN FRANCISCO" [ref=e961] [cursor=pointer]:
+      - generic [ref=e963]: SAN FRANCISCO
+    - option "SAN JERÓNIMO" [ref=e964] [cursor=pointer]:
+      - generic [ref=e966]: SAN JERÓNIMO
+    - option "SAN JOSÉ DE LA MONTAÑA" [ref=e967] [cursor=pointer]:
+      - generic [ref=e969]: SAN JOSÉ DE LA MONTAÑA
+    - option "SAN JUAN DE URABÁ" [ref=e970] [cursor=pointer]:
+      - generic [ref=e972]: SAN JUAN DE URABÁ
+    - option "SAN LUIS" [ref=e973] [cursor=pointer]:
+      - generic [ref=e975]: SAN LUIS
+    - option "SAN PEDRO DE LOS MILAGROS" [ref=e976] [cursor=pointer]:
+      - generic [ref=e978]: SAN PEDRO DE LOS MILAGROS
+    - option "SAN PEDRO DE URABA" [ref=e979] [cursor=pointer]:
+      - generic [ref=e981]: SAN PEDRO DE URABA
+    - option "SAN RAFAEL" [ref=e982] [cursor=pointer]:
+      - generic [ref=e984]: SAN RAFAEL
+    - option "SAN ROQUE" [ref=e985] [cursor=pointer]:
+      - generic [ref=e987]: SAN ROQUE
+    - option "SAN VICENTE" [ref=e988] [cursor=pointer]:
+      - generic [ref=e990]: SAN VICENTE
+    - option "SANTA BÁRBARA" [ref=e991] [cursor=pointer]:
+      - generic [ref=e993]: SANTA BÁRBARA
+    - option "SANTA ROSA DE OSOS" [ref=e994] [cursor=pointer]:
+      - generic [ref=e996]: SANTA ROSA DE OSOS
+    - option "SANTAFÉ DE ANTIOQUIA" [ref=e997] [cursor=pointer]:
+      - generic [ref=e999]: SANTAFÉ DE ANTIOQUIA
+    - option "SANTO DOMINGO" [ref=e1000] [cursor=pointer]:
+      - generic [ref=e1002]: SANTO DOMINGO
+    - option "SEGOVIA" [ref=e1003] [cursor=pointer]:
+      - generic [ref=e1005]: SEGOVIA
+    - option "SEGOVIA" [ref=e1006] [cursor=pointer]:
+      - generic [ref=e1008]: SEGOVIA
+    - option "SONSON" [ref=e1009] [cursor=pointer]:
+      - generic [ref=e1011]: SONSON
+    - option "SOPETRÁN" [ref=e1012] [cursor=pointer]:
+      - generic [ref=e1014]: SOPETRÁN
+    - option "TAME" [ref=e1015] [cursor=pointer]:
+      - generic [ref=e1017]: TAME
+    - option "TARAZÁ" [ref=e1018] [cursor=pointer]:
+      - generic [ref=e1020]: TARAZÁ
+    - option "TARSO" [ref=e1021] [cursor=pointer]:
+      - generic [ref=e1023]: TARSO
+    - option "TITIRIBÍ" [ref=e1024] [cursor=pointer]:
+      - generic [ref=e1026]: TITIRIBÍ
+    - option "TOLEDO" [ref=e1027] [cursor=pointer]:
+      - generic [ref=e1029]: TOLEDO
+    - option "TURBO" [ref=e1030] [cursor=pointer]:
+      - generic [ref=e1032]: TURBO
+    - option "TÁMESIS" [ref=e1033] [cursor=pointer]:
+      - generic [ref=e1035]: TÁMESIS
+    - option "URAMITA" [ref=e1036] [cursor=pointer]:
+      - generic [ref=e1038]: URAMITA
+    - option "URRAO" [ref=e1039] [cursor=pointer]:
+      - generic [ref=e1041]: URRAO
+    - option "VALDIVIA" [ref=e1042] [cursor=pointer]:
+      - generic [ref=e1044]: VALDIVIA
+    - option "VALPARAÍSO" [ref=e1045] [cursor=pointer]:
+      - generic [ref=e1047]: VALPARAÍSO
+    - option "VEGACHÍ" [ref=e1048] [cursor=pointer]:
+      - generic [ref=e1050]: VEGACHÍ
+    - option "VENECIA" [ref=e1051] [cursor=pointer]:
+      - generic [ref=e1053]: VENECIA
+    - option "VIGÍA DEL FUERTE" [ref=e1054] [cursor=pointer]:
+      - generic [ref=e1056]: VIGÍA DEL FUERTE
+    - option "YALÍ" [ref=e1057] [cursor=pointer]:
+      - generic [ref=e1059]: YALÍ
+    - option "YARUMAL" [ref=e1060] [cursor=pointer]:
+      - generic [ref=e1062]: YARUMAL
+    - option "YOLOMBÓ" [ref=e1063] [cursor=pointer]:
+      - generic [ref=e1065]: YOLOMBÓ
+    - option "YONDÓ" [ref=e1066] [cursor=pointer]:
+      - generic [ref=e1068]: YONDÓ
+    - option "ZARAGOZA" [ref=e1069] [cursor=pointer]:
+      - generic [ref=e1071]: ZARAGOZA
