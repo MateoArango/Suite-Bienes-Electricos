@@ -174,4 +174,133 @@ test.describe("Lookup data and dependent filters", () => {
      * omitted here until the component clears invalid municipality selections.
      */
   });
+
+  test("implements Todos and Ninguno semantics without contradictory selections", async ({
+    page,
+  }) => {
+    const exportAssetPage = new ExportAssetPage(page);
+    await exportAssetPage.login("qa", "123456");
+    await exportAssetPage.open();
+
+    // 1. Select Todos in Department, then attempt to select or deselect individual departments.
+    await exportAssetPage.departmentSelect.click();
+
+    const departmentListbox = page.getByRole("listbox", {
+      name: "Departamento",
+    });
+    const departmentOptions = departmentListbox.getByRole("option");
+    const allDepartmentsOption = departmentListbox.getByRole("option", {
+      name: "Todos",
+      exact: true,
+    });
+    const antioquiaOption = departmentListbox.getByRole("option", {
+      name: "ANTIOQUIA",
+      exact: true,
+    });
+
+    await allDepartmentsOption.click();
+
+    await expect(allDepartmentsOption).toHaveAttribute("aria-selected", "true");
+    await expect(antioquiaOption).toHaveAttribute("aria-selected", "true");
+    await expect(
+      departmentListbox.locator('[role="option"][aria-selected="true"]'),
+    ).toHaveCount(await departmentOptions.count());
+
+    const allDepartmentLabels = await departmentOptions.allTextContents();
+    expect(new Set(allDepartmentLabels).size).toBe(allDepartmentLabels.length);
+
+    await antioquiaOption.click();
+    await expect(allDepartmentsOption).toHaveAttribute("aria-selected", "false");
+    await expect(antioquiaOption).toHaveAttribute("aria-selected", "false");
+
+    await antioquiaOption.click();
+    await expect(allDepartmentsOption).toHaveAttribute("aria-selected", "false");
+    await expect(antioquiaOption).toHaveAttribute("aria-selected", "true");
+    await expect(
+      departmentListbox.locator('[role="option"][aria-selected="true"]'),
+    ).toHaveCount((await departmentOptions.count()) - 1);
+
+    const selectedDepartmentLabels = await departmentListbox
+      .locator('[role="option"][aria-selected="true"]')
+      .allTextContents();
+    expect(new Set(selectedDepartmentLabels).size).toBe(
+      selectedDepartmentLabels.length,
+    );
+
+    await page.keyboard.press("Escape");
+    await expect(exportAssetPage.municipalitySelect).toHaveAttribute(
+      "aria-disabled",
+      "false",
+    );
+    await exportAssetPage.municipalitySelect.click();
+    await expect(
+      page.getByRole("option", { name: "Todos", exact: true }),
+    ).toBeVisible();
+    await page.keyboard.press("Escape");
+    await exportAssetPage.clearButton.click();
+
+    // 2. Select Todos in Municipality after choosing a department.
+    const citiesResponsePromise = page.waitForResponse((response) => {
+      const url = new URL(response.url());
+      return (
+        url.pathname === "/electrical-assets/report/cities" &&
+        url.searchParams.getAll("departmentIds").join(",") === "05" &&
+        response.request().method() === "GET"
+      );
+    });
+
+    await exportAssetPage.departmentSelect.click();
+    await page
+      .getByRole("option", { name: "ANTIOQUIA", exact: true })
+      .click();
+    expect((await citiesResponsePromise).status()).toBe(200);
+    await page.keyboard.press("Escape");
+
+    await exportAssetPage.municipalitySelect.click();
+    await page.getByRole("option", { name: "Todos", exact: true }).click();
+    await page.keyboard.press("Escape");
+
+    // 3. Select a state/group and then choose Ninguno.
+    await exportAssetPage.stateSelect.click();
+    await page
+      .getByRole("option", { name: "Activo", exact: true })
+      .click();
+    await expect(exportAssetPage.stateSelect).toContainText("Activo");
+    await exportAssetPage.stateSelect.click();
+    await page
+      .getByRole("option", { name: "Ninguno", exact: true })
+      .click();
+    await expect(exportAssetPage.stateSelect).toHaveText("");
+
+    await exportAssetPage.groupSelect.click();
+    await page
+      .getByRole("option", { name: "Bodegas", exact: true })
+      .click();
+    await expect(exportAssetPage.groupSelect).toContainText("Bodegas");
+    await exportAssetPage.groupSelect.click();
+    await page
+      .getByRole("option", { name: "Ninguno", exact: true })
+      .click();
+    await expect(exportAssetPage.groupSelect).toHaveText("");
+
+    const exportRequestPromise = page.waitForRequest((request) => {
+      const url = new URL(request.url());
+      return (
+        url.pathname ===
+          "/electrical-assets/report/electrical-assets/excel" &&
+        request.method() === "POST"
+      );
+    });
+
+    await exportAssetPage.submitButton.click();
+    const exportPayload = (await exportRequestPromise).postDataJSON();
+
+    expect(exportPayload.estado).toBeNull();
+    expect(exportPayload.grupo).toBeNull();
+    expect(exportPayload.departamentos).toEqual(["05"]);
+    expect(exportPayload.municipios.length).toBeGreaterThan(0);
+    expect(new Set(exportPayload.municipios).size).toBe(
+      exportPayload.municipios.length,
+    );
+  });
 });
