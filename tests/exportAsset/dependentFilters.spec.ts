@@ -303,4 +303,151 @@ test.describe("Lookup data and dependent filters", () => {
       exportPayload.municipios.length,
     );
   });
+
+  test("clears every filter and restores dependent-control state", async ({
+    page,
+  }) => {
+    const exportAssetPage = new ExportAssetPage(page);
+    await exportAssetPage.login("qa", "123456");
+    await exportAssetPage.open();
+
+    const exportRequests: string[] = [];
+    page.on("request", (request) => {
+      const url = new URL(request.url());
+      if (
+        url.pathname ===
+          "/electrical-assets/report/electrical-assets/excel" &&
+        request.method() === "POST"
+      ) {
+        exportRequests.push(request.url());
+      }
+    });
+
+    // 1. Populate start/end dates, two departments, municipalities, plate, status, and group.
+    await exportAssetPage.startDateInput.fill("1/1/2025");
+    await exportAssetPage.endDateInput.fill("1/1/2026");
+
+    await exportAssetPage.departmentSelect.click();
+
+    const antioquiaCitiesResponsePromise = page.waitForResponse((response) => {
+      const url = new URL(response.url());
+      return (
+        url.pathname === "/electrical-assets/report/cities" &&
+        url.searchParams.getAll("departmentIds").join(",") === "05" &&
+        response.request().method() === "GET"
+      );
+    });
+    const antioquiaOption = page.getByRole("option", {
+      name: "ANTIOQUIA",
+      exact: true,
+    });
+    await antioquiaOption.click();
+    expect((await antioquiaCitiesResponsePromise).status()).toBe(200);
+    await expect(antioquiaOption).toHaveAttribute("aria-selected", "true");
+    await expect(exportAssetPage.municipalitySelect).toHaveAttribute(
+      "aria-disabled",
+      "false",
+    );
+
+    const combinedCitiesResponsePromise = page.waitForResponse((response) => {
+      const url = new URL(response.url());
+      return (
+        url.pathname === "/electrical-assets/report/cities" &&
+        url.searchParams.getAll("departmentIds").join(",") === "05,81" &&
+        response.request().method() === "GET"
+      );
+    });
+    const araucaOption = page.getByRole("option", {
+      name: "ARAUCA",
+      exact: true,
+    });
+    await araucaOption.click();
+    expect((await combinedCitiesResponsePromise).status()).toBe(200);
+    await expect(araucaOption).toHaveAttribute("aria-selected", "true");
+    await expect(exportAssetPage.departmentSelect).toContainText(
+      "ANTIOQUIA, ARAUCA",
+    );
+    await page.keyboard.press("Escape");
+
+    await exportAssetPage.municipalitySelect.click();
+    const abejorralOption = page.getByRole("option", {
+      name: "ABEJORRAL",
+      exact: true,
+    });
+    const arauquitaOption = page.getByRole("option", {
+      name: "ARAUQUITA",
+      exact: true,
+    });
+    await abejorralOption.click();
+    await expect(abejorralOption).toHaveAttribute("aria-selected", "true");
+    /*
+     * Known legacy component bug:
+     * Consecutive municipality selections can cause the options to blink while
+     * Angular refreshes the multi-select state. During that re-render, the next
+     * selection is intermittently lost. The same behavior has been reproduced
+     * manually and with both Cypress and Playwright, so this pause is retained
+     * as a compatibility workaround rather than a test synchronization fix.
+     *
+     * A future 2.0 implementation should stabilize option identity by code and
+     * prevent stale lookup/form updates from replacing the current selection.
+     * 
+     * Line 396 try to fix the issue by adding a waitForTimeout to ensure the
+     * selection is registered before proceeding.
+     */
+    await page.waitForTimeout(200);
+    await arauquitaOption.click();
+    await expect(arauquitaOption).toHaveAttribute("aria-selected", "true");
+    await expect(exportAssetPage.municipalitySelect).toContainText(
+      "ABEJORRAL, ARAUQUITA",
+    );
+    await page.keyboard.press("Escape");
+
+    await exportAssetPage.licensePlateInput.fill("QA-CLEAR-026");
+    await exportAssetPage.stateSelect.click();
+    await page
+      .getByRole("option", { name: "Activo", exact: true })
+      .click();
+    await exportAssetPage.groupSelect.click();
+    await page
+      .getByRole("option", { name: "Bodegas", exact: true })
+      .click();
+
+    await expect(exportAssetPage.startDateInput).toHaveValue("1/1/2025");
+    await expect(exportAssetPage.endDateInput).toHaveValue("1/1/2026");
+    await expect(exportAssetPage.departmentSelect).toContainText(
+      "ANTIOQUIA, ARAUCA",
+    );
+    await expect(exportAssetPage.municipalitySelect).toContainText(
+      "ABEJORRAL, ARAUQUITA",
+    );
+    await expect(exportAssetPage.licensePlateInput).toHaveValue("QA-CLEAR-026");
+    await expect(exportAssetPage.stateSelect).toContainText("Activo");
+    await expect(exportAssetPage.groupSelect).toContainText("Bodegas");
+
+    // 2. Click generateReportClearButton.
+    await exportAssetPage.clearButton.click();
+
+    await expect(exportAssetPage.startDateInput).toHaveValue("");
+    await expect(exportAssetPage.endDateInput).toHaveValue("");
+    await expect(exportAssetPage.departmentSelect).toHaveText("");
+    await expect(exportAssetPage.municipalitySelect).toHaveText("");
+    await expect(exportAssetPage.licensePlateInput).toHaveValue("");
+    await expect(exportAssetPage.stateSelect).toHaveText("");
+    await expect(exportAssetPage.groupSelect).toHaveText("");
+    await expect(exportAssetPage.municipalitySelect).toHaveAttribute(
+      "aria-disabled",
+      "true",
+    );
+    await expect(
+      exportAssetPage.form.locator('[aria-invalid="true"]'),
+    ).toHaveCount(0);
+    await expect(
+      exportAssetPage.form.locator(
+        "mat-error:visible, .mat-mdc-form-field-error:visible",
+      ),
+    ).toHaveCount(0);
+    await expect(exportAssetPage.form).toBeVisible();
+    await expect(page).toHaveURL(/\/dashboard\/bienelectrico\/generar-reporte$/);
+    expect(exportRequests).toHaveLength(0);
+  });
 });
