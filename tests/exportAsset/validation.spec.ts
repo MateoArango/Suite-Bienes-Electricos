@@ -47,6 +47,30 @@ async function waitForExportRequest(page: Page) {
   );
 }
 
+type ExportPayload = {
+  fechaInicial: string;
+  fechaFinal: string;
+  departamentos: string[];
+  municipios: string[];
+  estado: string | null;
+  grupo: string | null;
+  placa: string;
+};
+
+function expectCanonicalExportPayload(payload: ExportPayload) {
+  expect(Object.keys(payload).sort()).toEqual(
+    [
+      "departamentos",
+      "estado",
+      "fechaFinal",
+      "fechaInicial",
+      "grupo",
+      "municipios",
+      "placa",
+    ].sort(),
+  );
+}
+
 test.describe("Generate Report date validation", () => {
   test("3.1 Calendar-selected valid dates", async ({ page }) => {
     const exportAssetPage = new ExportAssetPage(page);
@@ -383,7 +407,12 @@ test.describe("Generate Report date validation", () => {
       const expectedEnd =
         await exportAssetPage.endDateInput.inputValue();
       const requestPromise = waitForExportRequest(page);
-
+      /*
+      * The blank flow reaches a heap memory
+      * problem on the server,
+      * so we should not test the case where both dates are blank
+      * 3 instances generating blank reports produces this behavior
+      */
       await exportAssetPage.submitButton.click();
       const payload = (await requestPromise).postDataJSON() as {
         fechaInicial: string;
@@ -400,4 +429,59 @@ test.describe("Generate Report date validation", () => {
       expect(payload.fechaFinal === "").toBe(!dateCase.selectEnd);
     });
   }
+});
+
+test.describe("Generate Report plate validation", () => {
+  test("3.4 preserves and normalizes plate identifiers in the export POST", async ({
+    page,
+  }) => {
+    const exportAssetPage = new ExportAssetPage(page);
+
+    // 1. Enter a known plate with leading zeros, for example 00000109, and submit the filtered export.
+    await exportAssetPage.login("qa", "123456");
+    await exportAssetPage.open();
+    await exportAssetPage.licensePlateInput.fill("00000109");
+    await expect(exportAssetPage.licensePlateInput).toHaveValue(
+      "00000109",
+    );
+    const requestPromise = waitForExportRequest(page);
+    await exportAssetPage.submitButton.click();
+
+    const payload = (await requestPromise).postDataJSON() as ExportPayload;
+    expect(payload.placa).toBe("00000109");
+    expectCanonicalExportPayload(payload);
+    await expect (page.getByText(exportAssetPage.msgSuccess)).toBeVisible();
+  });
+
+  test("3.4 rejects a plate with surrounding ASCII whitespace", async ({
+    page,
+  }) => {
+    const exportAssetPage = new ExportAssetPage(page);
+
+    // 1. Enter the same non-empty plate with surrounding ASCII whitespace and submit the filtered export.
+    await exportAssetPage.login("qa", "123456");
+    await exportAssetPage.open();
+    await exportAssetPage.licensePlateInput.fill(" 00000109 ");
+    const requestPromise = waitForExportRequest(page);
+    await exportAssetPage.submitButton.click();
+
+    const payload = (await requestPromise).postDataJSON() as ExportPayload;
+    expect(payload.placa).toBe(" 00000109 ");
+    expectCanonicalExportPayload(payload);
+    await expect(
+      page.getByText(
+        "No hay datos para exportar con los filtros enviados.",
+      ),
+    ).toBeVisible();
+  });
+
+  test.fixme(
+    "3.4 rejects letters and enforces a documented numeric maximum",
+    async () => {
+      // 1. Reject letters and values beyond the numeric maximum before export.
+      // The business maximum length is not documented yet, so executable
+      // boundary coverage must wait until that contract is defined.
+    },
+  );
+
 });

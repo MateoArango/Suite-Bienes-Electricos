@@ -227,22 +227,22 @@ Automation guidance:
 
 **Seed:** `tests/seed.spec.ts`
 
-#### 4.1. exports an XLSX with all filters and an exact API payload
+#### 4.1. exports an XLSX with three filters and an exact API payload
 
 **File:** `tests/exportAsset/exportContract.spec.ts`
 
 **Steps:**
-  1. Select dates through calendars, ANTIOQUIA and ARAUCA, one municipality per department, plate 00000109, status Activo, and group Bodegas.
-    - expect: Every control is valid and displays the intended value.
+  1. Select department ANTIOQUIA, municipality ABRIAQUÍ, and plate 00000502.
+    - expect: The three controls display the intended values.
   2. Start response/download waits before clicking generateReportSubmitButton.
     - expect: Exactly one POST is made to /electrical-assets/report/electrical-assets/excel.
     - expect: JSON contains only fechaInicial, fechaFinal, departamentos, municipios, estado, grupo, and placa.
-    - expect: Department codes include 05 and 81, status is A, group is 603, plate preserves leading zeros, and dates are normalized dd/MM/yyyy.
+    - expect: Department is 05, municipality is 004, plate preserves 00000502, and unused filters retain their canonical empty values.
   3. Validate the response and saved download.
     - expect: Status is 200.
     - expect: Content-Type is the XLSX MIME.
-    - expect: Content-Disposition filename matches reporte-bienes-electricos-YYYYMMDD-HHmmss.xlsx.
-    - expect: File size is greater than zero and begins with the ZIP/XLSX signature.
+    - expect: Content-Disposition filename matches reporte_YYYY-MM-DD_HH.mm.xlsx.
+    - expect: The downloaded workbook contains plate 00000502, external plate 0RED1650-199, and article name Redes.
     - expect: “Reporte generado correctamente” appears only after success.
 
 #### 4.2. exports with no optional filters using the canonical empty payload
@@ -250,9 +250,9 @@ Automation guidance:
 **File:** `tests/exportAsset/exportContract.spec.ts`
 
 **Steps:**
-  1. Open a fresh blank drawer and submit while recording the request and download.
-    - expect: If blank export is supported, payload is fechaInicial:'', fechaFinal:'', departamentos:[], municipios:[], estado:null, grupo:null, placa:'' and a valid XLSX downloads.
-    - expect: If product requirements require at least one filter, a visible validation message appears and no POST is sent. Record the chosen contract explicitly.
+  1. Open a fresh blank drawer and submit through the real export API.
+    - expect: Payload is fechaInicial:'', fechaFinal:'', departamentos:[], municipios:[], estado:null, grupo:null, placa:''.
+    - expect: A valid XLSX response downloads and can be parsed.
 
 #### 4.3. downloaded workbook contains rows consistent with the filters
 

@@ -1,0 +1,33 @@
+--- PAGE 1 ---
+Error ticket 
+curl ^"https://bieneselectricosapi-qa.adacsc.co/electrical-assets/auth/login^" ^ 
+  -H ^"Accept: application/json, text/plain, */*^" ^ 
+  -H ^"Accept-Language: en-US,en;q=0.9,es-ES;q=0.8,es;q=0.7^" ^ 
+  -H ^"Connection: keep-alive^" ^ 
+  -H ^"Content-Type: application/json^" ^ 
+  -H ^"Origin: https://bieneselectricos-qa.adacsc.co^" ^ 
+  -H ^"Referer: https://bieneselectricos-qa.adacsc.co/^" ^ 
+  -H ^"Sec-Fetch-Dest: empty^" ^ 
+  -H ^"Sec-Fetch-Mode: cors^" ^ 
+  -H ^"Sec-Fetch-Site: same-site^" ^ 
+  -H ^"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 
+(KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36^" ^ 
+  -H ^"sec-ch-ua: ^\^"Not;A=Brand^\^";v=^\^"8^\^" , 
+^\^"Chromium^\^";v=^\^"150^\^" , ^\^"Google Chrome^\^";v=^\^"150^\^"^" ^ 
+  -H ^"sec-ch-ua-mobile: ?0^" ^ 
+  -H ^"sec-ch-ua-platform: ^\^"Windows^\^"^" ^ 
+  --data-raw ^"^{^\^"login^\^":^\^"qa^\^" ,^\^"password^\^":^\^"123456^\^"^}^" 
+ 
+Response 
+{ 
+    "success": false, 
+    "data": null, 
+    "error": { 
+        "message": "An unexpected error occurred. " , 
+        "detail": "Handler dispatch failed: java.lang.OutOfMemoryError: Java heap space" , 
+        "errorCode": "SERVER_ERROR" 
+
+--- PAGE 2 ---
+    } 
+} 
+ 
