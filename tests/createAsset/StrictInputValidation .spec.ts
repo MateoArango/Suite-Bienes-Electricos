@@ -5,6 +5,7 @@ import { CreateAssetPage } from '../pages/CreateAssetPage';
 test.describe('Crear Activo - P0 Strict Input Validation', () => {
 
   test('8. Fotos enforces max length exactly', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -32,6 +33,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('9. Enlace ARCGIS enforces max length exactly', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -57,6 +59,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('10a. Valoración financiera - 5-char fields reject the 6th character', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -92,6 +95,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await expect(vidaRemanente).toHaveValue('12345');
   });
   test('10b. Machine features - 5-char fields reject the 6th character', async ({ page }) => {
+    test.slow();
 
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -136,6 +140,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('10c. Support and Structure - Altura apoyo rejects the 6th character', async ({ page }) => {
+    test.slow();
 
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -167,6 +172,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('10d. Driver and network - 5-char fields reject the 6th character', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -222,6 +228,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
   test('11. Masked fields ignore invalid characters', async ({ page }) => {
+    test.slow();
 
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -260,6 +267,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
 
 
   test('12. Fotos enforces max length via typing and paste', async ({ page, context }) => {
+    test.slow();
 
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');

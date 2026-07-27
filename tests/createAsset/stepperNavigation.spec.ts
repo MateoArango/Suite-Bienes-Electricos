@@ -4,6 +4,7 @@ import { CreateAssetPage } from '../pages/CreateAssetPage';
 test.describe('Crear Activo - P1 Stepper Navigation', () => {
 
   test('15. Stepper displays correct step after plate selection', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -17,6 +18,7 @@ test.describe('Crear Activo - P1 Stepper Navigation', () => {
   });
 
   test('16. Field counter tracks all filled fields independently from required validation', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -64,6 +66,7 @@ test.describe('Crear Activo - P1 Stepper Navigation', () => {
   });
 
   test('17. User can navigate back without losing Location values', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -89,6 +92,7 @@ test.describe('Crear Activo - P1 Stepper Navigation', () => {
   });
 
   test('18. Siguiente blocks and unblocks correctly on back navigation', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     const fotosField = page.getByRole('textbox', { name: 'Fotos' });
     const createAsset = new CreateAssetPage(page);

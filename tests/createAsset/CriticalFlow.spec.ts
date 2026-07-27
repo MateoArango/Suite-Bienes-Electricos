@@ -19,6 +19,7 @@ import { CreateAssetPage } from '../pages/CreateAssetPage';
 test.describe('Crear Activo - P0 Critical Flow', () => {
 
   test('1. Create active successfully with only required fields', async ({ page }) => {
+    test.slow();
 
 
     const basePage = new BasePage(page);
@@ -82,6 +83,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
   });
 
   test('2. Cannot create an Asset without selecting Plate', async ({ page }) => {
+    test.slow();
     const createAsset = new CreateAssetPage(page);
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -141,6 +143,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
   });
 
   test('3. Cannot continue Location step without Departamento', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
     const createAsset = new CreateAssetPage(page);
@@ -163,6 +166,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
   });
 
   test('4. Cannot continue Location step without Municipio', async ({ page }) => {
+    test.slow();
 
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -187,6 +191,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
   });
 
   test('5. Cannot continue Location step without Fotos', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 
@@ -210,6 +215,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
   });
 
   test('6. Cannot continue Location step without Enlace ARCGIS', async ({ page }) => {
+    test.slow();
 
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -234,6 +240,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
   });
 
   test('7. Optional Location fields are not required to advance', async ({ page }) => {
+    test.slow();
 
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');

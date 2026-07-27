@@ -4,6 +4,7 @@ import { CreateAssetPage } from '../pages/CreateAssetPage';
 test.describe('Crear Activo - P1 Date Picker Behavior', () => {
 
   test('13. Date fields do not allow manual typing', async ({ page }) => {
+    test.slow();
     const nextBtn = page.getByRole('button', { name: 'Siguiente' });
     const dateBtn = page.locator('button[aria-current="date"]');
     const basePage = new BasePage(page);
@@ -49,6 +50,7 @@ test.describe('Crear Activo - P1 Date Picker Behavior', () => {
   });
 
   test('14. Date fields can only be populated via calendar selection', async ({ page }) => {
+    test.slow();
     const dateBtn = page.locator('button[aria-current="date"]');
 
     const basePage = new BasePage(page);

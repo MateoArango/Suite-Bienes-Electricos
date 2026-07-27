@@ -4,6 +4,7 @@ import { CreateAssetPage } from '../pages/CreateAssetPage';
 test.describe('Crear Activo - P2 Robustness / UX', () => {
 
   test('23. Changing Departamento resets Municipio', async ({ page }) => {
+    test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
 

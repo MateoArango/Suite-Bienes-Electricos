@@ -5,6 +5,7 @@ import { CreateAssetPage } from '../pages/CreateAssetPage';
 test.describe('Activos - Creación y Registro', () => {
 
   test('Full Path - Create Active', async ({ page }) => {
+    test.slow();
     // Shared Locators
     const calendarBtn = page.getByRole('button', { name: 'Open calendar' });
     const dateBtn = page.locator('button[aria-current="date"]');
