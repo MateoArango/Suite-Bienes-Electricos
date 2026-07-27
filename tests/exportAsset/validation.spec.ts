@@ -3,6 +3,7 @@
 
 import { test, expect, Locator, Page } from "@playwright/test";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 const exportEndpoint =
   "/electrical-assets/report/electrical-assets/excel";
@@ -72,7 +73,7 @@ function expectCanonicalExportPayload(payload: ExportPayload) {
 }
 
 test.describe("Generate Report date validation", () => {
-  test("3.1 Calendar-selected valid dates", async ({ page }) => {
+  test("3.1 Calendar-selected valid dates", testMetadata('QA-EXPORT-008', 'Selects valid dates through the calendars and verifies normalized request dates plus the XLSX download contract.'), async ({ page }) => {
     const exportAssetPage = new ExportAssetPage(page);
     const enabledCalendarCells = page.locator(
       "mat-calendar button.mat-calendar-body-cell:not([disabled])",
@@ -167,7 +168,7 @@ test.describe("Generate Report date validation", () => {
     expect(download.suggestedFilename()).toMatch(/\.xlsx$/i);
   });
 
-  test("3.2 Future dates are unavailable", async ({ page }) => {
+  test("3.2 Future dates are unavailable", testMetadata('QA-EXPORT-009', 'Keeps future calendar dates disabled and sends no export request from that interaction.'), async ({ page }) => {
     const exportAssetPage = new ExportAssetPage(page);
     const exportRequests: string[] = [];
 
@@ -247,7 +248,7 @@ test.describe("Generate Report date validation", () => {
     expect(exportRequests).toHaveLength(0);
   });
 
-  test("3.3 Start dates after the end boundary are unavailable", async ({
+  test("3.3 Start dates after the end boundary are unavailable", testMetadata('QA-EXPORT-010', 'Disables start dates later than the selected end-date boundary and avoids exporting.'), async ({
     page,
   }) => {
     const exportAssetPage = new ExportAssetPage(page);
@@ -323,7 +324,7 @@ test.describe("Generate Report date validation", () => {
     expect(exportRequests).toHaveLength(0);
   });
 
-  test("3.3 Equal start and end dates are accepted", async ({ page }) => {
+  test("3.3 Equal start and end dates are accepted", testMetadata('QA-EXPORT-011', 'Accepts an equal start and end date and serializes the same normalized value for both fields.'), async ({ page }) => {
     const exportAssetPage = new ExportAssetPage(page);
 
     await exportAssetPage.login("qa", "123456");
@@ -364,24 +365,30 @@ test.describe("Generate Report date validation", () => {
 
   const optionalDateCases = [
     {
+      id: "QA-EXPORT-012",
       name: "blank start",
+      description: "Serializes an omitted optional start date as an empty string while preserving the selected end date.",
       selectStart: false,
       selectEnd: true,
     },
     {
+      id: "QA-EXPORT-013",
       name: "blank end",
+      description: "Serializes an omitted optional end date as an empty string while preserving the selected start date.",
       selectStart: true,
       selectEnd: false,
     },
     {
+      id: "QA-EXPORT-014",
       name: "both blank",
+      description: "Serializes both optional dates as empty strings in the canonical export request.",
       selectStart: false,
       selectEnd: false,
     },
   ];
 
   for (const dateCase of optionalDateCases) {
-    test(`3.3 Optional dates serialize ${dateCase.name}`, async ({
+    test(`3.3 Optional dates serialize ${dateCase.name}`, testMetadata(dateCase.id, dateCase.description), async ({
       page,
     }) => {
       const exportAssetPage = new ExportAssetPage(page);
@@ -432,7 +439,7 @@ test.describe("Generate Report date validation", () => {
 });
 
 test.describe("Generate Report plate validation", () => {
-  test("3.4 preserves and normalizes plate identifiers in the export POST", async ({
+  test("3.4 preserves and normalizes plate identifiers in the export POST", testMetadata('QA-EXPORT-015', 'Preserves a known plate identifier with leading zeros in the canonical export payload.'), async ({
     page,
   }) => {
     const exportAssetPage = new ExportAssetPage(page);
@@ -453,7 +460,7 @@ test.describe("Generate Report plate validation", () => {
     await expect (page.getByText(exportAssetPage.msgSuccess)).toBeVisible();
   });
 
-  test("3.4 rejects a plate with surrounding ASCII whitespace", async ({
+  test("3.4 preserves a plate with surrounding ASCII whitespace", testMetadata('QA-EXPORT-016', 'Preserves surrounding ASCII whitespace in the submitted plate and verifies the resulting no-data response.'), async ({
     page,
   }) => {
     const exportAssetPage = new ExportAssetPage(page);
@@ -477,6 +484,7 @@ test.describe("Generate Report plate validation", () => {
 
   test.fixme(
     "3.4 rejects letters and enforces a documented numeric maximum",
+    testMetadata('QA-EXPORT-017', 'Will verify numeric-only plate input and its maximum length after the business boundary is documented.'),
     async () => {
       // 1. Reject letters and values beyond the numeric maximum before export.
       // The business maximum length is not documented yet, so executable

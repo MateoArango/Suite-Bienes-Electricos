@@ -1,9 +1,10 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { CreateAssetPage } from '../pages/CreateAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 test.describe('Crear Activo - P2 Robustness / UX', () => {
 
-  test('23. Changing Departamento resets Municipio', async ({ page }) => {
+  test('23. Changing Departamento resets Municipio', testMetadata('QA-CREATE-023', 'Clears the dependent Municipio selection when Departamento changes.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -41,7 +42,7 @@ test.describe('Crear Activo - P2 Robustness / UX', () => {
     await expect(page.getByRole('combobox', { name: 'Municipio' })).toContainText('AMAGÁ');
   });
 
-  test('25. Optional long-text fields: empty does not block, overflow is capped', async ({ page }) => {
+  test('25. Optional long-text fields: empty does not block, overflow is capped', testMetadata('QA-CREATE-025', 'Allows optional long-text fields to remain empty and caps values that exceed their configured limits.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');

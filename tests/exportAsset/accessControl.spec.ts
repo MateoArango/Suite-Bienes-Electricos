@@ -3,6 +3,7 @@
 
 import { test, expect, Page } from "@playwright/test";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 const exportEndpoint =
   "/electrical-assets/report/electrical-assets/excel";
@@ -18,6 +19,7 @@ async function logoutFrom(page: Page) {
 test.describe("Generate Report access control", () => {
   test.fixme(
     "4.8 invalidates the authenticated session across open tabs after logout",
+    testMetadata('QA-EXPORT-022', 'Will verify logout blocks protected report calls in another tab; currently blocked by the missing stable logout locator and observed session defect.'),
     async ({ browser }) => {
       // Confirmed current defect: after logout in tab A, the already-open tab B
       // still receives HTTP 200 from protected departments, grupos, estados,

@@ -2,6 +2,7 @@ import { Page, Request } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 /**
  * QA-EDIT-006
@@ -41,7 +42,7 @@ async function saveAndCapturePayload(page: Page, editAsset: EditAssetPage) {
   };
 }
 
-test('QA-EDIT-006: save sends full update payload and preserves important fields', async ({ page, apiContext, authToken }) => {
+test('QA-EDIT-006: save sends full update payload and preserves important fields', testMetadata('QA-EDIT-006', 'Captures the save PATCH and verifies changed values plus important unchanged fields in the full update payload.'), async ({ page, apiContext, authToken }) => {
   const basePage = new BasePage(page);
   const editAsset = new EditAssetPage(page);
 

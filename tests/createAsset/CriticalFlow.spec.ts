@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { CreateAssetPage } from '../pages/CreateAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 /**
  * P0 - Critical Flow
  * Scenarios 1-7 from the QA analysis (activeCreaterobustesness.pdf).
@@ -18,7 +19,7 @@ import { CreateAssetPage } from '../pages/CreateAssetPage';
 
 test.describe('Crear Activo - P0 Critical Flow', () => {
 
-  test('1. Create active successfully with only required fields', async ({ page }) => {
+  test('1. Create active successfully with only required fields', testMetadata('QA-CREATE-001', 'Creates an asset after completing only the required location fields and advancing through optional steps.'), async ({ page }) => {
     test.slow();
 
 
@@ -82,7 +83,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     
   });
 
-  test('2. Cannot create an Asset without selecting Plate', async ({ page }) => {
+  test('2. Cannot create an Asset without selecting Plate', testMetadata('QA-CREATE-002', 'Blocks final asset creation and shows validation when no plate was selected.'), async ({ page }) => {
     test.slow();
     const createAsset = new CreateAssetPage(page);
     const basePage = new BasePage(page);
@@ -142,7 +143,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await expect(page.getByText('Seleccione una placa para crear el activo.')).toBeVisible();
   });
 
-  test('3. Cannot continue Location step without Departamento', async ({ page }) => {
+  test('3. Cannot continue Location step without Departamento', testMetadata('QA-CREATE-003', 'Disables Location-step progression when Departamento is missing.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -165,7 +166,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     
   });
 
-  test('4. Cannot continue Location step without Municipio', async ({ page }) => {
+  test('4. Cannot continue Location step without Municipio', testMetadata('QA-CREATE-004', 'Disables Location-step progression when Municipio is missing.'), async ({ page }) => {
     test.slow();
 
     const basePage = new BasePage(page);
@@ -190,7 +191,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
 
   });
 
-  test('5. Cannot continue Location step without Fotos', async ({ page }) => {
+  test('5. Cannot continue Location step without Fotos', testMetadata('QA-CREATE-005', 'Disables Location-step progression when the required Fotos link is missing.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -214,7 +215,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await expect(page.locator('span').filter({ hasText: /^Ubicación y registro$/ })).toBeVisible();
   });
 
-  test('6. Cannot continue Location step without Enlace ARCGIS', async ({ page }) => {
+  test('6. Cannot continue Location step without Enlace ARCGIS', testMetadata('QA-CREATE-006', 'Disables Location-step progression when the required ARCGIS link is missing.'), async ({ page }) => {
     test.slow();
 
     const basePage = new BasePage(page);
@@ -239,7 +240,7 @@ test.describe('Crear Activo - P0 Critical Flow', () => {
     await expect(page.locator('span').filter({ hasText: /^Ubicación y registro$/ })).toBeVisible();
   });
 
-  test('7. Optional Location fields are not required to advance', async ({ page }) => {
+  test('7. Optional Location fields are not required to advance', testMetadata('QA-CREATE-007', 'Allows progression when required Location values are complete and optional Location fields remain blank.'), async ({ page }) => {
     test.slow();
 
     const basePage = new BasePage(page);

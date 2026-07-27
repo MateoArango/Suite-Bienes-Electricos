@@ -4,6 +4,7 @@ import fs from 'fs/promises';
 import * as XLSX from 'xlsx';
 import { BasePage } from '../pages/BasePage';
 import { ImportAssetPage } from '../pages/ImportAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 const SHEET_NAME = 'Plantilla';
 const DOWNLOAD_DIR = path.join(process.cwd(), 'tmp', 'downloads');
@@ -130,7 +131,7 @@ function readTemplateHeaders(filePath: string) {
     return rows[0].map((header) => String(header));
 }
 
-test('Import template has expected headers', async ({ page }) => {
+test('Import template has expected headers', testMetadata('QA-IMP-002', 'Downloads the import template and verifies the exact ordered Plantilla header contract.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const importAssetPage = new ImportAssetPage(page);
 
@@ -150,7 +151,7 @@ test('Import template has expected headers', async ({ page }) => {
     expect(headers).toEqual(expectedHeaders);
 });
 
-test('Import rejects non Excel files', async ({ page }) => {
+test('Import rejects non Excel files', testMetadata('QA-IMP-003', 'Rejects a non-Excel upload and displays the supported-format validation message.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const importAssetPage = new ImportAssetPage(page);
 
@@ -165,7 +166,7 @@ test('Import rejects non Excel files', async ({ page }) => {
     await expect(page.getByText(INVALID_FORMAT_MESSAGE)).toBeVisible();
 });
 
-test('Import rejects files over 10 MB and then validates smaller files', async ({ page }) => {
+test('Import rejects files over 10 MB and then validates smaller files', testMetadata('QA-IMP-004', 'Rejects a workbook over 10 MB and confirms a subsequent smaller workbook still reaches validation.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const importAssetPage = new ImportAssetPage(page);
 
@@ -179,7 +180,7 @@ test('Import rejects files over 10 MB and then validates smaller files', async (
     await expect(page.getByText(FILE_ERRORS_MESSAGE)).toBeVisible({ timeout: 20_000 });
 });
 
-test('Import rejects empty Excel files', async ({ page }) => {
+test('Import rejects empty Excel files', testMetadata('QA-IMP-005', 'Rejects an Excel workbook with no import data and displays the empty-file message.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const importAssetPage = new ImportAssetPage(page);
 

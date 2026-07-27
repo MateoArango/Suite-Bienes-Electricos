@@ -1,10 +1,11 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
+import { testMetadata } from '../helpers/testMetadata';
 
 
 test.describe('Access control gate', () => {
     //this test is to validate that the edit button is enabled and visible
-    test('Editar enabled asset', async ({ page }) => {
+    test('Editar enabled asset', testMetadata('QA-EDIT-036', 'Shows an enabled Editar action for an asset that permits editing.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editBtn = page.getByTestId('activesDetailEdit');
 
@@ -17,7 +18,7 @@ test.describe('Access control gate', () => {
     await expect(editBtn).toBeEnabled();
 });
 //this test is to validate that the edit button is disabled
-test ('Editar disabled asset', async ({ page }) => {
+test ('Editar disabled asset', testMetadata('QA-EDIT-037', 'Shows but disables the Editar action for an asset whose status prevents editing.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editBtn = page.getByTestId('activesDetailEdit');
 
@@ -31,7 +32,7 @@ test ('Editar disabled asset', async ({ page }) => {
 });
 
 //Baja asset opens read-only details, not an editable form
-test('read-only asset fields', async ({ page }) => {
+test('read-only asset fields', testMetadata('QA-EDIT-038', 'Renders a Baja asset in read-only detail mode with editing blocked.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editBtn = page.getByTestId('activesDetailEdit');
     const editUrl = '/dashboard/bienelectrico/detalle/00000076'; //076 - 016

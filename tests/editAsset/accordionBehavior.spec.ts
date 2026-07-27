@@ -1,12 +1,13 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 const PLATE = '0000247634';
 const OTHER_PLATE = '00000198';
 
 test.describe('Edit asset accordion behavior', () => {
-  test('QA-EDIT-028: panel edits persist across expand and collapse', async ({ page }) => {
+  test('QA-EDIT-028: panel edits persist across expand and collapse', testMetadata('QA-EDIT-028', 'Keeps an unsaved field edit while accordion panels are collapsed and expanded.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
 
@@ -28,7 +29,7 @@ test.describe('Edit asset accordion behavior', () => {
     await expect(editAsset.localidadField).toHaveValue(editedLocalidad);
   });
 
-  test('QA-EDIT-029: refresh mid-edit discards unsaved changes', async ({ page }) => {
+  test('QA-EDIT-029: refresh mid-edit discards unsaved changes', testMetadata('QA-EDIT-029', 'Discards unsaved field changes after a page refresh and reloads the persisted value.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
 
@@ -50,7 +51,7 @@ test.describe('Edit asset accordion behavior', () => {
     await expect(editAsset.localidadField).toHaveValue(originalLocalidad);
   });
 
-  test('QA-EDIT-030: navigating to another plate discards unsaved changes without confirmation', async ({ page }) => {
+  test('QA-EDIT-030: navigating to another plate discards unsaved changes without confirmation', testMetadata('QA-EDIT-030', 'Discards unsaved changes without a dialog when navigation switches to another plate.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
     let dialogShown = false;
@@ -80,7 +81,7 @@ test.describe('Edit asset accordion behavior', () => {
     await expect(editAsset.localidadField).toHaveValue(originalLocalidad);
   });
 
-  test('QA-EDIT-030B: Red y estructuras keeps multiple panels open and editable', async ({ page }) => {
+  test('QA-EDIT-030B: Red y estructuras keeps multiple panels open and editable', testMetadata('QA-EDIT-030B', 'Keeps multiple Red y estructuras panels open and allows values in each to be edited.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
 

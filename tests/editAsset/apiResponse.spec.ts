@@ -2,6 +2,7 @@ import { Locator } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 /* This test checks that most comparable API values are reflected in the edit UI.
 It is intentionally tolerant because legacy asset data can be null, incomplete,
@@ -68,7 +69,7 @@ async function logInputComparison(label: string, locator: Locator, apiValue: unk
   });
 }
 
-test('QA-EDIT-001: prepopulated fields match API source', async ({ page, apiContext, authToken }) => {
+test('QA-EDIT-001: prepopulated fields match API source', testMetadata('QA-EDIT-001', 'Compares populated edit controls with normalized values returned by the asset API.'), async ({ page, apiContext, authToken }) => {
   const basePage = new BasePage(page);
   const editAsset = new EditAssetPage(page);
 

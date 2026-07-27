@@ -2,6 +2,7 @@ import { Page } from "@playwright/test";
 import { test, expect } from "../fixtures";
 import { BasePage } from "../pages/BasePage";
 import { EditAssetPage } from "../pages/editAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 const PLATE = "0000247634";
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
@@ -41,7 +42,7 @@ async function waitForUnexpectedUpdate(page: Page) {
 
 test.describe.configure({ mode: 'serial' });
 test.describe("Edit asset critical flow", () => {
-  test("QA-EDIT-002: edit one required field and persist it after save", async ({
+  test("QA-EDIT-002: edit one required field and persist it after save", testMetadata('QA-EDIT-002', 'Edits one required field, confirms the PATCH succeeds, and verifies persistence after reopening.'), async ({
     page,
   }) => {
     const basePage = new BasePage(page);
@@ -82,7 +83,7 @@ test.describe("Edit asset critical flow", () => {
     }
   });
 
-  test("QA-EDIT-003: edit required fields across panels and persist them after save", async ({
+  test("QA-EDIT-003: edit required fields across panels and persist them after save", testMetadata('QA-EDIT-003', 'Edits required fields in multiple panels and verifies all saved values after reopening.'), async ({
     page,
   }) => {
     const basePage = new BasePage(page);
@@ -137,7 +138,7 @@ test.describe("Edit asset critical flow", () => {
     }
   });
 
-  test("QA-EDIT-004: clear required field blocks save with inline validation", async ({
+  test("QA-EDIT-004: clear required field blocks save with inline validation", testMetadata('QA-EDIT-004', 'Blocks save and displays inline validation after a required edit field is cleared.'), async ({
     page,
   }) => {
     const basePage = new BasePage(page);
@@ -155,7 +156,7 @@ test.describe("Edit asset critical flow", () => {
     await expect(editAsset.saveBtn).toBeDisabled();
   });
 
-  test("QA-EDIT-005: clear optional field and persist empty value after save", async ({
+  test("QA-EDIT-005: clear optional field and persist empty value after save", testMetadata('QA-EDIT-005', 'Allows an optional field to be cleared and persists its empty value after save.'), async ({
     page,
   }) => {
     const basePage = new BasePage(page);
@@ -198,7 +199,7 @@ test.describe("Edit asset critical flow", () => {
     }
   });
 
-  test("QA-EDIT-007: cancel discards changes without sending update request", async ({
+  test("QA-EDIT-007: cancel discards changes without sending update request", testMetadata('QA-EDIT-007', 'Cancels an edit, restores the persisted value, and sends no update request.'), async ({
     page,
   }) => {
     const basePage = new BasePage(page);
@@ -231,7 +232,7 @@ test.describe("Edit asset critical flow", () => {
     );
   });
 
-  test("QA-EDIT-008: saved value survives hard reload and reopen", async ({
+  test("QA-EDIT-008: saved value survives hard reload and reopen", testMetadata('QA-EDIT-008', 'Confirms a saved field value survives hard reload and a fresh reopen of the asset.'), async ({
     page,
   }) => {
     const basePage = new BasePage(page);
@@ -269,7 +270,7 @@ test.describe("Edit asset critical flow", () => {
     }
   });
 
-  test("QA-EDIT-009: direct URL opens a valid asset edit form", async ({
+  test("QA-EDIT-009: direct URL opens a valid asset edit form", testMetadata('QA-EDIT-009', 'Opens a valid asset directly by URL and renders its editable form controls.'), async ({
     page,
   }) => {
     const basePage = new BasePage(page);

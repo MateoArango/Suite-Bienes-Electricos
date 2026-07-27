@@ -2,6 +2,7 @@ import { Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 const PLATE = '00000610';
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
@@ -26,7 +27,7 @@ async function openRegistroPanel(page: Page) {
 }
 
 test.describe('Edit asset robustness', () => {
-  test('QA-EDIT-035: failed save can be retried without losing the edited value', async ({ page }) => {
+  test('QA-EDIT-035: failed save can be retried without losing the edited value', testMetadata('QA-EDIT-035', 'Retains the edited value after a failed PATCH and persists it on a successful retry.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
 

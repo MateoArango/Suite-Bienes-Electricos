@@ -1,11 +1,12 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 const PLATE = '00000560';
 
 test.describe('Edit asset field dependencies', () => {
-  test('QA-EDIT-026: changing Departamento resets Municipio and Codigo DANE', async ({ page }) => {
+  test('QA-EDIT-026: changing Departamento resets Municipio and Codigo DANE', testMetadata('QA-EDIT-026', 'Clears Municipio and Codigo DANE when the asset Departamento changes.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
     const codigoDaneField = page.getByRole('textbox', { name: /C.digo DANE/ });

@@ -1,9 +1,10 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { CreateAssetPage } from '../pages/CreateAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 test.describe('Crear Activo - P1 Date Picker Behavior', () => {
 
-  test('13. Date fields do not allow manual typing', async ({ page }) => {
+  test('13. Date fields do not allow manual typing', testMetadata('QA-CREATE-013', 'Confirms Create Asset date inputs reject direct keyboard entry.'), async ({ page }) => {
     test.slow();
     const nextBtn = page.getByRole('button', { name: 'Siguiente' });
     const dateBtn = page.locator('button[aria-current="date"]');
@@ -49,7 +50,7 @@ test.describe('Crear Activo - P1 Date Picker Behavior', () => {
 
   });
 
-  test('14. Date fields can only be populated via calendar selection', async ({ page }) => {
+  test('14. Date fields can only be populated via calendar selection', testMetadata('QA-CREATE-014', 'Populates each Create Asset date field through its calendar and verifies the selected value.'), async ({ page }) => {
     test.slow();
     const dateBtn = page.locator('button[aria-current="date"]');
 

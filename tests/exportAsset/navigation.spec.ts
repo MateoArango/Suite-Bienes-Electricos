@@ -3,9 +3,10 @@
 
 import { test, expect } from "@playwright/test";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 test.describe("Navigation, initial state, and selector contract", () => {
-  test("opens the Generate report drawer from the dashboard", async ({ page }) => {
+  test("opens the Generate report drawer from the dashboard", testMetadata('QA-EXPORT-001', 'Opens Generate Report from the dashboard and verifies its route, drawer, controls, and accessible actions.'), async ({ page }) => {
     // 1. From a fresh context, log in and verify the dashboard route.
     const exportAssetPage = new ExportAssetPage(page);
     await exportAssetPage.login("qa", "123456");

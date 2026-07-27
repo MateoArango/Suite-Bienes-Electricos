@@ -2,6 +2,7 @@ import { test, expect } from "../fixtures";
 import path from "path";
 import fs from "fs/promises";
 import { ImportAssetPage } from "../pages/ImportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 const PLATE = "00000401";
 const REORDERED_TEMPLATE = path.join(
@@ -80,42 +81,47 @@ const RESTORE_EXISTING_PLATE_FILE = path.join(
 const FILE_ERRORS_MESSAGE = "Se encontraron errores en el archivo";
 const BOUNDARY_CASES = [
   {
+    id: "QA-IMP-017",
     fileName: "text-max-plus-one.xlsx",
     column: "TIPO DE INSTALACI\u00d3N",
     expectedError: "longitud entre 0 y 8 caracteres (actual: 10)",
   },
   {
+    id: "QA-IMP-018",
     fileName: "number-out-of-range.xlsx",
     column: "EDAD_AGOTADA",
     expectedError: "longitud entre 0 y 5 caracteres (actual: 6)",
   },
   {
+    id: "QA-IMP-019",
     fileName: "number-decimal-not-allowed.xlsx",
     column: "VALOR ASOCIADO A SU MANTENIMIENTO",
     expectedError: "longitud entre 0 y 16 caracteres (actual: 17)",
   },
   {
+    id: "QA-IMP-020",
     fileName: "decimal-invalid-format.xlsx",
     column: "VALOR ASOCIADO A SU MANTENIMIENTO",
     expectedError: "debe ser numérico. Ejemplos válidos: 1, 1.5 o 1,5.",
   },
   {
+    id: "QA-IMP-021",
     fileName: "date-wrong-format.xlsx",
     column: "FECHA_INICIAL_POLIZAS_CONTRATO_DE_OBRA",
     expectedError: "debe tener formato dd/MM/yyyy. Ejemplo válido: 25/05/2026.",
   },
 ];
 const REQUIRED_FIELD_CASES = [
-  { fileName: "requiredField1-Error - 1.xlsx", column: "ARTICULO" },
-  { fileName: "requiredField1-Error - 2.xlsx", column: "N° PLACA" },
-  { fileName: "requiredField1-Error - 3.xlsx", column: "FOTOS (enlace)" },
-  { fileName: "requiredField1-Error - 4.xlsx", column: "PLANILLA (ARCGIS)" },
-  { fileName: "requiredField1-Error - 5.xlsx", column: "DEPARTAMENTO" },
-  { fileName: "requiredField1-Error - 6.xlsx", column: "MUNICIPIO" },
-  { fileName: "requiredField1-Error -7.xlsx", column: "COD_LOCALIZACION_DANE" },
+  { id: "QA-IMP-026", fileName: "requiredField1-Error - 1.xlsx", column: "ARTICULO" },
+  { id: "QA-IMP-027", fileName: "requiredField1-Error - 2.xlsx", column: "N° PLACA" },
+  { id: "QA-IMP-028", fileName: "requiredField1-Error - 3.xlsx", column: "FOTOS (enlace)" },
+  { id: "QA-IMP-029", fileName: "requiredField1-Error - 4.xlsx", column: "PLANILLA (ARCGIS)" },
+  { id: "QA-IMP-030", fileName: "requiredField1-Error - 5.xlsx", column: "DEPARTAMENTO" },
+  { id: "QA-IMP-031", fileName: "requiredField1-Error - 6.xlsx", column: "MUNICIPIO" },
+  { id: "QA-IMP-032", fileName: "requiredField1-Error -7.xlsx", column: "COD_LOCALIZACION_DANE" },
 ];
 
-test("Import accepts sparse rows with blank lines", async ({ page }) => {
+test("Import accepts sparse rows with blank lines", testMetadata('QA-IMP-010', 'Imports populated rows successfully when blank physical rows are interspersed in the workbook.'), async ({ page }) => {
   const importAssetPage = new ImportAssetPage(page);
 
   await importAssetPage.openImport();
@@ -126,7 +132,7 @@ test("Import accepts sparse rows with blank lines", async ({ page }) => {
   await expect(importAssetPage.successMessage).toBeVisible();
 });
 
-test("Import reports physical row number for sparse row errors", async ({
+test("Import reports physical row number for sparse row errors", testMetadata('QA-IMP-011', 'Reports the original physical spreadsheet row for an error after blank rows.'), async ({
   page,
 }) => {
   const importAssetPage = new ImportAssetPage(page);
@@ -145,7 +151,7 @@ test("Import reports physical row number for sparse row errors", async ({
   await expect(calibreErrorRow.locator(".col-row")).toHaveText("6");
 });
 
-test("Import rejects a plate that does not correspond to the article", async ({
+test("Import rejects a plate that does not correspond to the article", testMetadata('QA-IMP-012', 'Rejects a workbook whose plate does not belong to the supplied article.'), async ({
   page,
 }) => {
   const importAssetPage = new ImportAssetPage(page);
@@ -169,7 +175,7 @@ test("Import rejects a plate that does not correspond to the article", async ({
   );
 });
 
-test("Import rejects a plate in Baja or Devolucion status", async ({
+test("Import rejects a plate in Baja or Devolucion status", testMetadata('QA-IMP-013', 'Rejects import of a plate whose current status is Baja or Devolucion.'), async ({
   page,
 }) => {
   const importAssetPage = new ImportAssetPage(page);
@@ -193,7 +199,7 @@ test("Import rejects a plate in Baja or Devolucion status", async ({
   );
 });
 
-test("Import rejects a plate repeated in the same workbook", async ({
+test("Import rejects a plate repeated in the same workbook", testMetadata('QA-IMP-014', 'Detects and reports a plate duplicated within the same workbook.'), async ({
   page,
 }) => {
   const importAssetPage = new ImportAssetPage(page);
@@ -222,7 +228,7 @@ test("Import rejects a plate repeated in the same workbook", async ({
   );
 });
 
-test("Import rejects a DANE code that does not match the municipality", async ({
+test("Import rejects a DANE code that does not match the municipality", testMetadata('QA-IMP-015', 'Rejects a location row when Codigo DANE does not correspond to Municipio.'), async ({
   page,
 }) => {
   const importAssetPage = new ImportAssetPage(page);
@@ -249,7 +255,7 @@ test("Import rejects a DANE code that does not match the municipality", async ({
   );
 });
 
-test("Import rejects a municipality that does not belong to the department", async ({
+test("Import rejects a municipality that does not belong to the department", testMetadata('QA-IMP-016', 'Rejects a location row when Municipio does not belong to Departamento.'), async ({
   page,
 }) => {
   const importAssetPage = new ImportAssetPage(page);
@@ -278,7 +284,7 @@ test("Import rejects a municipality that does not belong to the department", asy
   );
 });
 
-test("QA-IMP-025: import fully replaces an existing asset", async ({
+test("QA-IMP-025: import fully replaces an existing asset", testMetadata('QA-IMP-025', 'Replaces an existing asset from the workbook, verifies changed and blanked API fields, and restores the original fixture state.'), async ({
   page,
   apiContext,
   authToken,
@@ -351,7 +357,7 @@ test("QA-IMP-025: import fully replaces an existing asset", async ({
 });
 
 for (const boundaryCase of BOUNDARY_CASES) {
-  test(`Import rejects ${boundaryCase.fileName} violation in ${boundaryCase.column}`, async ({
+  test(`Import rejects ${boundaryCase.fileName} violation in ${boundaryCase.column}`, testMetadata(boundaryCase.id, `Rejects the ${boundaryCase.column} boundary violation and exports its expected validation error.`), async ({
     page,
   }) => {
     const importAssetPage = new ImportAssetPage(page);
@@ -379,7 +385,7 @@ for (const boundaryCase of BOUNDARY_CASES) {
   });
 }
 
-test("Import exports multiple boundary errors from one workbook", async ({
+test("Import exports multiple boundary errors from one workbook", testMetadata('QA-IMP-022', 'Reports and exports multiple field-boundary errors found in one workbook.'), async ({
   page,
 }) => {
   const importAssetPage = new ImportAssetPage(page);
@@ -426,7 +432,7 @@ test("Import exports multiple boundary errors from one workbook", async ({
 });
 
 for (const requiredFieldCase of REQUIRED_FIELD_CASES) {
-  test(`Import rejects missing required field ${requiredFieldCase.column}`, async ({
+  test(`Import rejects missing required field ${requiredFieldCase.column}`, testMetadata(requiredFieldCase.id, `Rejects the workbook and reports ${requiredFieldCase.column} when that required field is blank.`), async ({
     page,
   }) => {
     const importAssetPage = new ImportAssetPage(page);
@@ -459,7 +465,7 @@ for (const requiredFieldCase of REQUIRED_FIELD_CASES) {
   });
 }
 
-test("Import maps reordered location columns by header", async ({
+test("Import maps reordered location columns by header", testMetadata('QA-IMP-033', 'Maps reordered location columns by header and verifies the imported API values for the target plate.'), async ({
   page,
   apiContext,
   authToken,

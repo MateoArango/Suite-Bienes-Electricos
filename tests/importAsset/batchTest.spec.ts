@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures';
 import path from 'path';
 import { ImportAssetPage } from '../pages/ImportAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 const BATCH_FILE = path.join(
     process.cwd(),
@@ -9,7 +10,7 @@ const BATCH_FILE = path.join(
     'batch.xlsx'
 );
 
-test('Import completes a batch workbook', async ({ page }) => {
+test('Import completes a batch workbook', testMetadata('QA-IMP-006', 'Uploads the verified batch workbook and confirms the batch import completes successfully.'), async ({ page }) => {
     const importAssetPage = new ImportAssetPage(page);
 
     await importAssetPage.openImport();

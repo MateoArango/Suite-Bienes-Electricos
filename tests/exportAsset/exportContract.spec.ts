@@ -4,6 +4,7 @@
 import { test, expect } from "@playwright/test";
 import * as XLSX from "xlsx";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 const exportEndpoint =
   "/electrical-assets/report/electrical-assets/excel";
@@ -19,7 +20,7 @@ type ExportPayload = {
 };
 
 test.describe("Generate Report export contract", () => {
-  test("4.1 exports plate with its exact payload and XLSX data", async ({
+  test("4.1 exports plate with its exact payload and XLSX data", testMetadata('QA-EXPORT-018', 'Exports a safely filtered plate, validates the exact seven-key payload, and checks identifying values in the downloaded XLSX.'), async ({
     page,
   }, testInfo) => {
     const exportAssetPage = new ExportAssetPage(page);
@@ -149,7 +150,7 @@ test.describe("Generate Report export contract", () => {
     ).toBeVisible();
   });
 
-  test("4.2 exports with the canonical empty payload", async ({
+  test("4.2 exports with the canonical empty payload", testMetadata('QA-EXPORT-019', 'Verifies the canonical unfiltered payload and a valid XLSX response; this live path remains intentionally slow and heap-sensitive.'), async ({
     page,
   }, testInfo) => {
     test.slow();

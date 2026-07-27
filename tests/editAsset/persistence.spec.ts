@@ -2,6 +2,7 @@ import { Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 const PLATE = '00000564';
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
@@ -26,7 +27,7 @@ async function openResponsablePanel(page: Page) {
 }
 
 test.describe('Edit asset persistence', () => {
-  test('QA-EDIT-032: browser back and forward do not show stale cached form data after save', async ({ page }) => {
+  test('QA-EDIT-032: browser back and forward do not show stale cached form data after save', testMetadata('QA-EDIT-032', 'Verifies browser history navigation reloads the saved value instead of stale form state.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editAsset = new EditAssetPage(page);
 

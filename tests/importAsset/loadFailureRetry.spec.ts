@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures';
 import path from 'path';
 import { ImportAssetPage } from '../pages/ImportAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 const LOAD_FAILURE_RETRY_FILE = path.join(
     process.cwd(),
@@ -24,7 +25,7 @@ const LOAD_DISCONNECTED_RETRY_FILE = path.join(
     'load-disconnected-retry.xlsx'
 );
 
-test('Import retains the validated file and retries after a final-load 500', async ({ page }) => {
+test('Import retains the validated file and retries after a final-load 500', testMetadata('QA-IMP-007', 'Retains the validated workbook after a load 500 and retries loading without repeating validation.'), async ({ page }) => {
     const importAssetPage = new ImportAssetPage(page);
     let validationAttempts = 0;
     let loadAttempts = 0;
@@ -73,7 +74,7 @@ test('Import retains the validated file and retries after a final-load 500', asy
     await expect(page.getByText('load-failure-retry.xlsx')).not.toBeVisible();
 });
 
-test('Import retains the validated file and retries after a final-load timeout', async ({ page }) => {
+test('Import retains the validated file and retries after a final-load timeout', testMetadata('QA-IMP-008', 'Retains the validated workbook after a load timeout and retries loading without repeating validation.'), async ({ page }) => {
     const importAssetPage = new ImportAssetPage(page);
     let validationAttempts = 0;
     let loadAttempts = 0;
@@ -117,7 +118,7 @@ test('Import retains the validated file and retries after a final-load timeout',
     await expect(page.getByText('load-timeout-retry.xlsx')).not.toBeVisible();
 });
 
-test('Import retains the validated file and retries after internet disconnection', async ({ page }) => {
+test('Import retains the validated file and retries after internet disconnection', testMetadata('QA-IMP-009', 'Retains the validated workbook after a disconnected load and retries without repeating validation.'), async ({ page }) => {
     const importAssetPage = new ImportAssetPage(page);
     let validationAttempts = 0;
     let loadAttempts = 0;

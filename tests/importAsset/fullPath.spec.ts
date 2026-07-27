@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
 import { ImportAssetPage } from '../pages/ImportAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 /*
  * Full import validation:
@@ -228,7 +229,7 @@ function compareExcelRowToApi(excelRow: ExcelRow, asset: unknown) {
         .filter((comparison) => !comparison.matches);
 }
 
-test('Full Path - Import Active', async ({ page }) => {
+test('Full Path - Import Active', testMetadata('QA-IMP-001', 'Imports the full workbook and compares its 102 mapped fields with the created asset API response.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const editAssetPage = new EditAssetPage(page);
     const importAssetPage = new ImportAssetPage(page);

@@ -1,9 +1,10 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { CreateAssetPage } from '../pages/CreateAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 test.describe('Crear Activo - P1 Stepper Navigation', () => {
 
-  test('15. Stepper displays correct step after plate selection', async ({ page }) => {
+  test('15. Stepper displays correct step after plate selection', testMetadata('QA-CREATE-015', 'Shows the Location step and its sub-step indicator after a plate is selected.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -17,7 +18,7 @@ test.describe('Crear Activo - P1 Stepper Navigation', () => {
     await expect(createAsset.stepper).toContainText('Sub paso 1 de 1');
   });
 
-  test('16. Field counter tracks all filled fields independently from required validation', async ({ page }) => {
+  test('16. Field counter tracks all filled fields independently from required validation', testMetadata('QA-CREATE-016', 'Updates the step field counter for optional and required inputs without confusing it with form validity.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -65,7 +66,7 @@ test.describe('Crear Activo - P1 Stepper Navigation', () => {
     await expect(createAsset.nextBtn).toBeEnabled();
   });
 
-  test('17. User can navigate back without losing Location values', async ({ page }) => {
+  test('17. User can navigate back without losing Location values', testMetadata('QA-CREATE-017', 'Preserves entered Location values after advancing and navigating back.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -91,7 +92,7 @@ test.describe('Crear Activo - P1 Stepper Navigation', () => {
     await expect(page.getByRole('textbox', { name: 'Enlace ARCGIS' })).toHaveValue('https://www.google.com/arcgis-test');
   });
 
-  test('18. Siguiente blocks and unblocks correctly on back navigation', async ({ page }) => {
+  test('18. Siguiente blocks and unblocks correctly on back navigation', testMetadata('QA-CREATE-018', 'Re-evaluates required Location validation after back navigation and enables Siguiente only when valid.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     const fotosField = page.getByRole('textbox', { name: 'Fotos' });

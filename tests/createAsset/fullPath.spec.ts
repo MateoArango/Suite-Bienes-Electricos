@@ -1,10 +1,11 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { CreateAssetPage } from '../pages/CreateAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 test.describe('Activos - Creación y Registro', () => {
 
-  test('Full Path - Create Active', async ({ page }) => {
+  test('Full Path - Create Active', testMetadata('QA-CREATE-000', 'Completes the full Create Asset workflow across every step and confirms successful registration.'), async ({ page }) => {
     test.slow();
     // Shared Locators
     const calendarBtn = page.getByRole('button', { name: 'Open calendar' });

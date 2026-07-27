@@ -3,9 +3,10 @@
 
 import { test, expect } from "@playwright/test";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 test.describe("Lookup data and dependent filters", () => {
-  test("enables and filters municipalities for one department", async ({
+  test("enables and filters municipalities for one department", testMetadata('QA-EXPORT-004', 'Enables Municipality after one department is selected and limits options to that department.'), async ({
     page,
   }) => {
     const exportAssetPage = new ExportAssetPage(page);
@@ -66,7 +67,7 @@ test.describe("Lookup data and dependent filters", () => {
     await expect(exportAssetPage.municipalitySelect).toContainText("ABEJORRAL");
   });
 
-  test("supports multiple departments and sends repeated departmentIds", async ({
+  test("supports multiple departments and sends repeated departmentIds", testMetadata('QA-EXPORT-005', 'Loads combined municipalities for multiple departments using repeated departmentIds and removes stale UI options.'), async ({
     page,
   }) => {
     const exportAssetPage = new ExportAssetPage(page);
@@ -175,7 +176,8 @@ test.describe("Lookup data and dependent filters", () => {
      */
   });
 
-  test("implements Todos and Ninguno semantics without contradictory selections", async ({
+  test("implements Todos and Ninguno semantics without contradictory selections",
+     testMetadata('QA-EXPORT-006', 'Applies Todos and Ninguno semantics while preventing contradictory selections and duplicate municipality codes.'), async ({
     page,
   }) => {
     const exportAssetPage = new ExportAssetPage(page);
@@ -304,7 +306,8 @@ test.describe("Lookup data and dependent filters", () => {
     );
   });
 
-  test("clears every filter and restores dependent-control state", async ({
+  test("clears every filter and restores dependent-control state",
+     testMetadata('QA-EXPORT-007', 'Clears all report filters, restores Municipality to disabled, and re-applies required validation state.'), async ({
     page,
   }) => {
     const exportAssetPage = new ExportAssetPage(page);

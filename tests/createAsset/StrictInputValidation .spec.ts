@@ -1,10 +1,11 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { CreateAssetPage } from '../pages/CreateAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 test.describe('Crear Activo - P0 Strict Input Validation', () => {
 
-  test('8. Fotos enforces max length exactly', async ({ page }) => {
+  test('8. Fotos enforces max length exactly', testMetadata('QA-CREATE-008', 'Accepts the Fotos maximum length and discards the first character beyond that limit.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -32,7 +33,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     expect(result).not.toContain('Z');
   });
 
-  test('9. Enlace ARCGIS enforces max length exactly', async ({ page }) => {
+  test('9. Enlace ARCGIS enforces max length exactly', testMetadata('QA-CREATE-009', 'Accepts the ARCGIS link maximum length and discards the first character beyond that limit.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -58,7 +59,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     expect(result).not.toContain('Z');
   });
 
-  test('10a. Valoración financiera - 5-char fields reject the 6th character', async ({ page }) => {
+  test('10a. Valoración financiera - 5-char fields reject the 6th character', testMetadata('QA-CREATE-010A', 'Enforces five-character limits on the tested financial valuation fields.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -94,7 +95,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await vidaRemanente.fill('123456');
     await expect(vidaRemanente).toHaveValue('12345');
   });
-  test('10b. Machine features - 5-char fields reject the 6th character', async ({ page }) => {
+  test('10b. Machine features - 5-char fields reject the 6th character', testMetadata('QA-CREATE-010B', 'Enforces five-character limits on the tested machine-feature fields.'), async ({ page }) => {
     test.slow();
 
     const basePage = new BasePage(page);
@@ -139,7 +140,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await expect(edadAparente).toHaveValue('12345');
   });
 
-  test('10c. Support and Structure - Altura apoyo rejects the 6th character', async ({ page }) => {
+  test('10c. Support and Structure - Altura apoyo rejects the 6th character', testMetadata('QA-CREATE-010C', 'Enforces the five-character limit for Altura apoyo.'), async ({ page }) => {
     test.slow();
 
     const basePage = new BasePage(page);
@@ -171,7 +172,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await expect(alturaApoyo).toHaveValue('12345');
   });
 
-  test('10d. Driver and network - 5-char fields reject the 6th character', async ({ page }) => {
+  test('10d. Driver and network - 5-char fields reject the 6th character', testMetadata('QA-CREATE-010D', 'Enforces five-character limits on the tested driver and network fields.'), async ({ page }) => {
     test.slow();
     const basePage = new BasePage(page);
     await basePage.login('qa', '123456');
@@ -227,7 +228,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
     await expect(longitudCalc).toHaveValue('12345');
   });
 
-  test('11. Masked fields ignore invalid characters', async ({ page }) => {
+  test('11. Masked fields ignore invalid characters', testMetadata('QA-CREATE-011', 'Confirms masked Create Asset inputs ignore characters outside their accepted format.'), async ({ page }) => {
     test.slow();
 
     const basePage = new BasePage(page);
@@ -266,7 +267,7 @@ test.describe('Crear Activo - P0 Strict Input Validation', () => {
   });
 
 
-  test('12. Fotos enforces max length via typing and paste', async ({ page, context }) => {
+  test('12. Fotos enforces max length via typing and paste', testMetadata('QA-CREATE-012', 'Applies the Fotos length limit consistently to keyboard input and clipboard paste.'), async ({ page, context }) => {
     test.slow();
 
     const basePage = new BasePage(page);

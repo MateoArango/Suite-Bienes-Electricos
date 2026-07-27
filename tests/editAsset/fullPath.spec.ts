@@ -1,8 +1,9 @@
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
-test('Editar Activo - P0 Full Path', async ({ page }) => {
+test('Editar Activo - P0 Full Path', testMetadata('QA-EDIT-000', 'Exercises the complete editable asset form across its sections and saves the resulting changes.'), async ({ page }) => {
     const basePage = new BasePage(page);
     const saveBtn = page.getByTestId('activesDetailSave');
     const deleteBtn = page.getByTestId('activesDetailDelete');

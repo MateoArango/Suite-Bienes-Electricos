@@ -3,9 +3,11 @@
 
 import { test, expect } from "@playwright/test";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 test.describe("Navigation, initial state, and selector contract", () => {
-  test("closes with Cancel without persisting draft values", async ({
+  test("closes with Cancel without persisting draft values",
+     testMetadata('QA-EXPORT-002', 'Cancels without exporting and verifies draft filters are cleared when the report drawer is reopened.'), async ({
     page,
   }) => {
     const exportPosts: string[] = [];

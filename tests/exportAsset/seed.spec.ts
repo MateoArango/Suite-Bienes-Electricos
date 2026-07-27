@@ -1,8 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 test.describe("Full Path", () => {
-  test("Full path and all the filters", async ({ page }) => {
+  test("Full path and all the filters", testMetadata('QA-EXPORT-000', 'Exercises the baseline Generate Report path with dates, department, and municipality filters.'), async ({ page }) => {
     // generate code here.
     /* buttons
     getByTestId('generateReportClearButton')

@@ -3,9 +3,10 @@
 
 import { test, expect, type Response } from "@playwright/test";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 test.describe("Lookup data and dependent filters", () => {
-  test("loads report lookup APIs with authorization and renders their values", async ({
+  test("loads report lookup APIs with authorization and renders their values", testMetadata('QA-EXPORT-003', 'Verifies authorized lookup requests succeed and their department, state, and group values render in the form.'), async ({
     page,
   }) => {
     const exportAssetPage = new ExportAssetPage(page);

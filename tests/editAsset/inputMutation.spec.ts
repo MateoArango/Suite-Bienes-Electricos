@@ -2,6 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { BasePage } from '../pages/BasePage';
 import { EditAssetPage } from '../pages/editAssetPage';
+import { testMetadata } from '../helpers/testMetadata';
 
 const PLATE = '00000542';
 const UPDATE_PATH = `/electrical-assets/article-resume/${PLATE}`;
@@ -40,7 +41,7 @@ async function openResponsablePanel(page: Page) {
 }
 
 test.describe('Input mutation', () => {
-    test('QA-EDIT-011: overwrite text with select all and type', async ({ page }) => {
+    test('QA-EDIT-011: overwrite text with select all and type', testMetadata('QA-EDIT-011', 'Replaces a complete text value by selecting it and typing a new value.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -56,7 +57,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.localidadField).toHaveValue(newValue);
     });
 
-    test('QA-EDIT-012: append text at the end of an existing value', async ({ page }) => {
+    test('QA-EDIT-012: append text at the end of an existing value', testMetadata('QA-EDIT-012', 'Appends characters at the end of an existing text input without replacing its prefix.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -74,7 +75,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.localidadField).toHaveValue(`${originalValue}${appendedText}`);
     });
 
-    test('QA-EDIT-013: insert text in the middle of an existing value', async ({ page }) => {
+    test('QA-EDIT-013: insert text in the middle of an existing value', testMetadata('QA-EDIT-013', 'Inserts characters at the cursor within an existing text value.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -97,7 +98,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.localidadField).toHaveValue(expectedValue);
     });
 
-    test('QA-EDIT-014: delete first character with forward delete', async ({ page }) => {
+    test('QA-EDIT-014: delete first character with forward delete', testMetadata('QA-EDIT-014', 'Deletes the first character with the forward-delete key and preserves the remainder.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -115,7 +116,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.localidadField).toHaveValue(expectedValue);
     });
 
-    test('QA-EDIT-015: delete last character with backspace at the end', async ({ page }) => {
+    test('QA-EDIT-015: delete last character with backspace at the end', testMetadata('QA-EDIT-015', 'Deletes the final character with Backspace and preserves the preceding value.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -133,7 +134,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.localidadField).toHaveValue(expectedValue);
     });
 
-    test('QA-EDIT-016: replace full value with Ctrl+A and type', async ({ page }) => {
+    test('QA-EDIT-016: replace full value with Ctrl+A and type', testMetadata('QA-EDIT-016', 'Replaces an entire input value using the platform select-all shortcut.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -150,7 +151,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.localidadField).toHaveValue(newValue);
     });
 
-    test('QA-EDIT-017: copy Vereda and paste exact value into Localidad', async ({ page }) => {
+    test('QA-EDIT-017: copy Vereda and paste exact value into Localidad', testMetadata('QA-EDIT-017', 'Copies Vereda through the clipboard and pastes the exact value into Localidad.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -175,7 +176,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.localidadField).toHaveValue(sourceValue);
     });
 
-    test('QA-EDIT-017: cut Vereda and paste exact value into Localidad', async ({ page }) => {
+    test('QA-EDIT-018: cut Vereda and paste exact value into Localidad', testMetadata('QA-EDIT-018', 'Cuts Vereda through the clipboard and pastes the exact value into Localidad.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -201,7 +202,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.veredaField).toHaveValue('');
     });
 
-    test('QA-EDIT-019: vereda stops accepting typed characters at max length', async ({ page }) => {
+    test('QA-EDIT-019: vereda stops accepting typed characters at max length', testMetadata('QA-EDIT-019', 'Stops accepting typed Vereda characters once the field reaches its maximum length.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -218,7 +219,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.veredaField).toHaveValue(expectedValue);
     });
 
-    test('QA-EDIT-020: paste over max length trims pasted data', async ({ page }) => {
+    test('QA-EDIT-020: paste over max length trims pasted data', testMetadata('QA-EDIT-020', 'Trims clipboard content pasted beyond the field maximum length.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -239,7 +240,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.latitudField).toHaveValue(overLimitLatitud.slice(0, 30));
     });
 
-    test('QA-EDIT-021: numeric fields reject non-numeric characters', async ({ page }) => {
+    test('QA-EDIT-021: numeric fields reject non-numeric characters', testMetadata('QA-EDIT-021', 'Rejects alphabetic characters in the tested numeric edit fields.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -266,7 +267,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.avaluoRvField).toHaveValue(digitsOnlyAvaluo);
     });
 
-    test('QA-EDIT-023: unicode input persists after save and reload', async ({ page }) => {
+    test('QA-EDIT-023: unicode input persists after save and reload', testMetadata('QA-EDIT-023', 'Persists Unicode text through save, reload, and reopen, then restores the original backend value.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -303,7 +304,7 @@ test.describe('Input mutation', () => {
         }
     });
 
-    test('QA-EDIT-024: undo and redo revert and reapply an edit', async ({ page }) => {
+    test('QA-EDIT-024: undo and redo revert and reapply an edit', testMetadata('QA-EDIT-024', 'Uses browser undo and redo shortcuts to revert and reapply an input change.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 
@@ -326,7 +327,7 @@ test.describe('Input mutation', () => {
         await expect(editAsset.localidadField).toHaveValue(editedValue);
     });
 
-    test('QA-EDIT-025: Valor UC currency mask formats live while typing', async ({ page }) => {
+    test('QA-EDIT-025: Valor UC currency mask formats live while typing', testMetadata('QA-EDIT-025', 'Formats Valor UC as currency during typing while preserving its numeric meaning.'), async ({ page }) => {
         const basePage = new BasePage(page);
         const editAsset = new EditAssetPage(page);
 

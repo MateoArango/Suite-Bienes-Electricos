@@ -4,11 +4,12 @@
 import { expect, test, type Locator } from "@playwright/test";
 import * as XLSX from "xlsx";
 import { ExportAssetPage } from "../pages/ExportAssetPage";
+import { testMetadata } from "../helpers/testMetadata";
 
 const exportEndpoint = "/electrical-assets/report/electrical-assets/excel";
 
 test.describe("Export report error handling", () => {
-  test("handles lookup endpoint failures and recovery", async ({ page }) => {
+  test("handles lookup endpoint failures and recovery", testMetadata('QA-EXPORT-020', 'Exercises lookup 401, 403, 500, timeout, and malformed responses, then verifies controls recover after successful reloads.'), async ({ page }) => {
     const exportAssetPage = new ExportAssetPage(page);
     const endpoints = ["departments", "cities", "estados", "grupos"] as const;
     type Endpoint = (typeof endpoints)[number];
@@ -242,7 +243,7 @@ test.describe("Export report error handling", () => {
     }
   });
 
-  test("prevents duplicate exports during a slow request", async ({ page }) => {
+  test("prevents duplicate exports during a slow request", testMetadata('QA-EXPORT-021', 'Allows only one export request while a slow response is pending and restores the submit action afterward.'), async ({ page }) => {
     const exportAssetPage = new ExportAssetPage(page);
     await exportAssetPage.login("qa", "123456");
     await exportAssetPage.open();
