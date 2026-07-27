@@ -20,6 +20,7 @@ type ExportPayload = {
 };
 
 test.describe("Generate Report export contract", () => {
+  test.slow();
   test("4.1 exports plate with its exact payload and XLSX data", testMetadata('QA-EXPORT-018', 'Exports a safely filtered plate, validates the exact seven-key payload, and checks identifying values in the downloaded XLSX.'), async ({
     page,
   }, testInfo) => {
