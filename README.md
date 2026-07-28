@@ -71,6 +71,18 @@ Use `serial` only where the tests in that spec intentionally share the same reco
 
 ## Useful Commands
 
+Once cloned the repository, install npm (node)
+
+```powershell
+npm install
+```
+Install Playwright
+
+
+```powershell
+npx playwright install
+```
+
 List every discovered test without opening a browser:
 
 ```powershell
